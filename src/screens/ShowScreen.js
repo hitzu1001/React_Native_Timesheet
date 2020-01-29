@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
 import { FontAwesome } from '@expo/vector-icons';
@@ -6,12 +6,17 @@ import { FontAwesome } from '@expo/vector-icons';
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost } = useContext(Context);
 
-  const callDeleteFromNav = () => {
-    deleteBlogPost('6');
-  };
-  navigation.setParams(callDeleteFromNav);
+  useEffect(()=>{
+    // navigation.setParams(deleteBlogPost)
+    const callDeleteFromNav = () => {
+      deleteBlogPost(navigation.getParam('id'));
+    };
+    navigation.setParams({callDeleteFromNav:callDeleteFromNav});
+  },[])
 
-  console.log(navigation.params);
+
+
+  // console.log(navigation.params);
 
   const blogPost = state.find(
     blogPost => blogPost.id === navigation.getParam('id')
@@ -26,6 +31,7 @@ const ShowScreen = ({ navigation }) => {
 };
 
 ShowScreen.navigationOptions = ({ navigation }) => {
+  // console.log(navigation.state.params)
   return {
     headerRight:
       <>
@@ -36,8 +42,11 @@ ShowScreen.navigationOptions = ({ navigation }) => {
         >
           <FontAwesome style={styles.editIcon} name='pencil' />
         </TouchableOpacity>
-        {/* <TouchableOpacity onPress={() => navigation.state.params.callDeleteFromNav()}> */}
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => {
+          navigation.state.params.callDeleteFromNav()
+          navigation.navigate("Timesheet")
+          }}>
+        {/* <TouchableOpacity onPress={() => {}}> */}
           <FontAwesome style={styles.deleteIcon} name='trash' />
         </TouchableOpacity>
       </>
