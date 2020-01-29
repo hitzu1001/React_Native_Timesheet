@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-navigation';
 import Spacer from '../components/Spacer';
 import { Context as AuthContext } from '../context/AuthContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons'
 
 
 const MoreScreen = () => {
@@ -12,13 +13,24 @@ const MoreScreen = () => {
   return (
     <SafeAreaView>
       <Text style={styles.header}>MoreScreen</Text>
-      <Spacer>
-        <TouchableOpacity style={styles.logoutContainer} onPress={signout}>
-          {/* <MaterialCommunityIcons name='logout' size={30} color='gray' /> */}
-          <MaterialCommunityIcons style={styles.logoutIcon} name='logout' />
-          <Text style={styles.logoutText}>Log out</Text>
+        <TouchableOpacity style={styles.Container}>
+          <FontAwesome style={styles.Icon} name='gear' />
+          <Text style={styles.Text}>Settings</Text>
         </TouchableOpacity>
-      </Spacer>
+        <TouchableOpacity style={styles.Container}>
+          <MaterialCommunityIcons style={styles.Icon} name='timer-off' />
+          <Text style={styles.Text}>Time Off</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.Container}>
+          <MaterialCommunityIcons style={styles.Icon} name='bell-outline' />
+          <Text style={styles.Text}>Notifications</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.Container} onPress={signout}>
+          <MaterialCommunityIcons style={styles.Icon} name='logout' />
+          <Text style={styles.Text}>Log out</Text>
+        </TouchableOpacity>
+
+
     </SafeAreaView>
   );
 };
@@ -32,20 +44,21 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     backgroundColor: 'lightgray',
+    marginBottom: 20
   },
-  logoutContainer: {
+  Container: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 20,
+    marginBottom: 40
   },
-  logoutIcon: {
-    fontSize: 30,
+  Icon: {
+    fontSize: 20,
     color: 'gray',
-    alignSelf: 'center'
   },
-  logoutText: {
-    margin: 20,
-    fontSize: 18,
-    alignSelf: 'center'
+  Text: {
+    marginLeft: 20,
+    fontSize: 16,
   }
 });
 

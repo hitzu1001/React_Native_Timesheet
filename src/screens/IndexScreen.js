@@ -1,13 +1,11 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
 import { Context } from '../context/BlogContext';
-import TimeSheetForm from '../components/TimeSheetForm'
 import { FontAwesome } from '@expo/vector-icons'
 
-
-const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(Context);
+const IndexScreen = ({ navigation }) => {
+  // const blogPosts = useContext(BlogContext);
+  const { state, deleteBlogPost, getBlogPosts } = useContext(Context);
 
   useEffect(() => {
     getBlogPosts();
@@ -22,7 +20,7 @@ const TimesheetScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <View>
       <FlatList
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
@@ -30,30 +28,24 @@ const TimesheetScreen = ({ navigation }) => {
           return (
             <View style={styles.row}>
               <TouchableOpacity
-                style={styles.titleContainer}
+                style={styles.titleTO} 
                 onPress={() => navigation.navigate('Show', { id: item.id })}
               >
                 <Text style={styles.title}>{item.title} - {item.id}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                <FontAwesome style={styles.deleteIcon} name='trash' />
               </TouchableOpacity>
             </View>
           );
         }}
       ></FlatList>
-      {/* <TimeSheetForm /> */}
-    </SafeAreaView>
+    </View>
   );
 };
 
-TimesheetScreen.navigationOptions = ({ navigation }) => {
+IndexScreen.navigationOptions = ({ navigation }) => {
   return {
-    title: 'Timesheets',
-    headerStyle: {
-      // backgroundColor: '#20b2aa',
-    },
-    headerTintColor: 'black',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
     headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
       <FontAwesome style={styles.addIcon} name='plus' />
     </TouchableOpacity>
@@ -61,10 +53,6 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  addIcon: {
-    fontSize: 16,
-    marginRight: 20,
-  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -74,14 +62,24 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'lightgray',
   },
-  titleContainer: {
+  titleTO: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'red',
+    // borderWidth: 1,
+    // borderColor: 'red',
   },
   title: {
     fontSize: 18,
-  }
+  },
+  deleteIcon: {
+    fontSize: 24,
+    marginLeft: 10,
+    // borderWidth: 1,
+    // borderColor: 'red',
+  },
+  addIcon: {
+    fontSize: 24,
+    marginRight: 20,
+  },
 });
 
-export default TimesheetScreen;
+export default IndexScreen;
