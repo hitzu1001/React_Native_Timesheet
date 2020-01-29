@@ -13,15 +13,13 @@ const TimesheetScreen = () => {
 
 TimesheetScreen.navigationOptions = {
   title: 'Timesheet',
-  tabBarIcon: <MaterialCommunityIcons name='chart-timeline' size={24} color='gray'/>
+  tabBarIcon: <MaterialCommunityIcons name='playlist-edit' size={26} color='gray'/>
 };
 
 const styles = StyleSheet.create({
   header: {
     padding: 20,
     backgroundColor: 'lightgray',
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
   },
 });
 

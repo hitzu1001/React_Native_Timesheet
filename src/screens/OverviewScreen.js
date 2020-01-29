@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const OverviewScreen = () => {
   return (
-    <SafeAreaView >
+    <SafeAreaView style={styles.headerContainer}>
       <Text style={styles.header}>OverviewScreen</Text>
     </SafeAreaView>
   );
@@ -13,15 +13,13 @@ const OverviewScreen = () => {
 
 OverviewScreen.navigationOptions = {
   title: 'Overview',
-  tabBarIcon: <MaterialCommunityIcons name='view-dashboard-outline' size={24} color='gray' />
+  tabBarIcon: <MaterialCommunityIcons name='view-dashboard-outline' size={22} color='gray' />
 };
 
 const styles = StyleSheet.create({
   header: {
     padding: 20,
     backgroundColor: 'lightgray',
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
   },
 });
 

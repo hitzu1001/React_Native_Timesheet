@@ -13,15 +13,13 @@ const ScheduleScreen = () => {
 
 ScheduleScreen.navigationOptions = {
   title: 'Schedule',
-  tabBarIcon: <FontAwesome name='calendar' size={24} color='gray'/>
+  tabBarIcon: <FontAwesome name='calendar' size={20} color='gray'/>
 };
 
 const styles = StyleSheet.create({
   header: {
     padding: 20,
     backgroundColor: 'lightgray',
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
   },
 });
 
