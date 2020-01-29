@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { Text, View } from "react-native";
-import DatePicker from "../components/DatePicker";
-import moment from "moment";
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
+// import DatePicker from '../components/DatePicker'
 
 export class TimeSheetForm extends Component {
   constructor(props) {

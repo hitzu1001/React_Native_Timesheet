@@ -7,10 +7,29 @@ import SignupScreen from './src/screens/SignupScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import OverviewScreen from './src/screens/OverviewScreen';
 import TimesheetScreen from './src/screens/TimesheetScreen';
+import ShowScreen from './src/screens/ShowScreen';
+import CreateScreen from './src/screens/CreateScreen';
+import EditScreen from './src/screens/EditScreen';
+import NoteScreen from './src/screens/NoteScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
 import MoreScreen from './src/screens/MoreScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as BlogProvider } from './src/context/BlogContext';
 import { setNavigator } from './src/navigationRef';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+const timesheetFlow = createStackNavigator({
+  Timesheet: TimesheetScreen,
+  Show: ShowScreen,
+  Create: CreateScreen,
+  Edit: EditScreen,
+  Note: NoteScreen,
+})
+
+timesheetFlow.navigationOptions = {
+  title: 'Timesheets',
+  tabBarIcon: <MaterialCommunityIcons name='playlist-edit' size={26} color='gray' />
+}
 
 const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,
@@ -20,18 +39,21 @@ const switchNavigator = createSwitchNavigator({
   }),
   mainFlow: createBottomTabNavigator({
     Overview: OverviewScreen,
-    Timesheet: TimesheetScreen,
+    timesheetFlow,
     Schedule: ScheduleScreen,
     More: MoreScreen,
   })
+
 });
 
 const App = createAppContainer(switchNavigator);
 
 export default () => {
   return (
-    <AuthProvider>
-      <App ref={navigator => { setNavigator(navigator) }} />
-    </AuthProvider>
+    <BlogProvider>
+      <AuthProvider>
+        <App ref={navigator => { setNavigator(navigator) }} />
+      </AuthProvider>
+    </BlogProvider>
   );
 }
