@@ -48,6 +48,7 @@ ShowScreen.navigationOptions = ({ navigation }) => {
   };
 };
 
+
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 30,
