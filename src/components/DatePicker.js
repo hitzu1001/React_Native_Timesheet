@@ -1,24 +1,26 @@
-import {SafeAreaView, ScrollView, StyleSheet, View, Text, StatusBar, Button, Platform} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View, Text, StatusBar, Button, Platform, TouchableOpacity} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Header,Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {Fragment, Component} from 'react';
 import moment from 'moment';
 
+
 // type Props = {};
 export default class App extends Component {
   state = {
-    date: new Date(),
+    // date: new Date(moment('2020-01-01T19:00:00').toDate()),
+    date: new Date(moment.utc().startOf('day').add(27, 'hours').toDate()),
     mode: 'date',
     show: false,
   }
 
   setDate = (event, date) => {
     date = date || this.state.date;
-
     this.setState({
       show: Platform.OS === 'ios' ? true : false,
-      date,
+      date
     });
+    this.props.setTime(date)
   }
 
   show = mode => {
@@ -30,10 +32,16 @@ export default class App extends Component {
 
   datepicker = () => {
     this.show('date');
+    this.setState({
+      show: !this.state.show,
+    });
   }
 
   timepicker = () => {
     this.show('time');
+    this.setState({
+      show: !this.state.show,
+    });
   }
 
   render() {
@@ -56,7 +64,7 @@ export default class App extends Component {
                 </View>
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {moment(date).format('LLLL')}
+                    {moment(date).utc().format('YYYY-MM-DD HH:mm')}
                   </Text>
                 </View>
                 { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
@@ -79,6 +87,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: Colors.white,
+
   },
   footer: {
     color: Colors.dark,
