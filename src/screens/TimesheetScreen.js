@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { Context } from '../context/BlogContext';
-import TimeSheetForm from '../components/TimeSheetForm'
 import { FontAwesome } from '@expo/vector-icons'
 
 
@@ -11,7 +10,6 @@ const TimesheetScreen = ({ navigation }) => {
 
   useEffect(() => {
     getBlogPosts();
-
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
     });
@@ -39,7 +37,6 @@ const TimesheetScreen = ({ navigation }) => {
           );
         }}
       ></FlatList>
-      {/* <TimeSheetForm /> */}
     </SafeAreaView>
   );
 };
@@ -62,7 +59,8 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   addIcon: {
-    fontSize: 16,
+    fontSize: 20,
+    color: '#0275d8',
     marginRight: 20,
   },
   row: {

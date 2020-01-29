@@ -5,16 +5,6 @@ const blogReducer = (state, action) => {
   switch (action.type) {
     case 'get_blogposts':
       return action.payload;
-    // case 'add_blogpost':
-    //   return [
-    //     ...state,
-    //     {
-    //       id: uuid(),
-    //       // id: Math.floor(Math.random() * 99999),
-    //       title: action.payload.title,
-    //       content: action.payload.content
-    //     }
-    //   ];
     case 'delete_blogpost':
       return state.filter(blogPost => blogPost.id !== action.payload);
     case 'edit_blogpost':
@@ -35,29 +25,31 @@ const getBlogPosts = dispatch => {
 }
 
 const addBlogPost = dispatch => {
-  return async (title, content, callback) => {
+  return async (title, notes, callback) => {
     if (callback) {
       callback();
     }
-    await timesheetApi.post('/blogposts', { title, content });
-    // dispatch({ type: 'add_blogpost', payload: { title, content } });
+    await timesheetApi.post('/blogposts', { title, notes });
   };
 };
 
 const deleteBlogPost = dispatch => {
-  return async id => {
+  return async (id, callback) => {
+    if (callback) {
+      callback();
+    }
     await timesheetApi.delete(`/blogposts/${id}`);
     dispatch({ type: 'delete_blogpost', payload: id });
   };
 };
 
 const editBlogPost = dispatch => {
-  return async (id, title, content, callback) => {
+  return async (id, title, notes, callback) => {
     if (callback) {
       callback();
     }
-    await timesheetApi.put(`/blogposts/${id}`, { title, content });
-    dispatch({ type: 'edit_blogpost', payload: { id, title, content } });
+    await timesheetApi.put(`/blogposts/${id}`, { title, notes });
+    dispatch({ type: 'edit_blogpost', payload: { id, title, notes } });
   };
 };
 

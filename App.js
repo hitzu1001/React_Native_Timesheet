@@ -10,6 +10,7 @@ import TimesheetScreen from './src/screens/TimesheetScreen';
 import ShowScreen from './src/screens/ShowScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import EditScreen from './src/screens/EditScreen';
+import NoteScreen from './src/screens/NoteScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
 import MoreScreen from './src/screens/MoreScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
@@ -22,6 +23,7 @@ const timesheetFlow = createStackNavigator({
   Show: ShowScreen,
   Create: CreateScreen,
   Edit: EditScreen,
+  Note: NoteScreen,
 })
 
 timesheetFlow.navigationOptions = {
