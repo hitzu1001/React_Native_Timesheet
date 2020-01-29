@@ -5,6 +5,7 @@ import Spacer from '../components/Spacer';
 import { Context as AuthContext } from '../context/AuthContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+
 const MoreScreen = () => {
   const { signout } = useContext(AuthContext);
 
