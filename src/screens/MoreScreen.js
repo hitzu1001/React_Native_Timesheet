@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 
+
 const MoreScreen = () => {
   return (
     <SafeAreaView>
