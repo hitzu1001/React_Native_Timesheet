@@ -57,9 +57,6 @@ export default class App extends Component {
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
                     {moment(date).format('LLLL')}
-                  {/* { Platform.OS === 'ios' ? moment(date).format('LLLL') :  moment(date).format('LLLL') } */}
-                    {/* { mode === 'time' && moment.utc(date).format('HH:mm') }
-                    { mode === 'date' && moment.utc(date).format('MM/DD/YYYY') } */}
                   </Text>
                 </View>
                 { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
