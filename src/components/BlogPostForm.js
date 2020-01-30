@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { navigate } from '../navigationRef';
+import TimeSheetForm from '../components/TimeSheetForm'
 
 const BlogPostForm = ({ onSubmit, initialValues }) => {
   const [title, setTitle] = useState(initialValues.title);
   const [notes, setNotes] = useState(initialValues.notes);
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>TIME</Text>
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           value={title}
           onChangeText={title => setTitle(title)}
-        />
+        /> */}
+        <TimeSheetForm />
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>TASK</Text>
@@ -34,7 +36,7 @@ const BlogPostForm = ({ onSubmit, initialValues }) => {
         title='Save Timesheet'
         onPress={() => onSubmit(title, notes)}
       />
-    </View>
+    </ScrollView>
   );
 };
 
