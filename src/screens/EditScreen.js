@@ -11,6 +11,10 @@ const EditScreen = ({ navigation }) => {
 
   const blogPost = state.find(blogPost => blogPost.id === id);
 
+  useEffect(() => {
+    navigation.setParams({ change });
+  }, [change]);
+
   return (
     <BlogPostForm
       initialValues={{
@@ -24,22 +28,9 @@ const EditScreen = ({ navigation }) => {
           navigation.pop();
         });
       }}
+      isChange={setChange}
     />
   );
-  useEffect(() => {
-    navigation.setParams({ change });
-  }, [change]);
-
-
-  return <BlogPostForm
-    initialValues={{ title: blogPost.title, notes: blogPost.notes }}
-    onSubmit={(title, notes) => {
-      editBlogPost(id, title, notes, () => {
-        navigation.pop();
-      });
-    }}
-    isChange={setChange}
-  />
 };
 
 EditScreen.navigationOptions = ({ navigation }) => {

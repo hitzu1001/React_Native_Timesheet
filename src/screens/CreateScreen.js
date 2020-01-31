@@ -6,12 +6,15 @@ import { Entypo } from '@expo/vector-icons';
 
 const CreateScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(Context);
+
   return <BlogPostForm onSubmit={(title, notes, startTime, endTime) => {
     addBlogPost(title, notes, startTime, endTime, () => {
       // ensure the page is navigated to Index after the post has been added
       navigation.navigate('Timesheet');
     });
-  }} />
+  }}
+    isChange={() => {}}
+  />
 };
 
 CreateScreen.navigationOptions = ({ navigation }) => {

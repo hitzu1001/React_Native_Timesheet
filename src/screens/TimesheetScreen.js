@@ -45,13 +45,13 @@ const TimesheetScreen = ({ navigation }) => {
 TimesheetScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Timesheets',
-    headerStyle: {
-      // backgroundColor: '#20b2aa',
-    },
-    headerTintColor: 'black',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
+    // headerStyle: {
+    //   backgroundColor: '#20b2aa',
+    // },
+    // headerTintColor: 'black',
+    // headerTitleStyle: {
+    //   fontWeight: 'bold',
+    // },
     headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
       <FontAwesome style={styles.addIcon} name='plus' />
     </TouchableOpacity>,

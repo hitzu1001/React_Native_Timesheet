@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView
 import { navigate } from '../navigationRef';
 import TimeForm from './TimeForm'
 
-const BlogPostForm = ({ onSubmit, initialValues, isChange }) => {
+const BlogPostForm = ({ initialValues, onSubmit, isChange }) => {
   const [title, setTitle] = useState(initialValues.title);
   const [notes, setNotes] = useState(initialValues.notes);
   const [startTime, setStartTime] = useState(initialValues.startTime);
@@ -38,8 +38,8 @@ const BlogPostForm = ({ onSubmit, initialValues, isChange }) => {
           {notes === "" ? (
             <Text>Add timesheet note</Text>
           ) : (
-            <Text style={styles.noteContent}>{notes}</Text>
-          )}
+              <Text style={styles.noteContent}>{notes}</Text>
+            )}
         </TouchableOpacity>
       </View>
       <Button
