@@ -22,7 +22,8 @@ const ShowScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <Card title='TIME' item='' />
+      <Card title='START TIME' item={blogPost.startTime} />
+      <Card title='END TIME' item={blogPost.endTime} />
       <Card title='TASK' item={blogPost.title} />
       <Card title='NOTES' item={blogPost.notes} />
       <View style={styles.subContainer}>

@@ -26,15 +26,22 @@ export class TimeForm extends Component {
     this.setEndTime = this.setEndTime.bind(this);
   }
 
+  componentDidMount() {
+    this.props.setStartTime(this.state.startTime)
+    this.props.setEndTime(this.state.endTime)
+  }
+
+
+
   setStartTime(date) {
+    this.props.setStartTime(date)
     this.setState({
       startTime: date
     });
-    // console.log("Time in TimeForm:");
-    // console.log(this.state.startTime);
   }
 
   setEndTime(date) {
+    this.props.setEndTime(date)
     this.setState({
       endTime: date
     });
