@@ -1,14 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import AttachPhotos from '../components/AttachPhotos'
 import { Feather } from '@expo/vector-icons';
 
 const ScheduleScreen = () => {
   return (
     <View>
       <Text style={styles.header}>ScheduleScreen</Text>
-      <AttachPhotos />
     </View>
   );
 };

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { navigate } from '../navigationRef';
-import TimeForm from './TimeForm'
+import TimeForm from './TimeForm';
+import AttachPhotos from '../components/AttachPhotos';
+import { Entypo } from '@expo/vector-icons';
 
-const BlogPostForm = ({ initialValues, onSubmit, isChange }) => {
+const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [title, setTitle] = useState(initialValues.title);
   const [notes, setNotes] = useState(initialValues.notes);
   const [startTime, setStartTime] = useState(initialValues.startTime);
@@ -35,13 +37,19 @@ const BlogPostForm = ({ initialValues, onSubmit, isChange }) => {
             navigate("NoteEdit", { notes, setNotes });
           }}
         >
-          {notes === "" ? (
-            <Text>Add timesheet note</Text>
+          {notes === '' ? (
+            <View style={styles.emptyNote}>
+              <Entypo style={styles.addIcon} name='plus' />
+              <Text style={styles.emptyNoteText}>Add timesheet note</Text>
+            </View>
           ) : (
-              <Text style={styles.noteContent}>{notes}</Text>
+              <Text style={styles.noteContent} numberOfLines={3} ellipsizeMode='tail'>
+                {notes}
+              </Text>
             )}
         </TouchableOpacity>
       </View>
+      {!isCreate && <AttachPhotos id={id} />}
       <Button
         title="Save Timesheet"
         onPress={() => onSubmit(title, notes, startTime, endTime)}
@@ -54,7 +62,7 @@ BlogPostForm.defaultProps = {
   initialValues: {
     title: "",
     notes:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie. \n\nTristique senectus et netus et malesuada fames. Ultrices dui sapien eget mi proin sed libero enim sed. Odio ut enim blandit volutpat maecenas. Non blandit massa enim nec. \n\nDictum non consectetur a erat nam at lectus. Viverra ipsum nunc aliquet bibendum enim facilisis gravida. Velit laoreet id donec ultrices tincidunt arcu non sodales neque."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie."
   }
 };
 
@@ -75,12 +83,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3
   },
+  emptyNote: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  addIcon: {
+    fontSize: 22,
+    color: '#20b2aa',
+    marginRight: 5,
+  },
+  emptyNoteText: {
+    color: '#20b2aa',
+  },
   noteContent: {
     paddingVertical: 10,
     paddingHorizontal: 5,
     borderColor: "lightgray",
     borderWidth: 1,
-    borderRadius: 3
+    borderRadius: 3,
   }
 });
 

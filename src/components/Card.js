@@ -5,7 +5,7 @@ const Card = ({ title, item, onPress }) => {
   return <View style={styles.card}>
     <Text style={styles.cardTitle}>{title}</Text>
     {/* <TouchableOpacity onPress={onPress}> */}
-      <Text style={styles.cardItem}>{item}</Text>
+      <Text style={styles.cardItem} numberOfLines={3} ellipsizeMode='tail'>{item}</Text>
     {/* </TouchableOpacity> */}
   </View>
 };

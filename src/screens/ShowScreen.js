@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
 import Card from '../components/Card';
+
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import moment from 'moment';
 
@@ -33,7 +34,6 @@ const ShowScreen = ({ navigation }) => {
       <Card title='NOTES' item={blogPost.notes} />
       <View style={styles.subContainer}>
         <Text style={styles.containerTitle}>ATTACHMENTS</Text>
-        <Text style={styles.containerItem}>None</Text>
       </View>
     </ScrollView>
   );
@@ -41,7 +41,7 @@ const ShowScreen = ({ navigation }) => {
 
 ShowScreen.navigationOptions = ({ navigation }) => {
   return {
-    title: 'blogPost.startTime',
+    title: 'Show Date~~~',
     headerLeft: <TouchableOpacity onPress={() => navigation.pop()}>
       <Feather style={styles.backIcon} name='arrow-left' />
     </TouchableOpacity>,

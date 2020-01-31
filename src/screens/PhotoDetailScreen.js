@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
-import { navigate } from '../navigationRef';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 const PhotoDetailScreen = ({ navigation }) => {
@@ -40,24 +39,43 @@ const PhotoDetailScreen = ({ navigation }) => {
 };
 
 PhotoDetailScreen.navigationOptions = ({ navigation }) => {
-  const { uri, deletePhoto, comment, setComment } = navigation.state.params;
+  const { id, uri, deletePhoto, isNew, comment, setComment } = navigation.state.params;
   return {
     title: 'Photo details',
-    headerLeft: <TouchableOpacity onPress={() => { }}>
+    headerLeft: <TouchableOpacity onPress={() => {
+      (comment === '123') // fix this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+        ? navigation.navigate('Edit', { id })
+        : Alert.alert('Discard changes?', '',
+          [
+            {
+              text: 'Keep Editing',
+              style: 'cancel'
+            },
+            {
+              text: 'Discard',
+              onPress: () => {
+                // setComment('comment in db');
+                navigation.navigate('Edit', { id })
+              }
+            }
+          ],
+          { cancelable: false },
+        )
+    }}>
       <Entypo style={styles.crossIcon} name='cross' />
     </TouchableOpacity>,
     headerRight: <>
       <TouchableOpacity onPress={() =>
-        navigate("Schedule")
+        navigation.navigate('Edit', { id })
       }>
-        <Entypo style={styles.searchIcon} name='save' />
+        <FontAwesome style={styles.searchIcon} name='save' />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => {
+      {!isNew && <TouchableOpacity onPress={() => {
         deletePhoto(uri);
-        navigate("Schedule");
+        navigation.navigate('Edit', { id });
       }}>
         <FontAwesome style={styles.searchIcon} name='trash' />
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </>,
   };
 };

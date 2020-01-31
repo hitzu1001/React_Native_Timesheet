@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { navigate } from '../navigationRef';
-import { Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 export class AttachPhotos extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export class AttachPhotos extends Component {
     return (
       <ScrollView>
         <View style={styles.attachContainer}>
-          <Text style={styles.attachTitle}>ATTACHMENTS</Text>
+          <Text style={styles.lable}>ATTACHMENTS</Text>
           <View style={styles.photoContainer}>
             <TouchableOpacity style={styles.attachBtn} onPress={() =>
               Alert.alert('Add attachments', '',
@@ -52,7 +52,7 @@ export class AttachPhotos extends Component {
                 ],
                 { cancelable: false },
               )}>
-              <Feather style={styles.addIcon} name='plus' />
+              <Entypo style={styles.addIcon} name='plus' />
             </TouchableOpacity>
             {images && this.renderImages()}
           </View>
@@ -88,8 +88,10 @@ export class AttachPhotos extends Component {
         images: [...this.state.images, result.uri]
       });
       navigate("PhotoDetail", {
+        id: this.props.id,
         uri: result.uri,
         deletePhoto: uri => this.handleDelete(uri),
+        isNew: true,
       });
     };
   };
@@ -98,8 +100,13 @@ export class AttachPhotos extends Component {
 
 const styles = StyleSheet.create({
   attachContainer: {
-    marginHorizontal: 20,
     marginVertical: 20,
+    marginHorizontal: 20,
+  },
+  lable: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginBottom: 5
   },
   photoContainer: {
     flexDirection: 'row',
@@ -115,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addIcon: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#20b2aa',
   },
   image: {

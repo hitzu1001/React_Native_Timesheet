@@ -9,7 +9,6 @@ const EditScreen = ({ navigation }) => {
   const id = navigation.getParam("id");
   const { state, editBlogPost } = useContext(Context);
   const [change, setChange] = useState(false);
-
   const blogPost = state.find(blogPost => blogPost.id === id);
 
   useEffect(() => {
@@ -21,6 +20,7 @@ const EditScreen = ({ navigation }) => {
 
   return (
     <BlogPostForm
+      id={id}
       initialValues={{
         title: blogPost.title,
         notes: blogPost.notes,
@@ -33,6 +33,7 @@ const EditScreen = ({ navigation }) => {
         });
       }}
       isChange={setChange}
+      isCreate={false}
     />
   );
 };

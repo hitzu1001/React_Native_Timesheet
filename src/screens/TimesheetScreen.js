@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Context } from '../context/BlogContext';
-import { Feather } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons'
 
 
 const TimesheetScreen = ({ navigation }) => {
@@ -46,14 +46,14 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
     title: 'Timesheets',
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
     headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-      <Feather style={styles.addIcon} name='plus' />
+      <Entypo style={styles.addIcon} name='plus' />
     </TouchableOpacity>,
   };
 };
 
 const styles = StyleSheet.create({
   addIcon: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#20b2aa',
     marginRight: 20,
   },

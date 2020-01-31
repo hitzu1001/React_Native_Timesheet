@@ -13,19 +13,21 @@ const CreateScreen = ({ navigation }) => {
 
   return (
     <BlogPostForm
-      onSubmit={(title, notes, startTime, endTime) => {
-        addBlogPost(title, notes, startTime, endTime, () => {
-          // ensure the page is navigated to Index after the post has been added
-          navigation.navigate("Timesheet");
-        });
-      }}
-      isChange={() => {}}
+      id={0}
       initialValues={{
         title: "",
         notes: "",
         startTime: startTime,
         endTime: endTime
       }}
+      onSubmit={(title, notes, startTime, endTime) => {
+        addBlogPost(title, notes, startTime, endTime, () => {
+          // ensure the page is navigated to Index after the post has been added
+          navigation.navigate("Timesheet");
+        });
+      }}
+      isChange={() => {}}   
+      isCreate={true}
     />
   );
 };
