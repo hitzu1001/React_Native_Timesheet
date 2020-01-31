@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
 import Card from '../components/Card';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Feather } from '@expo/vector-icons';
 
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost } = useContext(Context);
@@ -37,6 +37,10 @@ const ShowScreen = ({ navigation }) => {
 ShowScreen.navigationOptions = ({ navigation }) => {
   // console.log(navigation.state.params)
   return {
+    title: 'blogPost.startTime',
+    headerLeft: <TouchableOpacity onPress={() => navigation.pop()}>
+      <Feather style={styles.backIcon} name='arrow-left' />
+    </TouchableOpacity>,
     headerRight:
       <>
         <TouchableOpacity
@@ -70,10 +74,15 @@ const styles = StyleSheet.create({
   containerItem: {
     color: 'dimgray'
   },
+  backIcon:{
+    fontSize: 22,
+    color: '#20b2aa',
+    marginLeft: 20,
+  },
   icon: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#20b2aa',
     marginRight: 20,
-  }
+  },
 });
 export default ShowScreen;

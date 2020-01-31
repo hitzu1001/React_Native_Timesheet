@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { SafeAreaView } from 'react-navigation';
 import { Context } from '../context/BlogContext';
-import { FontAwesome } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 
 
 const TimesheetScreen = ({ navigation }) => {
@@ -21,7 +20,7 @@ const TimesheetScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <View>
       <FlatList
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
@@ -38,23 +37,16 @@ const TimesheetScreen = ({ navigation }) => {
           );
         }}
       ></FlatList>
-    </SafeAreaView>
+    </View>
   );
 };
 
 TimesheetScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Timesheets',
-    // headerStyle: {
-    //   backgroundColor: '#20b2aa',
-    // },
-    // headerTintColor: 'black',
-    // headerTitleStyle: {
-    //   fontWeight: 'bold',
-    // },
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
     headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-      <FontAwesome style={styles.addIcon} name='plus' />
+      <Feather style={styles.addIcon} name='plus' />
     </TouchableOpacity>,
   };
 };

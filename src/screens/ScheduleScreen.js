@@ -1,22 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
+import AttachPhotos from '../components/AttachPhotos'
+import { Feather } from '@expo/vector-icons';
 
 const ScheduleScreen = () => {
   return (
     <View>
       <Text style={styles.header}>ScheduleScreen</Text>
+      <AttachPhotos />
     </View>
   );
 };
 
-ScheduleScreen.navigationOptions = ({ navigation }) => {
+ScheduleScreen.navigationOptions = () => {
   return {
     title: 'Schedule',
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
-    headerRight: <TouchableOpacity onPress={() => {}}>
-      <FontAwesome style={styles.searchIcon} name='search' />
+    headerRight: <TouchableOpacity onPress={() => { }}>
+      <Feather style={styles.searchIcon} name='search' />
     </TouchableOpacity>,
   };
 };
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginLeft: 20
-  }
+  },
 });
 
 export default ScheduleScreen;

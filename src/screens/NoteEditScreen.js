@@ -26,10 +26,11 @@ const NoteEditScreen = ({ navigation }) => {
 };
 
 NoteEditScreen.navigationOptions = ({ navigation }) => {
+  const { notes, setNotes, content } = navigation.state.params;
   return {
     title: 'Timesheet Note',
     headerLeft: <TouchableOpacity onPress={() => {
-      (navigation.state.params.content === navigation.state.params.notes)
+      (content === notes)
         ? navigation.pop()
         : Alert.alert('Discard changes?', '',
           [
@@ -40,7 +41,7 @@ NoteEditScreen.navigationOptions = ({ navigation }) => {
             {
               text: 'Discard',
               onPress: () => {
-                navigation.state.params.setNotes(navigation.state.params.notes);
+                setNotes(notes);
                 navigation.pop();
               }
             }

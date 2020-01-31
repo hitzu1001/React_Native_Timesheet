@@ -1,4 +1,3 @@
-import * as Font from 'expo-font';
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -14,11 +13,11 @@ import EditScreen from './src/screens/EditScreen';
 import NoteEditScreen from './src/screens/NoteEditScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
 import MoreScreen from './src/screens/MoreScreen';
+import PhotoDetailScreen from './src/screens/PhotoDetailScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
 import { setNavigator } from './src/navigationRef';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 
 const overviewFlow = createStackNavigator({
   Overview: OverviewScreen,
@@ -34,6 +33,7 @@ const timesheetFlow = createStackNavigator({
   Create: CreateScreen,
   Edit: EditScreen,
   NoteEdit: NoteEditScreen,
+  PhotoDetail: PhotoDetailScreen,
 })
 timesheetFlow.navigationOptions = {
   title: 'Timesheets',
@@ -45,7 +45,7 @@ const scheduleFlow = createStackNavigator({
 })
 scheduleFlow.navigationOptions = {
   title: 'Schedule',
-  tabBarIcon: <FontAwesome name='calendar' size={20} color='gray'/>
+  tabBarIcon: <FontAwesome name='calendar' size={20} color='gray' />
 }
 
 const moreFlow = createStackNavigator({

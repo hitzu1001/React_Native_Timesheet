@@ -14,6 +14,13 @@ const OverviewScreen = () => {
 OverviewScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Overview',
+    // headerStyle: {
+    //   backgroundColor: '#20b2aa',
+    // },
+    // headerTintColor: 'black',
+    // headerTitleStyle: {
+    //   fontWeight: 'bold',
+    // },
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
   };
 };
