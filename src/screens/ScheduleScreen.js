@@ -1,26 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Avatar } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
 
 const ScheduleScreen = () => {
   return (
-    <SafeAreaView>
+    <View>
       <Text style={styles.header}>ScheduleScreen</Text>
-    </SafeAreaView>
+    </View>
   );
 };
 
-ScheduleScreen.navigationOptions = {
-  title: 'Schedule',
-  tabBarIcon: <FontAwesome name='calendar' size={20} color='gray'/>
+ScheduleScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title: 'Schedule',
+    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
+    headerRight: <TouchableOpacity onPress={() => {}}>
+      <FontAwesome style={styles.searchIcon} name='search' />
+    </TouchableOpacity>,
+  };
 };
 
 const styles = StyleSheet.create({
   header: {
     padding: 20,
-    backgroundColor: 'lightgray',
   },
+  searchIcon: {
+    fontSize: 20,
+    color: '#20b2aa',
+    marginRight: 20,
+  },
+  avatar: {
+    marginLeft: 20
+  }
 });
 
 export default ScheduleScreen;

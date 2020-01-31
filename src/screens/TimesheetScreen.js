@@ -52,10 +52,10 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
     // headerTitleStyle: {
     //   fontWeight: 'bold',
     // },
+    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
     headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
       <FontAwesome style={styles.addIcon} name='plus' />
     </TouchableOpacity>,
-    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar}/>
   };
 };
 

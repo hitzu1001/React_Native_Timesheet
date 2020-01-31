@@ -18,6 +18,15 @@ import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
 import { setNavigator } from './src/navigationRef';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
+const overviewFlow = createStackNavigator({
+  Overview: OverviewScreen,
+})
+overviewFlow.navigationOptions = {
+  title: 'Overview',
+  tabBarIcon: <MaterialCommunityIcons name='view-dashboard-outline' size={22} color='gray' />
+}
 
 const timesheetFlow = createStackNavigator({
   Timesheet: TimesheetScreen,
@@ -26,10 +35,25 @@ const timesheetFlow = createStackNavigator({
   Edit: EditScreen,
   NoteEdit: NoteEditScreen,
 })
-
 timesheetFlow.navigationOptions = {
   title: 'Timesheets',
   tabBarIcon: <MaterialCommunityIcons name='playlist-edit' size={26} color='gray' />
+}
+
+const scheduleFlow = createStackNavigator({
+  Schedule: ScheduleScreen,
+})
+scheduleFlow.navigationOptions = {
+  title: 'Schedule',
+  tabBarIcon: <FontAwesome name='calendar' size={20} color='gray'/>
+}
+
+const moreFlow = createStackNavigator({
+  More: MoreScreen,
+})
+moreFlow.navigationOptions = {
+  title: 'More',
+  tabBarIcon: <MaterialCommunityIcons name='dots-horizontal' size={22} color='gray' />
 }
 
 const switchNavigator = createSwitchNavigator({
@@ -39,10 +63,10 @@ const switchNavigator = createSwitchNavigator({
     Signin: SigninScreen
   }),
   mainFlow: createBottomTabNavigator({
-    Overview: OverviewScreen,
+    overviewFlow,
     timesheetFlow,
-    Schedule: ScheduleScreen,
-    More: MoreScreen,
+    scheduleFlow,
+    moreFlow
   })
 
 });

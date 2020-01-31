@@ -1,26 +1,30 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { Avatar } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const OverviewScreen = () => {
   return (
-    <SafeAreaView style={styles.headerContainer}>
+    <View style={styles.headerContainer}>
       <Text style={styles.header}>OverviewScreen</Text>
-    </SafeAreaView>
+    </View>
   );
 };
 
-OverviewScreen.navigationOptions = {
-  title: 'Overview',
-  tabBarIcon: <MaterialCommunityIcons name='view-dashboard-outline' size={22} color='gray' />
+OverviewScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title: 'Overview',
+    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
+  };
 };
 
 const styles = StyleSheet.create({
   header: {
     padding: 20,
-    backgroundColor: 'lightgray',
   },
+  avatar: {
+    marginLeft: 20
+  }
 });
 
 export default OverviewScreen;
