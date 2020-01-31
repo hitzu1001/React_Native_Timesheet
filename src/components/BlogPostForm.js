@@ -18,7 +18,7 @@ const BlogPostForm = ({ initialValues, onSubmit, isChange }) => {
     <ScrollView>
       <View style={styles.subContainer}>
         {/* <Text style={styles.lable}>TIME</Text> */}
-        <TimeForm setStartTime={setStartTime} setEndTime={setEndTime} />
+        <TimeForm startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} />
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>TASK</Text>

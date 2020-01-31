@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Context } from '../context/BlogContext';
 import BlogPostForm from '../components/BlogPostForm';
 import { Feather } from '@expo/vector-icons';
+import moment from 'moment';
 
 const EditScreen = ({ navigation }) => {
   const id = navigation.getParam("id");
@@ -15,15 +16,18 @@ const EditScreen = ({ navigation }) => {
     navigation.setParams({ change });
   }, [change]);
 
+  var startTime = new Date(moment(blogPost.startTime).format('LLLL'));
+  var endTime = new Date(moment(blogPost.endTime).format('LLLL'));
+
   return (
     <BlogPostForm
       initialValues={{
         title: blogPost.title,
         notes: blogPost.notes,
-        startTime: blogPost.startTime,
-        endTime: blogPost.endTime
+        startTime: startTime,
+        endTime: endTime
       }}
-      onSubmit={(title, notes) => {
+      onSubmit={(title, notes, startTime, endTime) => {
         editBlogPost(id, title, notes, startTime, endTime, () => {
           navigation.pop();
         });
