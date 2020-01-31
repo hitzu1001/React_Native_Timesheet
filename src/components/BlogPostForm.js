@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { navigate } from '../navigationRef';
 import TimeForm from './TimeForm'
 
-const BlogPostForm = ({ onSubmit, initialValues }) => {
+const BlogPostForm = ({ onSubmit, initialValues, isChange }) => {
   const [title, setTitle] = useState(initialValues.title);
   const [notes, setNotes] = useState(initialValues.notes);
+  const change = (title !== initialValues.title) || (notes !== initialValues.notes);
+
+  useEffect(() => {
+    isChange(change);
+  }, [title, notes]);
 
   return (
     <ScrollView>
