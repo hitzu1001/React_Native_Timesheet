@@ -1,7 +1,7 @@
-import {SafeAreaView, ScrollView, StyleSheet, View, Text, StatusBar, Button, Platform, TouchableOpacity} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, StatusBar, Button, Platform, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Header,Colors} from 'react-native/Libraries/NewAppScreen';
-import React, {Fragment, Component} from 'react';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import React, { Fragment, Component } from 'react';
 import moment from 'moment';
 
 
@@ -43,6 +43,12 @@ export default class App extends Component {
       show: !this.state.show,
     });
   }
+  
+  picker = () => {
+    this.setState({
+      show: !this.state.show,
+    });
+  }
 
   render() {
     const { show, date, mode } = this.state;
@@ -55,20 +61,23 @@ export default class App extends Component {
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
             <View style={styles.body}>
+              <Text style={styles.title}>{this.props.title}</Text>
               <View testID="appRootView" style={styles.container}>
-                <View style={styles.button}>
-                  <Button testID="datePickerButton" onPress={this.datepicker} title="Show date picker!" />
-                </View>
-                <View style={styles.button}>
-                  <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker!" />
-                </View>
-                <View style={styles.header}>
+                <TouchableOpacity onPress={this.datepicker} >
+                  <Text style={styles.btn}>Date</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.timepicker} >
+                  <Text style={styles.btn}>Time</Text>
+                </TouchableOpacity>
+                {/* <Button testID="datePickerButton" onPress={this.datepicker} title="Date" color="#20B2AA" />
+                <Button testID="timePickerButton" onPress={this.timepicker} title="Time" color="#20B2AA" /> */}
+                <TouchableOpacity style={styles.dateTime} onPress={this.picker}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
                     {moment(date).utc().format('YYYY-MM-DD HH:mm')}
                   </Text>
-                </View>
-                { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+                </TouchableOpacity>
               </View>
+              {show && <DateTimePicker timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} />}
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -81,42 +90,44 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
   body: {
     backgroundColor: Colors.white,
-
   },
-  footer: {
-    color: Colors.dark,
+  title: {
     fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+    fontWeight: 'bold'
   },
   container: {
-    marginTop: 32,
+    marginVertical: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    borderRadius: 3,
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  header: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    marginBottom: 20,
   },
-  button: {
-    alignItems: 'center',
-    marginBottom: 20,
+  btn: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    color: "#20B2AA",
+    fontSize: 15,
+    // borderColor: 'red',
+    // borderWidth: 2,
   },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  dateTime: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   dateTimeText: {
-    fontSize: 16,
-    fontWeight: 'normal',
+    paddingVertical: 5,
+    fontSize: 15,
+    marginRight: 5,
+    // borderColor: 'red',
+    // borderWidth: 2,
   },
 });

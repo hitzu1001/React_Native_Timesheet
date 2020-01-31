@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
+import Card from '../components/Card';
 import { FontAwesome } from '@expo/vector-icons';
 
 const ShowScreen = ({ navigation }) => {
@@ -20,10 +21,15 @@ const ShowScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{blogPost.title}</Text>
-      <Text>{blogPost.notes}</Text>
-    </View>
+    <ScrollView>
+      <Card title='TIME' item='' />
+      <Card title='TASK' item={blogPost.title} />
+      <Card title='NOTES' item={blogPost.notes} />
+      <View style={styles.subContainer}>
+        <Text style={styles.containerTitle}>ATTACHMENTS</Text>
+        <Text style={styles.containerItem}>None</Text>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -37,12 +43,13 @@ ShowScreen.navigationOptions = ({ navigation }) => {
             navigation.navigate('Edit', { id: navigation.getParam('id') })
           }
         >
-          <FontAwesome style={styles.editIcon} name='pencil' />
+          <FontAwesome style={styles.icon} name='pencil' />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
-          navigation.state.params.callDeleteFromNav()}}
+          navigation.state.params.callDeleteFromNav()
+        }}
         >
-          <FontAwesome style={styles.deleteIcon} name='trash' />
+          <FontAwesome style={styles.icon} name='trash' />
         </TouchableOpacity>
       </>
   };
@@ -50,22 +57,22 @@ ShowScreen.navigationOptions = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 30,
+  subContainer: {
+    marginHorizontal: 20,
     marginVertical: 20,
   },
-  title: {
+  containerTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  containerItem: {
+    color: 'dimgray'
+  },
+  icon: {
     fontSize: 20,
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  editIcon: {
-    fontSize: 24,
+    color: '#20b2aa',
     marginRight: 20,
-  },
-  deleteIcon: {
-    fontSize: 24,
-    marginRight: 20,
-  },
+  }
 });
 export default ShowScreen;

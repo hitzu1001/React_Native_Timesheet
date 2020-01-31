@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-const NoteScreen = ({ navigation }) => {
+const NoteEditScreen = ({ navigation }) => {
   const [content, setContent] = useState(navigation.state.params.notes);
 
   return (
-    <ScrollView>
+    <View style={styles.container}>
       <TextInput
         style={styles.note}
         value={content}
@@ -15,17 +15,33 @@ const NoteScreen = ({ navigation }) => {
           navigation.state.params.setNotes(content);
         }}
         multiline={true}
-        numberOfLines={15}
         autoFocus={true}
       />
-    </ScrollView>
+    </View>
   );
 };
 
-NoteScreen.navigationOptions = ({ navigation }) => {
+NoteEditScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Timesheet Note',
-    headerLeft: <TouchableOpacity onPress={() => navigation.goBack()}>
+    headerLeft: <TouchableOpacity onPress={() =>
+      Alert.alert('Discard changes?', '',
+        [
+          {
+            text: 'Keep Editing',
+            onPress: () => console.log('Keep Editing'),
+            style: 'cancel'
+          },
+          {
+            text: 'Discard',
+            onPress: () => {
+              navigation.state.params.setNotes(navigation.state.params.notes);
+              navigation.goBack();
+            }
+          }
+        ],
+        { cancelable: false },
+      )}>
       <Feather style={styles.backIcon} name='arrow-left' />
     </TouchableOpacity>,
     headerRight: <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -34,9 +50,14 @@ NoteScreen.navigationOptions = ({ navigation }) => {
   };
 };
 
+
+
 const styles = StyleSheet.create({
+  container: {
+    height: 400
+  },
   note: {
-    margin: 10,
+    margin: 20,
     lineHeight: 20,
     // borderColor: 'red',
     // borderWidth: 2,
@@ -44,16 +65,16 @@ const styles = StyleSheet.create({
   backIcon: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#0275d8',
+    color: '#20b2aa',
     marginLeft: 20,
   },
   saveBtn: {
     fontWeight: 'bold',
-    color: '#0275d8',
+    color: '#20b2aa',
     marginRight: 20,
   },
 });
 
-export default NoteScreen;
+export default NoteEditScreen;
 
 

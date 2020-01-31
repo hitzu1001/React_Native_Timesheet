@@ -16,7 +16,6 @@ const SigninScreen = ({ navigation }) => {
         headerText='Sign In to Your Account'
         errorMessage={state.errorMessage}
         buttonText='Sign In'
-        // onSubmit={({ email, password }) => signin({ email, password })}
         onSubmit={signin}
       />
       <NavLink

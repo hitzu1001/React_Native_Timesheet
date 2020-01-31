@@ -26,7 +26,7 @@ CreateScreen.navigationOptions = ({ navigation }) => {
 const styles = StyleSheet.create({
   crossIcon: {
     fontSize: 24,
-    color: '#0275d8',
+    color: '#20b2aa',
     marginLeft: 20,
   },
 });

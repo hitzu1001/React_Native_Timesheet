@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Avatar } from 'react-native-elements';
 import { SafeAreaView } from 'react-navigation';
 import { Context } from '../context/BlogContext';
 import { FontAwesome } from '@expo/vector-icons'
@@ -53,14 +54,15 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
     },
     headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
       <FontAwesome style={styles.addIcon} name='plus' />
-    </TouchableOpacity>
+    </TouchableOpacity>,
+    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar}/>
   };
 };
 
 const styles = StyleSheet.create({
   addIcon: {
     fontSize: 20,
-    color: '#0275d8',
+    color: '#20b2aa',
     marginRight: 20,
   },
   row: {
@@ -79,6 +81,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+  },
+  avatar: {
+    marginLeft: 20
   }
 });
 

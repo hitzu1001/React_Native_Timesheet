@@ -10,8 +10,8 @@ const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit }) => {
   return (
     <>
       <Spacer>
-        <Text h4>{headerText}</Text>
-      </Spacer>
+        <Text h4 h4Style={styles.headerText}>{headerText}</Text>
+      </Spacer >
       <Input
         label='Email'
         value={email}
@@ -35,19 +35,27 @@ const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit }) => {
       <Spacer>
         <Button
           title={buttonText}
-          onPress={() => onSubmit({ email, password })} />
+          onPress={() => onSubmit({ email, password })}
+          buttonStyle={styles.button}
+        />
       </Spacer>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  headerText: {
+    marginBottom: 15,
+  },
   errorMessage: {
     fontSize: 16,
     color: 'red',
     marginLeft: 15,
     marginTop: 15
   },
+  button: {
+    backgroundColor: '#20b2aa'
+  }
 });
 
 export default AuthForm

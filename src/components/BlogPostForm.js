@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { navigate } from '../navigationRef';
-import TimeSheetForm from '../components/TimeSheetForm'
+import TimeForm from './TimeForm'
 
 const BlogPostForm = ({ onSubmit, initialValues }) => {
   const [title, setTitle] = useState(initialValues.title);
@@ -10,21 +10,21 @@ const BlogPostForm = ({ onSubmit, initialValues }) => {
   return (
     <ScrollView>
       <View style={styles.subContainer}>
-        <Text style={styles.lable}>TIME</Text>
-        {/* <TextInput
-          style={styles.input}
-          value={title}
-          onChangeText={title => setTitle(title)}
-        /> */}
-        <TimeSheetForm />
+        {/* <Text style={styles.lable}>TIME</Text> */}
+        <TimeForm />
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>TASK</Text>
+        <TextInput
+          style={styles.input}
+          value={title}
+          onChangeText={title => setTitle(title)}
+        />
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>NOTES</Text>
         <TouchableOpacity onPress={() => {
-          navigate('Note', { notes, setNotes })
+          navigate('NoteEdit', { notes, setNotes })
         }}>
           {notes === ''
             ? <Text>Add timesheet note</Text>
@@ -43,24 +43,26 @@ const BlogPostForm = ({ onSubmit, initialValues }) => {
 BlogPostForm.defaultProps = {
   initialValues: {
     title: '',
-    notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie. \nTristique senectus et netus et malesuada fames. Ultrices dui sapien eget mi proin sed libero enim sed. Odio ut enim blandit volutpat maecenas. Non blandit massa enim nec. \nDictum non consectetur a erat nam at lectus. Viverra ipsum nunc aliquet bibendum enim facilisis gravida. Velit laoreet id donec ultrices tincidunt arcu non sodales neque.',
+    notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie. \n\nTristique senectus et netus et malesuada fames. Ultrices dui sapien eget mi proin sed libero enim sed. Odio ut enim blandit volutpat maecenas. Non blandit massa enim nec. \n\nDictum non consectetur a erat nam at lectus. Viverra ipsum nunc aliquet bibendum enim facilisis gravida. Velit laoreet id donec ultrices tincidunt arcu non sodales neque.',
   }
 };
 
 const styles = StyleSheet.create({
   subContainer: {
+    marginHorizontal: 20,
     marginVertical: 20,
-    marginHorizontal: 30,
   },
   lable: {
-    fontSize: 16,
-    marginBottom: 15,
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   input: {
-    fontSize: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderColor: 'lightgray',
     borderWidth: 1,
-    borderColor: 'black',
-    padding: 5,
+    borderRadius: 3,
   },
   noteContent: {
     paddingVertical: 10,
