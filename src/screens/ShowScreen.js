@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { Context } from '../context/BlogContext';
 import Card from '../components/Card';
 import { FontAwesome } from '@expo/vector-icons';
+import moment from 'moment';
 
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost } = useContext(Context);
@@ -20,10 +21,14 @@ const ShowScreen = ({ navigation }) => {
     blogPost => blogPost.id === navigation.getParam('id')
   );
 
+  var startTime = moment(blogPost.startTime).format('LLLL');
+  var endTime = moment(blogPost.endTime).format('LLLL');
+
+
   return (
     <ScrollView>
-      <Card title='START TIME' item={blogPost.startTime} />
-      <Card title='END TIME' item={blogPost.endTime} />
+      <Card title='START TIME' item={startTime} />
+      <Card title='END TIME' item={endTime} />
       <Card title='TASK' item={blogPost.title} />
       <Card title='NOTES' item={blogPost.notes} />
       <View style={styles.subContainer}>
@@ -35,7 +40,6 @@ const ShowScreen = ({ navigation }) => {
 };
 
 ShowScreen.navigationOptions = ({ navigation }) => {
-  // console.log(navigation.state.params)
   return {
     headerRight:
       <>
