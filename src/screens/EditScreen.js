@@ -33,8 +33,8 @@ EditScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Edit Timesheet',
     headerLeft: <TouchableOpacity onPress={() => {
-      (navigation.state.params.change === true) &&
-        Alert.alert('Discard changes?', '',
+      (navigation.state.params.change === true)
+        ? Alert.alert('Discard changes?', '',
           [
             {
               text: 'Keep Editing',
@@ -48,7 +48,8 @@ EditScreen.navigationOptions = ({ navigation }) => {
             }
           ],
           { cancelable: false },
-        );
+        )
+        : navigation.pop();
     }}>
       <Feather style={styles.backIcon} name='arrow-left' />
     </TouchableOpacity>
