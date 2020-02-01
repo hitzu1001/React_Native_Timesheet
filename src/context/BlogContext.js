@@ -66,7 +66,7 @@ const editBlogPost = dispatch => {
 
     dispatch({
       type: "edit_blogpost",
-      payload: { _id, title, notes, startTime, endTime }
+      payload: { title, notes, startTime, endTime, notes }
     });
   };
 };

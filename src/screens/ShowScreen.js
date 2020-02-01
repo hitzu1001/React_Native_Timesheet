@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
 import Card from '../components/Card';
-
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import moment from 'moment';
 

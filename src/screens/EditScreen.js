@@ -31,6 +31,7 @@ const EditScreen = ({ navigation }) => {
       onSubmit={(title, notes, startTime, endTime) => {
         editBlogPost(id, title, notes, startTime, endTime, () => {
           navigation.pop();
+          navigation.pop();
         });
       }}
       isChange={setChange}
