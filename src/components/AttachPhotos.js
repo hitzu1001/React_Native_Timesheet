@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext, Component } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -6,18 +6,31 @@ import * as Permissions from 'expo-permissions';
 import { navigate } from '../navigationRef';
 import { Entypo } from '@expo/vector-icons';
 
+
 export class AttachPhotos extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      images: [],
+      images: this.props.images,
     }
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleComment = this.handleComment.bind(this);
   };
+
+  updateComment(uri, newComment) {
+    const updateImages = this.state.images.map(img => {
+      return (img.uri === uri) ? { ...img, comment: newComment } : img
+    });
+    this.setState({ images: updateImages });
+  }
+
+  handleComment(uri, newComment) {
+    this.updateComment(uri, newComment);
+  }
 
   deleteImage(uri) {
     this.setState({
-      images: this.state.images.filter(i => i !== uri)
+      images: this.state.images.filter(i => i.uri !== uri)
     });
   };
 
@@ -28,8 +41,18 @@ export class AttachPhotos extends Component {
   renderImages() {
     return (
       this.state.images.map(i =>
-        <TouchableOpacity key={i} onPress={() => { }}>
-          <Image key={i} source={{ uri: i }} style={styles.image} />
+        <TouchableOpacity key={i.uri} onPress={() => {
+          navigate("PhotoEdit", {
+            id: this.props.id,
+            uri: i.uri,
+            deletePhoto: uri => this.handleDelete(uri),
+            images: this.state.images,
+            initialComment: i.comment,
+            updateComment: (uri, newComment) => this.handleComment(uri, newComment),
+            isNew: false,
+          });
+        }} >
+          <Image key={i} source={{ uri: i.uri }} style={styles.image} />
         </TouchableOpacity>
       )
     );
@@ -54,9 +77,8 @@ export class AttachPhotos extends Component {
               )}>
               <Entypo style={styles.addIcon} name='plus' />
             </TouchableOpacity>
-            {images && this.renderImages()}
+            {images ? this.renderImages() : <Text style={styles.none}>None</Text>}
           </View>
-          <Text style={styles.none}>None</Text>
         </View>
       </ScrollView>
     );
@@ -85,12 +107,17 @@ export class AttachPhotos extends Component {
 
     if (!result.cancelled) {
       this.setState({
-        images: [...this.state.images, result.uri]
+        images: [...this.state.images, { uri: result.uri, comment: '' }]
       });
-      navigate("PhotoDetail", {
+
+      this.props.setImages(this.state.images);
+
+      navigate("PhotoEdit", {
         id: this.props.id,
         uri: result.uri,
         deletePhoto: uri => this.handleDelete(uri),
+        images: this.state.images,
+        updateComment: (uri, newComment) => this.handleComment(uri, newComment),
         isNew: true,
       });
     };
@@ -100,35 +127,38 @@ export class AttachPhotos extends Component {
 
 const styles = StyleSheet.create({
   attachContainer: {
-    marginVertical: 20,
+    marginTop: 20,
     marginHorizontal: 20,
   },
   lable: {
     fontSize: 12,
     fontWeight: "bold",
-    marginBottom: 5
   },
   photoContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   attachBtn: {
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
     borderColor: '#20b2aa',
     borderWidth: 2,
     borderStyle: 'dotted',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 8,
+    marginTop: 5,
   },
   addIcon: {
-    fontSize: 22,
+    fontSize: 24,
     color: '#20b2aa',
   },
   image: {
-    width: 60,
-    height: 60,
-    marginLeft: 5
+    width: 65,
+    height: 65,
+    marginRight: 8,
+    marginTop: 5,
   },
   none: {
     color: 'dimgray'

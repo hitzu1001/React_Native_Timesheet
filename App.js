@@ -13,9 +13,10 @@ import EditScreen from './src/screens/EditScreen';
 import NoteEditScreen from './src/screens/NoteEditScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
 import MoreScreen from './src/screens/MoreScreen';
-import PhotoDetailScreen from './src/screens/PhotoDetailScreen';
+import PhotoEditScreen from './src/screens/PhotoEditScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
+import { Provider as ImageProvider } from './src/context/ImageContext';
 import { setNavigator } from './src/navigationRef';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 
@@ -33,7 +34,7 @@ const timesheetFlow = createStackNavigator({
   Create: CreateScreen,
   Edit: EditScreen,
   NoteEdit: NoteEditScreen,
-  PhotoDetail: PhotoDetailScreen,
+  PhotoEdit: PhotoEditScreen,
 })
 timesheetFlow.navigationOptions = {
   title: 'Timesheets',
@@ -76,9 +77,11 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <BlogProvider>
-      <AuthProvider>
-        <App ref={navigator => { setNavigator(navigator) }} />
-      </AuthProvider>
+      <ImageProvider>
+        <AuthProvider>
+          <App ref={navigator => { setNavigator(navigator) }} />
+        </AuthProvider>
+      </ImageProvider>
     </BlogProvider>
   );
 }

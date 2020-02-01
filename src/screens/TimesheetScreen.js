@@ -1,12 +1,12 @@
 import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { Context } from '../context/BlogContext';
+import { Context as BlogContext} from '../context/BlogContext';
 import { Entypo } from '@expo/vector-icons'
 
 
 const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(Context);
+  const { state, getBlogPosts } = useContext(BlogContext);
 
   useEffect(() => {
     getBlogPosts();
@@ -54,9 +54,9 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   addIcon: {
-    fontSize: 22,
+    fontSize: 24,
     color: '#20b2aa',
-    marginRight: 20,
+    marginHorizontal: 20,
   },
   row: {
     flexDirection: 'row',

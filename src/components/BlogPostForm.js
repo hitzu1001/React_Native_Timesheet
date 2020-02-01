@@ -10,11 +10,13 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [notes, setNotes] = useState(initialValues.notes);
   const [startTime, setStartTime] = useState(initialValues.startTime);
   const [endTime, setEndTime] = useState(initialValues.endTime);
-  const change = (title !== initialValues.title) || (notes !== initialValues.notes);
+  const [images, setImages] = useState(initialValues.images);
+  const change = (title !== initialValues.title) || (notes !== initialValues.notes)
+    || (images != initialValues.images);
 
   useEffect(() => {
     isChange(change);
-  }, [title, notes]);
+  }, [title, notes, images]);
 
   return (
     <ScrollView>
@@ -49,11 +51,17 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
             )}
         </TouchableOpacity>
       </View>
-      {!isCreate && <AttachPhotos id={id} />}
-      <Button
-        title="Save Timesheet"
-        onPress={() => onSubmit(title, notes, startTime, endTime)}
-      />
+      {!isCreate && <AttachPhotos
+        id={id}
+        images={images}
+        setImages={images => setImages(images)}
+      />}
+      <TouchableOpacity
+        style={styles.saveBtn}
+        onPress={() => onSubmit(title, notes, startTime, endTime, images)}
+      >
+        <Text style={styles.saveText}>Save Timesheet</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -62,14 +70,15 @@ BlogPostForm.defaultProps = {
   initialValues: {
     title: "",
     notes:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie.",
+    images: [],
   }
 };
 
 const styles = StyleSheet.create({
   subContainer: {
     marginHorizontal: 20,
-    marginVertical: 20
+    marginTop: 20
   },
   lable: {
     fontSize: 12,
@@ -87,8 +96,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  saveBtn: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  saveText: {
+    fontSize: 18,
+    color: '#20b2aa',
+    // paddingHorizontal: 10,
+    // paddingVertical: 5,
+    // backgroundColor: '#e1f4f4'
+  },
   addIcon: {
-    fontSize: 22,
+    fontSize: 24,
     color: '#20b2aa',
     marginRight: 5,
   },

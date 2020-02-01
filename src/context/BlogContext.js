@@ -18,20 +18,20 @@ const blogReducer = (state, action) => {
 
 const getBlogPosts = dispatch => {
   return async () => {
-    // const response = await timesheetApi.get("/blogposts");
-    // dispatch({ type: "get_blogposts", payload: response.data });
-    const response = await timesheetApi.get("/timesheets")
+    const response = await timesheetApi.get("/blogposts");
     dispatch({ type: "get_blogposts", payload: response.data });
+    // const response = await timesheetApi.get("/timesheets")
+    // dispatch({ type: "get_blogposts", payload: response.data });
   };
 };
 
 const addBlogPost = dispatch => {
-  return async (title, notes, startTime, endTime, callback) => {
+  return async (title, notes, startTime, endTime, images, callback) => {
     if (callback) {
       callback();
     }
-    await timesheetApi.post("/timesheets", { title, startTime, endTime, notes });
-    //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
+    // await timesheetApi.post("/timesheets", { title, notes, startTime, endTime });
+    await timesheetApi.post("/blogposts", { title, notes, startTime, endTime, images });
   };
 };
 
@@ -46,21 +46,17 @@ const deleteBlogPost = dispatch => {
 };
 
 const editBlogPost = dispatch => {
-  return async (id, title, notes, startTime, endTime, callback) => {
+  return async (id, title, notes, startTime, endTime, images, callback) => {
     if (callback) {
       callback();
     }
     await timesheetApi.put(`/blogposts/${id}`, {
-      title,
-      notes,
-      notes,
-      startTime,
-      endTime
+      title, notes, startTime, endTime, images,
     });
 
     dispatch({
       type: "edit_blogpost",
-      payload: { id, title, notes, startTime, endTime}
+      payload: { id, title, notes, startTime, endTime, images }
     });
   };
 };
