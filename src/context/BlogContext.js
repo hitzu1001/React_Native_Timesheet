@@ -18,8 +18,9 @@ const blogReducer = (state, action) => {
 
 const getBlogPosts = dispatch => {
   return async () => {
-    const response = await timesheetApi.get("/blogposts");
-
+    // const response = await timesheetApi.get("/blogposts");
+    // dispatch({ type: "get_blogposts", payload: response.data });
+    const response = await timesheetApi.get("/timesheets")
     dispatch({ type: "get_blogposts", payload: response.data });
   };
 };
@@ -29,10 +30,8 @@ const addBlogPost = dispatch => {
     if (callback) {
       callback();
     }
-    // const startT = startTime.toString()
-    // const endT = endTime.toString()
-
-    await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
+    await timesheetApi.post("/timesheets", { title, startTime, endTime, notes });
+    //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
   };
 };
 
