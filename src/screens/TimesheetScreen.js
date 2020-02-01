@@ -13,7 +13,6 @@ const TimesheetScreen = ({ navigation }) => {
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
     });
-    console.log(state)
 
     return () => {
       listener.remove();

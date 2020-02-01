@@ -4,6 +4,7 @@ import timesheetApi from "../api/timesheetApi";
 const blogReducer = (state, action) => {
   switch (action.type) {
     case "get_blogposts":
+      console.log(action.payload)
       return action.payload;
     case "delete_blogpost":
       return state.filter(blogPost => blogPost.id !== action.payload);
