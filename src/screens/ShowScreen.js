@@ -19,7 +19,7 @@ const ShowScreen = ({ navigation }) => {
   }, [])
 
   const blogPost = state.find(
-    blogPost => blogPost.id === navigation.getParam('id')
+    blogPost => blogPost._id === navigation.getParam('id')
   );
 
   var startTime = moment(blogPost.startTime).format('LLLL');

@@ -29,9 +29,9 @@ const TimesheetScreen = ({ navigation }) => {
             <View style={styles.row}>
               <TouchableOpacity
                 style={styles.titleContainer}
-                onPress={() => navigation.navigate('Show', { id: item.id })}
+                onPress={() => navigation.navigate('Show', { id: item._id })}
               >
-                <Text style={styles.title}>{item.title} - {item.id}</Text>
+                <Text style={styles.title}>{item.title}</Text>
               </TouchableOpacity>
             </View>
           );
@@ -68,11 +68,13 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'red',
+    borderWidth: 3,
+    borderColor: 'pink',
   },
   title: {
     fontSize: 18,
+    padding: 5,
+    fontWeight: "bold"
   },
   avatar: {
     marginLeft: 20

@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import DatePicker from "./DatePicker";
 import moment from "moment";
-
+moment.utc(new Date()).local().format()
 export class TimeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // moment.utc().startOf('day').add(27, 'hours').toDate()
-      // startTime: new Date(moment.utc().startOf('day').add(27, 'hours').toDate()),
       startTime: this.props.startTime,
       endTime: this.props.endTime
     };
@@ -23,16 +21,16 @@ export class TimeForm extends Component {
   }
   // moment.utc(this.state.startTime).local().format()
   setStartTime(date) {
-    this.props.setStartTime(date);
+    this.props.setStartTime(moment.utc(date).local().format());
     this.setState({
-      startTime: date
+      startTime: moment.utc(date).local().format()
     });
   }
 
   setEndTime(date) {
-    this.props.setEndTime(date);
+    this.props.setEndTime(moment.utc(date).local().format());
     this.setState({
-      endTime: date
+      endTime: moment.utc(date).local().format()
     });
   }
 

@@ -4,13 +4,12 @@ import timesheetApi from "../api/timesheetApi";
 const blogReducer = (state, action) => {
   switch (action.type) {
     case "get_blogposts":
-      console.log(action.payload)
       return action.payload;
     case "delete_blogpost":
-      return state.filter(blogPost => blogPost.id !== action.payload);
+      return state.filter(blogPost => blogPost._id !== action.payload);
     case "edit_blogpost":
       return state.map(blogPost => {
-        return blogPost.id === action.payload.id ? action.payload : blogPost;
+        return blogPost._id === action.payload._id ? action.payload : blogPost;
       });
     default:
       return state;
@@ -21,7 +20,8 @@ const getBlogPosts = dispatch => {
   return async () => {
     // const response = await timesheetApi.get("/blogposts");
     // dispatch({ type: "get_blogposts", payload: response.data });
-    const response = await timesheetApi.get("/timesheets")
+    const response = await timesheetApi.get("/timesheets");
+    // console.log(response)
     dispatch({ type: "get_blogposts", payload: response.data });
   };
 };
@@ -31,7 +31,12 @@ const addBlogPost = dispatch => {
     if (callback) {
       callback();
     }
-    await timesheetApi.post("/timesheets", { title, startTime, endTime, notes });
+    await timesheetApi.post("/timesheets", {
+      title,
+      startTime,
+      endTime,
+      notes
+    });
     //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
   };
 };
@@ -41,7 +46,7 @@ const deleteBlogPost = dispatch => {
     if (callback) {
       callback();
     }
-    await timesheetApi.delete(`/blogposts/${id}`);
+    await timesheetApi.delete(`/timesheets/${id}`, { id });
     dispatch({ type: "delete_blogpost", payload: id });
   };
 };
@@ -51,9 +56,9 @@ const editBlogPost = dispatch => {
     if (callback) {
       callback();
     }
-    await timesheetApi.put(`/blogposts/${id}`, {
+    // await timesheetApi.put(`/blogposts/${_id}`
+    await timesheetApi.put(`/timesheets/${id}`, {
       title,
-      notes,
       notes,
       startTime,
       endTime
@@ -61,7 +66,7 @@ const editBlogPost = dispatch => {
 
     dispatch({
       type: "edit_blogpost",
-      payload: { id, title, notes, startTime, endTime}
+      payload: { _id, title, notes, startTime, endTime }
     });
   };
 };
