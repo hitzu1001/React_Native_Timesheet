@@ -18,6 +18,8 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
     isChange(change);
   }, [task, notes, images]);
 
+  console.log(images);
+
   return (
     <ScrollView>
       <View style={styles.subContainer}>

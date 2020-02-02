@@ -5,12 +5,12 @@ import { Context as AuthContext } from '../context/AuthContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
-const MoreScreen = () => {
+const MoreScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.subContainer}>
+      <TouchableOpacity style={styles.subContainer} >
         <MaterialCommunityIcons style={styles.icon} name='settings' />
         <Text style={styles.Text}>Settings</Text>
       </TouchableOpacity>
@@ -26,7 +26,7 @@ const MoreScreen = () => {
         <MaterialCommunityIcons style={styles.icon} name='logout' />
         <Text style={styles.Text}>Log out</Text>
       </TouchableOpacity>
-    </View>
+    </View >
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
@@ -20,6 +20,7 @@ const PhotoEditScreen = ({ navigation }) => {
       initialComment={photo[0].comment}
       updateComment={(uri, newComment) => updateComment(uri, newComment)}
       isChange={setChange}
+      readOnly={false}
     />
   );
 };
@@ -69,9 +70,10 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
     </TouchableOpacity>,
     headerRight: <>
       <TouchableOpacity style={iconStyle.iconTouchRight}
-        onPress={() =>
+        onPress={() => {
+          // updateComment(uri, initialComment);
           navigation.navigate('Edit', { id })
-        }>
+        }}>
         <Ionicons style={iconStyle.saveIcon} name='ios-save' />
       </TouchableOpacity>
       {!isNew && <TouchableOpacity style={iconStyle.iconTouchRight}

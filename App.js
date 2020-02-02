@@ -14,6 +14,7 @@ import NoteEditScreen from './src/screens/NoteEditScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
 import MoreScreen from './src/screens/MoreScreen';
 import PhotoEditScreen from './src/screens/PhotoEditScreen';
+import PhotoShowScreen from './src/screens/PhotoShowScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
 import { Provider as ImageProvider } from './src/context/ImageContext';
@@ -35,6 +36,7 @@ const timesheetFlow = createStackNavigator({
   Edit: EditScreen,
   NoteEdit: NoteEditScreen,
   PhotoEdit: PhotoEditScreen,
+  PhotoShow: PhotoShowScreen,
 })
 timesheetFlow.navigationOptions = {
   title: 'Timesheets',

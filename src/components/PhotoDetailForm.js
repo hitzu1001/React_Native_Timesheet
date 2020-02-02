@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 
-const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
+const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange, readOnly }) => {
   const [comment, setComment] = useState(initialComment);
   const changed = (comment !== initialComment);
 
@@ -32,6 +32,7 @@ const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
           onChangeText={comment => setComment(comment)}
           multiline={true}
           autoFocus={true}
+          editable={!readOnly} 
         />
       </View>
     </>

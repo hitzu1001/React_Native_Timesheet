@@ -52,12 +52,13 @@ const deleteBlogPost = dispatch => {
 
 const editBlogPost = dispatch => {
   return async (id, startTime, endTime, task, notes, images, callback) => {
-    if (callback) {
-      callback();
-    }
     await timesheetApi.put(`/timesheets/${id}`, {
       startTime, endTime, task, notes, images,
     });
+
+    if (callback) {
+      callback();
+    };
 
     dispatch({
       type: "edit_blogpost",

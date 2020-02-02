@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import Card from '../components/Card';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,10 @@ import moment from 'moment';
 
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost } = useContext(BlogContext);
+
+  const blogPost = state.find(
+    blogPost => blogPost._id === navigation.getParam('id')
+  );
 
   useEffect(() => {
     const callDeleteFromNav = () => {
@@ -18,11 +22,6 @@ const ShowScreen = ({ navigation }) => {
     navigation.setParams({ callDeleteFromNav: callDeleteFromNav });
   }, [])
 
-  const blogPost = state.find(
-    blogPost => blogPost._id === navigation.getParam('id')
-  );
-
-
   return (
     <ScrollView>
       <Card title='START TIME' item={moment(blogPost.startTime).format('LLLL')} />
@@ -31,8 +30,23 @@ const ShowScreen = ({ navigation }) => {
       <Card title='NOTES' item={blogPost.notes} />
       <View style={styles.subContainer}>
         <Text style={styles.containerTitle}>ATTACHMENTS</Text>
+        <View style={styles.photoContainer}>
+          {blogPost.images
+            ? blogPost.images.map(i =>
+              <TouchableOpacity key={i.uri} onPress={() => {
+                navigation.navigate("PhotoShow", {
+                  uri: i.uri,
+                  initialComment: i.comment,
+                  updateComment: () => { },
+                  isChange: () => { },
+                  readOnly: true,
+                });
+              }} >
+                <Image key={i} source={{ uri: i.uri }} style={styles.image} />
+              </TouchableOpacity>) : <Text style={styles.none}>None</Text>}
+        </View>
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 };
 
@@ -76,6 +90,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   containerItem: {
+    color: 'dimgray'
+  },
+  photoContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  image: {
+    width: 65,
+    height: 65,
+    marginRight: 8,
+    marginTop: 5,
+  },
+  none: {
     color: 'dimgray'
   },
 });

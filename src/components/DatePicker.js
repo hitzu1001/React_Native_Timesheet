@@ -63,7 +63,7 @@ export default class App extends Component {
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
             <View style={styles.body}>
-              <Text style={styles.task}>{this.props.task}</Text>
+              <Text style={styles.task}>{this.props.title}</Text>
               <View testID="appRootView" style={styles.container}>
                 <TouchableOpacity onPress={this.datepicker} >
                   <Text style={styles.btn}>Date</Text>
