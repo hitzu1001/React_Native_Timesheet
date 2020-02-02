@@ -1,34 +1,130 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Avatar } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
-import iconStyle from '../style/iconStyle';
+import React, { useEffect, useContext } from "react";
+import { View,ScrollView, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from "react-native";
+import { Avatar } from "react-native-elements";
+import { Ionicons } from "@expo/vector-icons";
+import iconStyle from "../style/iconStyle";
+import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import { Context as BlogContext } from '../context/BlogContext';
+import Card from '../components/Card';
+import moment from 'moment';
 
-const ScheduleScreen = () => {
-  return (
+const ScheduleScreen = ({ navigation }) => {
+  const { state, getBlogPosts } = useContext(BlogContext);
+
+  useEffect(() => {
+    getBlogPosts();
+    const listener = navigation.addListener("didFocus", () => {
+      getBlogPosts();
+    });
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
+return (
+  <View>
+    <ScrollView>
+      {/* <Text style={styles.header}>ScheduleScreen</Text> */}
+      <View style={styles.container}>
+        <Calendar markingType='multi-period'/>
+      </View>
+    </ScrollView>
     <View>
-      <Text style={styles.header}>ScheduleScreen</Text>
+      <FlatList
+        data={state}
+        keyExtractor={blogPost => blogPost.task}
+        renderItem={({ item }) => {
+          var timeDiff = parseInt(
+            moment(item.endTime).diff(moment(item.startTime), "minutes")
+          );
+        
+          var hours = (timeDiff - (timeDiff % 60)) / 60;
+          var minutes = timeDiff % 60;
+          return (
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.titleContainer}
+                onPress={() => navigation.navigate("Show", { id: item._id })}
+              >
+                <Text style={styles.task}>{item.task}</Text>
+                <Text style={styles.time}>
+                  {moment(item.startTime).format("lll")} ~{" "}
+                  {moment(item.endTime).format("lll")}
+                </Text>
+                <Text style={styles.timeDiff}>
+                  {hours} hours {minutes} minutes
+                </Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      />
     </View>
+  </View>
   );
 };
 
 ScheduleScreen.navigationOptions = () => {
   return {
-    title: 'Schedule',
+    title: "Schedule",
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
-    headerRight: <TouchableOpacity style={iconStyle.iconTouchRight}
-      onPress={() => { }}>
-      <Ionicons style={iconStyle.searchIcon} name='ios-search' />
-    </TouchableOpacity>,
+    headerRight: (
+      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => {}}>
+        <Ionicons style={iconStyle.searchIcon} name="ios-search" />
+      </TouchableOpacity>
+    )
   };
 };
 
 const styles = StyleSheet.create({
   header: {
-    padding: 20,
+    padding: 20
   },
   avatar: {
     marginLeft: 20
+  },
+  container: {
+    margin: 5,
+    padding: 5, 
+    borderWidth: 3,
+    borderColor: "pink",
+  },addIcon: {
+    fontSize: 26,
+    color: '#20b2aa',
+    // marginHorizontal: 20,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderColor: "lightgray",
+    borderTopWidth: 1,
+  },
+  titleContainer: {
+    flex: 1,
+    borderWidth: 3,
+    borderColor: "pink"
+  },
+  title: {
+    fontSize: 18,
+    padding: 5,
+    fontWeight: "bold"
+  },
+  time: {
+    fontSize: 12,
+    padding: 3,
+    alignSelf:"flex-end",
+    fontWeight: "bold"
+  },
+  timeDiff: {
+    fontSize: 12,
+    padding: 3,
+    alignSelf:"flex-end",
+    fontWeight: "bold",
+    color:"grey"
   },
 });
 
