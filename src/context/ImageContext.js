@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import createDateContext from "./createDataContext";
+import { Context as BlogContext } from "./BlogContext";
 
 const imageReducer = (state, action) => {
   switch (action.type) {
-    // case "get_images":
-    //   return action.payload;
+    case "set_images":
+      state = action.payload;
     case "add_image":
       return [...state, action.payload];
     case "delete_image":
@@ -17,11 +19,12 @@ const imageReducer = (state, action) => {
   }
 };
 
-// const getImages = dispatch => {
-//   return (images) => {
-//     dispatch({ type: "get_images", payload: images });
-//   };
-// };
+const setImages = dispatch => images => {
+  // const { state } = useContext(BlogContext);
+  // const blogPost = state.find(blogPost => blogPost._id === id);
+  dispatch({ type: "set_images", payload: images });
+  console.log(images)
+};
 
 const addImage = dispatch => uri => {
   dispatch({ type: "add_image", payload: { uri, comment: "" } });
@@ -37,6 +40,6 @@ const editImage = dispatch => (uri, comment) => {
 
 export const { Context, Provider } = createDateContext(
   imageReducer,
-  { addImage, deleteImage, editImage },
+  { setImages, addImage, deleteImage, editImage },
   []
 );

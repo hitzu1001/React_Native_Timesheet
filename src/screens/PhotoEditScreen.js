@@ -6,25 +6,27 @@ import PhotoDetailForm from "../components/PhotoDetailForm";
 import { Context as ImageContext } from "../context/ImageContext";
 
 const PhotoEditScreen = ({ navigation }) => {
-  const [change, setChange] = useState(false);
   const { state, deleteImage, editImage } = useContext(ImageContext);
-
+  const [comment, setComment] = useState(navigation.state.params.comment);
+  const [change, setChange] = useState(false);
 
   const photo = state.find(i => i.uri === navigation.state.params.uri);
-  // console.log(photo);
 
   useEffect(() => {
-    navigation.setParams({ change, deleteImage, editImage });
+    navigation.setParams({ change, deleteImage, editImage, comment });
   }, [change]);
 
   return (
-    <PhotoDetailForm
-      uri={photo.uri}
-      initialComment={photo.comment}
-      // updateComment={(uri, newComment) => updateComment(uri, newComment)}
-      isChange={setChange}
-      readOnly={false}
-    />
+    <>
+      {photo && (
+        <PhotoDetailForm
+          uri={photo.uri}
+          initialComment={photo.comment}
+          isChange={setChange}
+          readOnly={false}
+        />
+      )}
+    </>
   );
 };
 
@@ -91,7 +93,10 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
       <>
         <TouchableOpacity
           style={iconStyle.iconTouchRight}
-          onPress={() => navigation.navigate("Edit", { id })}
+          onPress={() => {
+            // editImage(uri, comment);
+            navigation.navigate("Edit", { id });
+          }}
         >
           <Ionicons style={iconStyle.saveIcon} name="ios-save" />
         </TouchableOpacity>
@@ -99,7 +104,7 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
           <TouchableOpacity
             style={iconStyle.iconTouchRight}
             onPress={() => {
-              deletePhoto(uri);
+              deleteImage(uri);
               navigation.navigate("Edit", { id });
             }}
           >

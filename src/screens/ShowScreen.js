@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
+import { Context as ImageContext } from '../context/ImageContext';
 import Card from '../components/Card';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
@@ -8,12 +9,14 @@ import moment from 'moment';
 
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost } = useContext(BlogContext);
+  const { setImages } = useContext(ImageContext);
 
   const blogPost = state.find(
     blogPost => blogPost._id === navigation.getParam('id')
   );
 
   useEffect(() => {
+    setImages(blogPost.images);
     const callDeleteFromNav = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
         navigation.navigate("Timesheet");
@@ -37,9 +40,6 @@ const ShowScreen = ({ navigation }) => {
                 navigation.navigate("PhotoShow", {
                   uri: i.uri,
                   initialComment: i.comment,
-                  updateComment: () => { },
-                  isChange: () => { },
-                  readOnly: true,
                 });
               }} >
                 <Image key={i} source={{ uri: i.uri }} style={styles.image} />

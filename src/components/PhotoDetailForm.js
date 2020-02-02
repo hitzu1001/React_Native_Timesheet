@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import iconStyle from '../style/iconStyle';
+import React, { useState, useEffect, useContext } from "react";
+import { View, Text, StyleSheet, Image, TextInput } from "react-native";
+import { Context as ImageContext } from "../context/ImageContext";
+import { Ionicons } from "@expo/vector-icons";
+import iconStyle from "../style/iconStyle";
 
-const PhotoDetailForm = ({ uri, initialComment, isChange }) => {
+const PhotoDetailForm = ({ uri, initialComment, isChange, readOnly }) => {
   const [comment, setComment] = useState(initialComment);
-  const changed = (comment !== initialComment);
+  const { editImage } = useContext(ImageContext);
+  const changed = comment !== initialComment;
 
   useEffect(() => {
     isChange(changed);
-    // updateComment(uri, comment);
+    editImage(uri, comment);
   }, [comment]);
 
   return (
@@ -18,7 +20,7 @@ const PhotoDetailForm = ({ uri, initialComment, isChange }) => {
       <View style={styles.authContainer}>
         <Text style={styles.task}>WHO CAN SEE THIS</Text>
         <View style={styles.authContent}>
-          <Ionicons style={iconStyle.lockIcon} name='ios-lock' />
+          <Ionicons style={iconStyle.lockIcon} name="ios-lock" />
           <Text style={styles.auth}>Seen only by you and your admin</Text>
         </View>
       </View>
@@ -28,11 +30,13 @@ const PhotoDetailForm = ({ uri, initialComment, isChange }) => {
         <TextInput
           style={styles.comment}
           value={comment}
-          placeholder='Enter comments'
+          placeholder="Enter comments"
           onChangeText={comment => setComment(comment)}
+          autoCapitalize='none'
+          autoCorrect={false}
           multiline={true}
           autoFocus={true}
-          editable={!readOnly} 
+          editable={!readOnly}
         />
       </View>
     </>
@@ -40,41 +44,41 @@ const PhotoDetailForm = ({ uri, initialComment, isChange }) => {
 };
 
 PhotoDetailForm.defaultProps = {
-  initialComment: ''
+  initialComment: ""
 };
 
 const styles = StyleSheet.create({
   image: {
     height: 220,
-    backgroundColor: '#000',
+    backgroundColor: "#000"
   },
   authContainer: {
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 10
   },
   task: {
     fontSize: 12,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontWeight: "bold",
+    marginBottom: 5
   },
   authContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center"
   },
   auth: {
-    color: 'dimgray'
+    color: "dimgray"
   },
   commentContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    height: 100,
+    height: 100
   },
   comment: {
-    fontSize: 15,
+    fontSize: 15
   },
   line: {
-    borderBottomColor: 'lightgray',
-    borderBottomWidth: 1,
+    borderBottomColor: "lightgray",
+    borderBottomWidth: 1
   }
 });
 

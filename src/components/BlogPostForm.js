@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  Button,
   TouchableOpacity,
   ScrollView
 } from "react-native";
@@ -12,13 +11,16 @@ import { navigate } from "../navigationRef";
 import TimeForm from "./TimeForm";
 import AttachPhotos from "../components/AttachPhotos";
 import { Ionicons } from "@expo/vector-icons";
+import { Context as ImageContext } from "../context/ImageContext";
 
 const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
+  const { state } = useContext(ImageContext);
   const [startTime, setStartTime] = useState(initialValues.startTime);
   const [endTime, setEndTime] = useState(initialValues.endTime);
   const [task, setTask] = useState(initialValues.task);
   const [notes, setNotes] = useState(initialValues.notes);
   const images = initialValues.images;
+
   const change =
     task !== initialValues.task ||
     notes !== initialValues.notes ||
@@ -27,8 +29,6 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   useEffect(() => {
     isChange(change);
   }, [task, notes, images]);
-
-  console.log(images);
 
   return (
     <ScrollView>
@@ -72,10 +72,10 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
           )}
         </TouchableOpacity>
       </View>
-      {!isCreate && <AttachPhotos id={id} images={images}/>}
+      {!isCreate && <AttachPhotos id={id} images={images} />}
       <TouchableOpacity
         style={styles.saveBtn}
-        onPress={() => onSubmit(startTime, endTime, task, notes, images)}
+        onPress={() => onSubmit(startTime, endTime, task, notes, state)}
       >
         <Text style={styles.saveText}>Save Timesheet</Text>
       </TouchableOpacity>
