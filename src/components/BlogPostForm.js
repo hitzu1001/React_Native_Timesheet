@@ -41,7 +41,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
         >
           {notes === '' ? (
             <View style={styles.emptyNote}>
-              <Ionicons style={styles.addIcon} name='plus' />
+              <Ionicons style={styles.addIcon} name='ios-add' />
               <Text style={styles.emptyNoteText}>Add timesheet note</Text>
             </View>
           ) : (
@@ -96,19 +96,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  saveBtn: {
-    marginTop: 30,
-    alignItems: 'center',
-  },
-  saveText: {
-    fontSize: 18,
-    color: '#20b2aa',
-    // paddingHorizontal: 10,
-    // paddingVertical: 5,
-    // backgroundColor: '#e1f4f4'
-  },
   addIcon: {
-    fontSize: 24,
+    fontSize: 22,
     color: '#20b2aa',
     marginRight: 5,
   },
@@ -121,7 +110,15 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     borderRadius: 3,
-  }
+  },
+  saveBtn: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  saveText: {
+    fontSize: 18,
+    color: '#20b2aa',
+  },
 });
 
 export default BlogPostForm;

@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     borderColor: '#20b2aa',
     borderWidth: 2,
     borderStyle: 'dotted',
-    flexDirection: 'row',
+    // flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 8,

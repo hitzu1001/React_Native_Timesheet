@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle';
 
 const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
   const [comment, setComment] = useState(initialComment);
@@ -17,7 +18,7 @@ const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
       <View style={styles.authContainer}>
         <Text style={styles.title}>WHO CAN SEE THIS</Text>
         <View style={styles.authContent}>
-          <Ionicons style={styles.lockIcon} name='ios-lock' />
+          <Ionicons style={iconStyle.lockIcon} name='ios-lock' />
           <Text style={styles.auth}>Seen only by you and your admin</Text>
         </View>
       </View>
@@ -42,11 +43,6 @@ PhotoDetailForm.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  lockIcon: {
-    fontSize: 20,
-    color: 'dimgray',
-    marginRight: 15,
-  },
   image: {
     height: 220,
     backgroundColor: '#000',

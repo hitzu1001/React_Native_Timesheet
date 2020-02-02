@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Context as BlogContext} from '../context/BlogContext';
+import { Context as BlogContext } from '../context/BlogContext';
 import Card from '../components/Card';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle';
 import moment from 'moment';
 
 const ShowScreen = ({ navigation }) => {
@@ -41,23 +42,26 @@ const ShowScreen = ({ navigation }) => {
 ShowScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Show Date~~~',
-    headerLeft: <TouchableOpacity onPress={() => navigation.pop()}>
-      <Ionicons style={styles.backIcon} name='ios-arrow-back' />
+    headerLeft: <TouchableOpacity style={iconStyle.iconTouchLeft}
+      onPress={() => navigation.pop()}
+    >
+      <Ionicons style={iconStyle.backIcon} name='ios-arrow-back' />
     </TouchableOpacity>,
     headerRight:
       <>
-        <TouchableOpacity
+        <TouchableOpacity style={iconStyle.iconTouchRight}
           onPress={() =>
             navigation.navigate('Edit', { id: navigation.getParam('id') })
           }
         >
-          <FontAwesome style={styles.icon} name='pencil' />
+          <FontAwesome style={iconStyle.editIcon} name='pencil' />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          navigation.state.params.callDeleteFromNav()
-        }}
+        <TouchableOpacity style={iconStyle.iconTouchRight}
+          onPress={() => {
+            navigation.state.params.callDeleteFromNav()
+          }}
         >
-          <Ionicons style={styles.icon} name='ios-trash' />
+          <Ionicons style={iconStyle.trashIcon} name='md-trash' />
         </TouchableOpacity>
       </>
   };
@@ -76,16 +80,6 @@ const styles = StyleSheet.create({
   },
   containerItem: {
     color: 'dimgray'
-  },
-  backIcon:{
-    fontSize: 26,
-    color: '#20b2aa',
-    marginHorizontal: 20,
-  },
-  icon: {
-    fontSize: 22,
-    color: '#20b2aa',
-    marginRight: 20,
   },
 });
 export default ShowScreen;

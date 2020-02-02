@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import { Avatar } from 'react-native-elements';
 import { Context as BlogContext} from '../context/BlogContext';
 import { Ionicons } from '@expo/vector-icons'
+import iconStyle from '../style/iconStyle';
 import moment from "moment";
 
 const TimesheetScreen = ({ navigation }) => {
@@ -59,7 +60,7 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
   return {
     title: "Timesheets",
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
-    headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+    headerRight: <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
       <Ionicons style={styles.addIcon} name='ios-add' />
     </TouchableOpacity>,
   };
@@ -67,9 +68,9 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   addIcon: {
-    fontSize: 24,
+    fontSize: 26,
     color: '#20b2aa',
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
   },
   row: {
     flexDirection: "row",

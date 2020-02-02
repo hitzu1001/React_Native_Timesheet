@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Context as BlogContext} from '../context/BlogContext';
+import { Context as BlogContext } from '../context/BlogContext';
 import BlogPostForm from '../components/BlogPostForm';
 import moment from 'moment';
 import { Entypo } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle'
 
 const EditScreen = ({ navigation }) => {
   const id = navigation.getParam("id");
@@ -44,37 +45,34 @@ const EditScreen = ({ navigation }) => {
 EditScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Edit Timesheet',
-    headerLeft: <TouchableOpacity onPress={() => {
-      (navigation.state.params.change === true)
-        ? Alert.alert('Discard changes?', '',
-          [
-            {
-              text: 'Keep Editing',
-              style: 'cancel'
-            },
-            {
-              text: 'Discard',
-              onPress: () => {
-                navigation.pop();
+    headerLeft: <TouchableOpacity
+      style={iconStyle.iconTouchLeft}
+      onPress={() => {
+        (navigation.state.params.change === true)
+          ? Alert.alert('Discard changes?', '',
+            [
+              {
+                text: 'Keep Editing',
+                style: 'cancel'
+              },
+              {
+                text: 'Discard',
+                onPress: () => {
+                  navigation.pop();
+                }
               }
-            }
-          ],
-          { cancelable: false },
-        )
-        : navigation.pop();
-    }}>
-      <Entypo style={styles.crossIcon} name='cross' />
+            ],
+            { cancelable: false },
+          )
+          : navigation.pop();
+      }}>
+      <Entypo style={iconStyle.crossIcon} name='cross' />
     </TouchableOpacity>
   };
 };
 
 const styles = StyleSheet.create({
-  crossIcon: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#20b2aa',
-    marginHorizontal: 20,
-  },
+
 });
 
 export default EditScreen;

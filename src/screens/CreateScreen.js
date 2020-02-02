@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Context as BlogContext} from "../context/BlogContext";
+import { Context as BlogContext } from "../context/BlogContext";
 import BlogPostForm from "../components/BlogPostForm";
-import { Entypo } from "@expo/vector-icons";
 import moment from 'moment';
+import { Entypo } from "@expo/vector-icons";
+import iconStyle from '../style/iconStyle'
 
 const CreateScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext);
@@ -37,19 +38,18 @@ CreateScreen.navigationOptions = ({ navigation }) => {
   return {
     title: "Add Timesheet",
     headerLeft: (
-      <TouchableOpacity onPress={() => navigation.navigate("Timesheet")}>
-        <Entypo style={styles.crossIcon} name="cross" />
+      <TouchableOpacity
+        style={iconStyle.iconTouchLeft}
+        onPress={() => navigation.navigate("Timesheet")}
+      >
+        <Entypo style={iconStyle.crossIcon} name="cross" />
       </TouchableOpacity>
     )
   };
 };
 
 const styles = StyleSheet.create({
-  crossIcon: {
-    fontSize: 26,
-    color: "#20b2aa",
-    marginHorizontal: 20,
-  }
+
 });
 
 export default CreateScreen;

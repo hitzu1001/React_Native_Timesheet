@@ -11,19 +11,19 @@ const MoreScreen = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.subContainer}>
-        <MaterialCommunityIcons style={styles.Icon} name='settings' />
+        <MaterialCommunityIcons style={styles.icon} name='settings' />
         <Text style={styles.Text}>Settings</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.subContainer}>
-        <MaterialCommunityIcons style={styles.Icon} name='timer-off' />
+        <MaterialCommunityIcons style={styles.icon} name='timer-off' />
         <Text style={styles.Text}>Time Off</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.subContainer}>
-        <MaterialCommunityIcons style={styles.Icon} name='bell-outline' />
+        <MaterialCommunityIcons style={styles.icon} name='bell-outline' />
         <Text style={styles.Text}>Notifications</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.subContainer} onPress={signout}>
-        <MaterialCommunityIcons style={styles.Icon} name='logout' />
+        <MaterialCommunityIcons style={styles.icon} name='logout' />
         <Text style={styles.Text}>Log out</Text>
       </TouchableOpacity>
     </View>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 40,
   },
-  Icon: {
+  icon: {
     fontSize: 22,
     color: 'gray',
   },

@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle';
 
 const ScheduleScreen = () => {
   return (
@@ -15,8 +16,9 @@ ScheduleScreen.navigationOptions = () => {
   return {
     title: 'Schedule',
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
-    headerRight: <TouchableOpacity onPress={() => { }}>
-      <Feather style={styles.searchIcon} name='search' />
+    headerRight: <TouchableOpacity style={iconStyle.iconTouchRight}
+      onPress={() => { }}>
+      <Ionicons style={iconStyle.searchIcon} name='ios-search' />
     </TouchableOpacity>,
   };
 };
@@ -24,11 +26,6 @@ ScheduleScreen.navigationOptions = () => {
 const styles = StyleSheet.create({
   header: {
     padding: 20,
-  },
-  searchIcon: {
-    fontSize: 20,
-    color: '#20b2aa',
-    marginRight: 20,
   },
   avatar: {
     marginLeft: 20
