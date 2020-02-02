@@ -12,27 +12,32 @@ const EditScreen = ({ navigation }) => {
   const [change, setChange] = useState(false);
   const blogPost = state.find(blogPost => blogPost._id === id);
 
-
   useEffect(() => {
     navigation.setParams({ change });
   }, [change]);
 
-  var startTime = moment.utc(new Date()).local().format();
-  var endTime = moment.utc(new Date()).local().format();
+  // var startTime = moment
+  //   .utc(new Date())
+  //   .local()
+  //   .format();
+
+  // var endTime = moment
+  //   .utc(new Date())
+  //   .local()
+  //   .format();
 
   return (
     <BlogPostForm
       id={id}
       initialValues={{
-        title: blogPost.title,
-        notes: blogPost.notes,
         startTime: blogPost.startTime,
         endTime: blogPost.endTime,
-        images: blogPost.images,
+        task: blogPost.task,
+        notes: blogPost.notes,
+        images: blogPost.images
       }}
-      onSubmit={(title, notes, startTime, endTime, images) => {
-        editBlogPost(id, title, notes, startTime, endTime, images, () => {
-          navigation.pop();
+      onSubmit={(startTime, endTime, task, notes, images) => {
+        editBlogPost(id, startTime, endTime, task, notes, images, () => {
           navigation.pop();
         });
       }}
@@ -72,7 +77,6 @@ EditScreen.navigationOptions = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-
 });
 
 export default EditScreen;

@@ -6,17 +6,17 @@ import AttachPhotos from '../components/AttachPhotos';
 import { Ionicons } from '@expo/vector-icons';
 
 const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
-  const [title, setTitle] = useState(initialValues.title);
-  const [notes, setNotes] = useState(initialValues.notes);
   const [startTime, setStartTime] = useState(initialValues.startTime);
   const [endTime, setEndTime] = useState(initialValues.endTime);
+  const [task, setTask] = useState(initialValues.task);
+  const [notes, setNotes] = useState(initialValues.notes);
   const [images, setImages] = useState(initialValues.images);
-  const change = (title !== initialValues.title) || (notes !== initialValues.notes)
+  const change = (task !== initialValues.task) || (notes !== initialValues.notes)
     || (images != initialValues.images);
 
   useEffect(() => {
     isChange(change);
-  }, [title, notes, images]);
+  }, [task, notes, images]);
 
   return (
     <ScrollView>
@@ -28,8 +28,8 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
         <Text style={styles.lable}>TASK</Text>
         <TextInput
           style={styles.input}
-          value={title}
-          onChangeText={title => setTitle(title)}
+          value={task}
+          onChangeText={task => setTask(task)}
         />
       </View>
       <View style={styles.subContainer}>
@@ -58,7 +58,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
       />}
       <TouchableOpacity
         style={styles.saveBtn}
-        onPress={() => onSubmit(title, notes, startTime, endTime, images)}
+        onPress={() => onSubmit(startTime, endTime, task, notes,  images)}
       >
         <Text style={styles.saveText}>Save Timesheet</Text>
       </TouchableOpacity>
@@ -68,7 +68,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
 
 BlogPostForm.defaultProps = {
   initialValues: {
-    title: "",
+    task: "",
     notes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie.",
     images: [],

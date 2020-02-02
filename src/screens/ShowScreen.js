@@ -22,15 +22,12 @@ const ShowScreen = ({ navigation }) => {
     blogPost => blogPost._id === navigation.getParam('id')
   );
 
-  var startTime = moment(blogPost.startTime).format('LLLL');
-  var endTime = moment(blogPost.endTime).format('LLLL');
-
 
   return (
     <ScrollView>
-      <Card title='START TIME' item={startTime} />
-      <Card title='END TIME' item={endTime} />
-      <Card title='TASK' item={blogPost.title} />
+      <Card title='START TIME' item={moment(blogPost.startTime).format('LLLL')} />
+      <Card title='END TIME' item={moment(blogPost.endTime).format('LLLL')} />
+      <Card title='TASK' item={blogPost.task} />
       <Card title='NOTES' item={blogPost.notes} />
       <View style={styles.subContainer}>
         <Text style={styles.containerTitle}>ATTACHMENTS</Text>

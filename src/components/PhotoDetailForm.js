@@ -16,7 +16,7 @@ const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
     <>
       <Image source={{ uri: uri }} style={styles.image} resizeMode="contain" />
       <View style={styles.authContainer}>
-        <Text style={styles.title}>WHO CAN SEE THIS</Text>
+        <Text style={styles.task}>WHO CAN SEE THIS</Text>
         <View style={styles.authContent}>
           <Ionicons style={iconStyle.lockIcon} name='ios-lock' />
           <Text style={styles.auth}>Seen only by you and your admin</Text>
@@ -24,7 +24,7 @@ const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
       </View>
       <View style={styles.line}></View>
       <View style={styles.commentContainer}>
-        <Text style={styles.title}>COMMENT</Text>
+        <Text style={styles.task}>COMMENT</Text>
         <TextInput
           style={styles.comment}
           value={comment}
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  title: {
+  task: {
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 5,

@@ -53,7 +53,6 @@ export class TimeForm extends Component {
             {hours} hours {minutes} minutes
           </Text>
         </View>
-        {/* <DatePicker title="End Time"/> */}
       </View>
     );
   }

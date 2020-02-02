@@ -8,27 +8,32 @@ import iconStyle from '../style/iconStyle'
 
 const CreateScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext);
-  var startTime = moment.utc(new Date()).local().format();
-  var endTime = moment.utc(new Date()).local().format();
-
+  var startTime = moment
+    .utc(new Date())
+    .local()
+    .format();
+  var endTime = moment
+    .utc(new Date())
+    .local()
+    .format();
 
   return (
     <BlogPostForm
       id={0}
       initialValues={{
-        title: "",
-        notes: "",
         startTime: startTime,
         endTime: endTime,
-        images: [],
+        task: "",
+        notes: "",
+        images: []
       }}
-      onSubmit={(title, notes, startTime, endTime, images) => {
-        addBlogPost(title, notes, startTime, endTime, images, () => {
+      onSubmit={(startTime, endTime, task, notes, images) => {
+        addBlogPost(startTime, endTime, task, notes, images, () => {
           // ensure the page is navigated to Index after the post has been added
           navigation.navigate("Timesheet");
         });
       }}
-      isChange={() => { }}
+      isChange={() => {}}
       isCreate={true}
     />
   );
@@ -49,7 +54,6 @@ CreateScreen.navigationOptions = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-
 });
 
 export default CreateScreen;
