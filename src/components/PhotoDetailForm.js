@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 
-const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
+const PhotoDetailForm = ({ uri, initialComment, isChange }) => {
   const [comment, setComment] = useState(initialComment);
   const changed = (comment !== initialComment);
 
   useEffect(() => {
     isChange(changed);
-    updateComment(uri, comment);
+    // updateComment(uri, comment);
   }, [comment]);
 
   return (
