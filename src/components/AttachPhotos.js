@@ -1,103 +1,37 @@
-import React, { useContext, Component } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
-import { navigate } from '../navigationRef';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useContext, Component, useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Alert
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
+import * as Permissions from "expo-permissions";
+import { Context as ImageContext } from "../context/ImageContext";
+import { navigate } from "../navigationRef";
+import { Ionicons } from "@expo/vector-icons";
 
+const AttachPhotos = ({ id, images }) => {
+  const { state, addImage } = useContext(ImageContext);
 
-export class AttachPhotos extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      images: this.props.images,
-    }
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleComment = this.handleComment.bind(this);
-  };
+  useEffect(() => {
+    getPermissionAsync();
+  }, []);
 
-  updateComment(uri, newComment) {
-    const updateImages = this.state.images.map(img => {
-      return (img.uri === uri) ? { ...img, comment: newComment } : img
-    });
-    this.setState({ images: updateImages });
-  }
-
-  handleComment(uri, newComment) {
-    this.updateComment(uri, newComment);
-  }
-
-  deleteImage(uri) {
-    this.setState({
-      images: this.state.images.filter(i => i.uri !== uri)
-    });
-  };
-
-  handleDelete(uri) {
-    this.deleteImage(uri);
-  };
-
-  renderImages() {
-    return (
-      this.state.images.map(i =>
-        <TouchableOpacity key={i.uri} onPress={() => {
-          navigate("PhotoEdit", {
-            id: this.props.id,
-            uri: i.uri,
-            deletePhoto: uri => this.handleDelete(uri),
-            images: this.state.images,
-            initialComment: i.comment,
-            updateComment: (uri, newComment) => this.handleComment(uri, newComment),
-            isNew: false,
-          });
-        }} >
-          <Image key={i} source={{ uri: i.uri }} style={styles.image} />
-        </TouchableOpacity>
-      )
-    );
-  }
-
-  render() {
-    let { images } = this.state;
-    // console.log(this.deleteImage);
-    return (
-      <ScrollView>
-        <View style={styles.attachContainer}>
-          <Text style={styles.lable}>ATTACHMENTS</Text>
-          <View style={styles.photoContainer}>
-            <TouchableOpacity style={styles.attachBtn} onPress={() =>
-              Alert.alert('Add attachments', '',
-                [
-                  { text: 'Take photos', onPress: () => { } },
-                  { text: 'Select photos', onPress: this._pickImage },
-                  { text: 'Cancel', style: 'cancel' }
-                ],
-                { cancelable: false },
-              )}>
-              <Ionicons style={styles.addIcon} name='ios-add' />
-            </TouchableOpacity>
-            {images ? this.renderImages() : <Text style={styles.none}>None</Text>}
-          </View>
-        </View>
-      </ScrollView>
-    );
-  }
-
-  componentDidMount() {
-    this.getPermissionAsync();
-  }
-
-  getPermissionAsync = async () => {
+  const getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
       }
     }
-  }
+  };
 
-  _pickImage = async () => {
+  const _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -107,63 +41,102 @@ export class AttachPhotos extends Component {
     console.log(result);
 
     if (!result.cancelled) {
-      this.setState({
-        images: [...this.state.images, { uri: result.uri, comment: '' }]
-      });
-
-      this.props.setImages(this.state.images);
+      addImage(result.uri);
 
       navigate("PhotoEdit", {
-        id: this.props.id,
+        id: id,
         uri: result.uri,
-        deletePhoto: uri => this.handleDelete(uri),
-        images: this.state.images,
-        updateComment: (uri, newComment) => this.handleComment(uri, newComment),
-        isNew: true,
+        initialComment: "",
+        isNew: true
       });
-    };
+    }
   };
 
-}
+  const renderImages = () => {
+    return state.map(i => (
+      <TouchableOpacity
+        key={i.uri}
+        onPress={() => {
+          navigate("PhotoEdit", {
+            id: id,
+            uri: i.uri,
+            initialComment: i.comment,
+            isNew: false
+          });
+        }}
+      >
+        <Image key={i} source={{ uri: i.uri }} style={styles.image} />
+      </TouchableOpacity>
+    ));
+  };
+
+  return (
+    <ScrollView>
+      <View style={styles.attachContainer}>
+        <Text style={styles.lable}>ATTACHMENTS</Text>
+        <View style={styles.photoContainer}>
+          <TouchableOpacity
+            style={styles.attachBtn}
+            onPress={() =>
+              Alert.alert(
+                "Add attachments",
+                "",
+                [
+                  { text: "Take photos", onPress: () => {} },
+                  { text: "Select photos", onPress: _pickImage },
+                  { text: "Cancel", style: "cancel" }
+                ],
+                { cancelable: false }
+              )
+            }
+          >
+            <Ionicons style={styles.addIcon} name="ios-add" />
+          </TouchableOpacity>
+          {images ? renderImages() : <Text style={styles.none}>None</Text>}
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   attachContainer: {
     marginTop: 20,
-    marginHorizontal: 20,
+    marginHorizontal: 20
   },
   lable: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   photoContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap"
   },
   attachBtn: {
     width: 65,
     height: 65,
-    borderColor: '#20b2aa',
+    borderColor: "#20b2aa",
     borderWidth: 2,
-    borderStyle: 'dotted',
+    borderStyle: "dotted",
     // flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 8,
-    marginTop: 5,
+    marginTop: 5
   },
   addIcon: {
     fontSize: 24,
-    color: '#20b2aa',
+    color: "#20b2aa"
   },
   image: {
     width: 65,
     height: 65,
     marginRight: 8,
-    marginTop: 5,
+    marginTop: 5
   },
   none: {
-    color: 'dimgray'
-  },
+    color: "dimgray"
+  }
 });
 
 export default AttachPhotos;
