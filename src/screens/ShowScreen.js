@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Context as BlogContext} from '../context/BlogContext';
 import Card from '../components/Card';
@@ -18,7 +18,7 @@ const ShowScreen = ({ navigation }) => {
   }, [])
 
   const blogPost = state.find(
-    blogPost => blogPost.id === navigation.getParam('id')
+    blogPost => blogPost._id === navigation.getParam('id')
   );
 
   var startTime = moment(blogPost.startTime).format('LLLL');

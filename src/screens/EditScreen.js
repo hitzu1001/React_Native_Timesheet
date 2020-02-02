@@ -9,14 +9,15 @@ const EditScreen = ({ navigation }) => {
   const id = navigation.getParam("id");
   const { state, editBlogPost } = useContext(BlogContext);
   const [change, setChange] = useState(false);
-  const blogPost = state.find(blogPost => blogPost.id === id);
+  const blogPost = state.find(blogPost => blogPost._id === id);
+
 
   useEffect(() => {
     navigation.setParams({ change });
   }, [change]);
 
-  var startTime = new Date(moment(blogPost.startTime).format('LLLL'));
-  var endTime = new Date(moment(blogPost.endTime).format('LLLL'));
+  var startTime = moment.utc(new Date()).local().format();
+  var endTime = moment.utc(new Date()).local().format();
 
   return (
     <BlogPostForm
@@ -24,12 +25,13 @@ const EditScreen = ({ navigation }) => {
       initialValues={{
         title: blogPost.title,
         notes: blogPost.notes,
-        startTime: startTime,
-        endTime: endTime,
+        startTime: blogPost.startTime,
+        endTime: blogPost.endTime,
         images: blogPost.images,
       }}
       onSubmit={(title, notes, startTime, endTime, images) => {
         editBlogPost(id, title, notes, startTime, endTime, images, () => {
+          navigation.pop();
           navigation.pop();
         });
       }}

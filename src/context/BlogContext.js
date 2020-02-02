@@ -6,10 +6,10 @@ const blogReducer = (state, action) => {
     case "get_blogposts":
       return action.payload;
     case "delete_blogpost":
-      return state.filter(blogPost => blogPost.id !== action.payload);
+      return state.filter(blogPost => blogPost._id !== action.payload);
     case "edit_blogpost":
       return state.map(blogPost => {
-        return blogPost.id === action.payload.id ? action.payload : blogPost;
+        return blogPost._id === action.payload._id ? action.payload : blogPost;
       });
     default:
       return state;
@@ -18,7 +18,10 @@ const blogReducer = (state, action) => {
 
 const getBlogPosts = dispatch => {
   return async () => {
-    const response = await timesheetApi.get("/blogposts");
+    // const response = await timesheetApi.get("/blogposts");
+    // dispatch({ type: "get_blogposts", payload: response.data });
+    const response = await timesheetApi.get("/timesheets");
+    // console.log(response)
     dispatch({ type: "get_blogposts", payload: response.data });
     // const response = await timesheetApi.get("/timesheets")
     // dispatch({ type: "get_blogposts", payload: response.data });
@@ -26,12 +29,14 @@ const getBlogPosts = dispatch => {
 };
 
 const addBlogPost = dispatch => {
-  return async (title, notes, startTime, endTime, images, callback) => {
+  return async (startTime, endTime, title, notes, images, callback) => {
     if (callback) {
       callback();
     }
-    // await timesheetApi.post("/timesheets", { title, notes, startTime, endTime });
-    await timesheetApi.post("/blogposts", { title, notes, startTime, endTime, images });
+    await timesheetApi.post("/timesheets", {
+      startTime, endTime, title, notes, images,
+    });
+    //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
   };
 };
 
@@ -40,23 +45,23 @@ const deleteBlogPost = dispatch => {
     if (callback) {
       callback();
     }
-    await timesheetApi.delete(`/blogposts/${id}`);
+    await timesheetApi.delete(`/timesheets/${id}`, { id });
     dispatch({ type: "delete_blogpost", payload: id });
   };
 };
 
 const editBlogPost = dispatch => {
-  return async (id, title, notes, startTime, endTime, images, callback) => {
+  return async (id, startTime, endTime, title, notes, images, callback) => {
     if (callback) {
       callback();
     }
-    await timesheetApi.put(`/blogposts/${id}`, {
-      title, notes, startTime, endTime, images,
+    await timesheetApi.put(`/timesheets/${id}`, {
+      startTime, endTime, title, notes, images,
     });
 
     dispatch({
       type: "edit_blogpost",
-      payload: { id, title, notes, startTime, endTime, images }
+      payload: { startTime, endTime, title, notes, images, }
     });
   };
 };
