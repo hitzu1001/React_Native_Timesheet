@@ -26,7 +26,7 @@ const ShowScreen = ({ navigation }) => {
     <ScrollView>
       <Card title='START TIME' item={moment(blogPost.startTime).format('LLLL')} />
       <Card title='END TIME' item={moment(blogPost.endTime).format('LLLL')} />
-      <Card title='TASK' item={blogPost.title} />
+      <Card title='TASK' item={blogPost.task} />
       <Card title='NOTES' item={blogPost.notes} />
       <View style={styles.subContainer}>
         <Text style={styles.containerTitle}>ATTACHMENTS</Text>

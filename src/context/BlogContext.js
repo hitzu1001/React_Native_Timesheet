@@ -29,12 +29,12 @@ const getBlogPosts = dispatch => {
 };
 
 const addBlogPost = dispatch => {
-  return async (startTime, endTime, title, notes, images, callback) => {
+  return async (startTime, endTime, task, notes, images, callback) => {
     if (callback) {
       callback();
     }
     await timesheetApi.post("/timesheets", {
-      startTime, endTime, title, notes, images,
+      startTime, endTime, task, notes, images,
     });
     //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
   };
@@ -51,17 +51,17 @@ const deleteBlogPost = dispatch => {
 };
 
 const editBlogPost = dispatch => {
-  return async (id, startTime, endTime, title, notes, images, callback) => {
+  return async (id, startTime, endTime, task, notes, images, callback) => {
     if (callback) {
       callback();
     }
     await timesheetApi.put(`/timesheets/${id}`, {
-      startTime, endTime, title, notes, images,
+      startTime, endTime, task, notes, images,
     });
 
     dispatch({
       type: "edit_blogpost",
-      payload: { startTime, endTime, title, notes, images, }
+      payload: { startTime, endTime, task, notes, images, }
     });
   };
 };

@@ -18,13 +18,11 @@ const TimesheetScreen = ({ navigation }) => {
       listener.remove();
     };
   }, []);
-
-
   return (
     <View>
       <FlatList
         data={state}
-        keyExtractor={blogPost => blogPost.title}
+        keyExtractor={blogPost => blogPost.task}
         renderItem={({ item }) => {
           var timeDiff = parseInt(
             moment(item.endTime).diff(moment(item.startTime), "minutes")
@@ -38,7 +36,7 @@ const TimesheetScreen = ({ navigation }) => {
                 style={styles.titleContainer}
                 onPress={() => navigation.navigate("Show", { id: item._id })}
               >
-                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.task}>{item.task}</Text>
                 <Text style={styles.time}>
                   {moment(item.startTime).format("lll")} ~{" "}
                   {moment(item.endTime).format("lll")}

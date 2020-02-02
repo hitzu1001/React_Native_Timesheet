@@ -15,27 +15,28 @@ const EditScreen = ({ navigation }) => {
     navigation.setParams({ change });
   }, [change]);
 
-  var startTime = moment
-    .utc(new Date())
-    .local()
-    .format();
-  var endTime = moment
-    .utc(new Date())
-    .local()
-    .format();
+  // var startTime = moment
+  //   .utc(new Date())
+  //   .local()
+  //   .format();
+
+  // var endTime = moment
+  //   .utc(new Date())
+  //   .local()
+  //   .format();
 
   return (
     <BlogPostForm
       id={id}
       initialValues={{
-        title: blogPost.title,
-        notes: blogPost.notes,
         startTime: blogPost.startTime,
         endTime: blogPost.endTime,
-        images: blogPost.images,
+        task: blogPost.task,
+        notes: blogPost.notes,
+        images: blogPost.images
       }}
-      onSubmit={(title, notes, startTime, endTime, images) => {
-        editBlogPost(id, title, notes, startTime, endTime, images, () => {
+      onSubmit={(startTime, endTime, task, notes, images) => {
+        editBlogPost(id, startTime, endTime, task, notes, images, () => {
           navigation.pop();
         });
       }}
@@ -47,38 +48,44 @@ const EditScreen = ({ navigation }) => {
 
 EditScreen.navigationOptions = ({ navigation }) => {
   return {
-    title: 'Edit Timesheet',
-    headerLeft: <TouchableOpacity onPress={() => {
-      (navigation.state.params.change === true)
-        ? Alert.alert('Discard changes?', '',
-          [
-            {
-              text: 'Keep Editing',
-              style: 'cancel'
-            },
-            {
-              text: 'Discard',
-              onPress: () => {
-                navigation.pop();
-              }
-            }
-          ],
-          { cancelable: false },
-        )
-        : navigation.pop();
-    }}>
-      <Entypo style={styles.crossIcon} name='cross' />
-    </TouchableOpacity>
+    title: "Edit Timesheet",
+    headerLeft: (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.state.params.change === true
+            ? Alert.alert(
+                "Discard changes?",
+                "",
+                [
+                  {
+                    text: "Keep Editing",
+                    style: "cancel"
+                  },
+                  {
+                    text: "Discard",
+                    onPress: () => {
+                      navigation.pop();
+                    }
+                  }
+                ],
+                { cancelable: false }
+              )
+            : navigation.pop();
+        }}
+      >
+        <Entypo style={styles.crossIcon} name="cross" />
+      </TouchableOpacity>
+    )
   };
 };
 
 const styles = StyleSheet.create({
   crossIcon: {
     fontSize: 26,
-    fontWeight: 'bold',
-    color: '#20b2aa',
-    marginHorizontal: 20,
-  },
+    fontWeight: "bold",
+    color: "#20b2aa",
+    marginHorizontal: 20
+  }
 });
 
 export default EditScreen;

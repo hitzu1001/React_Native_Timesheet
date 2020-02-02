@@ -63,7 +63,7 @@ export default class App extends Component {
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
             <View style={styles.body}>
-              <Text style={styles.title}>{this.props.title}</Text>
+              <Text style={styles.task}>{this.props.task}</Text>
               <View testID="appRootView" style={styles.container}>
                 <TouchableOpacity onPress={this.datepicker} >
                   <Text style={styles.btn}>Date</Text>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: Colors.white,
   },
-  title: {
+  task: {
     fontSize: 12,
     fontWeight: 'bold'
   },

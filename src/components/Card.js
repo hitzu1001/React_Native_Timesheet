@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Card = ({ title, item, onPress }) => {
+const Card = ({ task, item, onPress }) => {
   return <View style={styles.card}>
-    <Text style={styles.cardTitle}>{title}</Text>
+    <Text style={styles.cardTitle}>{task}</Text>
     {/* <TouchableOpacity onPress={onPress}> */}
       <Text style={styles.cardItem} numberOfLines={3} ellipsizeMode='tail'>{item}</Text>
     {/* </TouchableOpacity> */}
