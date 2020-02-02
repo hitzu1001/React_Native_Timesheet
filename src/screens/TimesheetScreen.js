@@ -1,18 +1,12 @@
-import React, { useEffect, useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity
-} from "react-native";
-import { Avatar } from "react-native-elements";
-import { Context } from "../context/BlogContext";
-import { Entypo } from "@expo/vector-icons";
+import React, { useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Avatar } from 'react-native-elements';
+import { Context as BlogContext} from '../context/BlogContext';
+import { Ionicons } from '@expo/vector-icons'
 import moment from "moment";
 
 const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(Context);
+  const { state, getBlogPosts } = useContext(BlogContext);
 
   useEffect(() => {
     getBlogPosts();
@@ -65,19 +59,17 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
   return {
     title: "Timesheets",
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
-    headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate("Create")}>
-        <Entypo style={styles.addIcon} name="plus" />
-      </TouchableOpacity>
-    )
+    headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+      <Ionicons style={styles.addIcon} name='ios-add' />
+    </TouchableOpacity>,
   };
 };
 
 const styles = StyleSheet.create({
   addIcon: {
-    fontSize: 22,
-    color: "#20b2aa",
-    marginRight: 20
+    fontSize: 24,
+    color: '#20b2aa',
+    marginHorizontal: 20,
   },
   row: {
     flexDirection: "row",

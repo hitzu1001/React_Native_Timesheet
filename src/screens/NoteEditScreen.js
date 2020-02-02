@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const NoteEditScreen = ({ navigation }) => {
   const [content, setContent] = useState(navigation.state.params.notes);
@@ -49,10 +49,10 @@ NoteEditScreen.navigationOptions = ({ navigation }) => {
           { cancelable: false },
         )
     }}>
-      <Feather style={styles.backIcon} name='arrow-left' />
+      <Ionicons style={styles.backIcon} name='ios-arrow-back' />
     </TouchableOpacity>,
     headerRight: <TouchableOpacity onPress={() => navigation.pop()}>
-      <FontAwesome style={styles.saveIcon} name='save' />
+      <Ionicons style={styles.saveIcon} name='ios-save' />
     </TouchableOpacity>
   };
 };
@@ -70,10 +70,9 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
   },
   backIcon: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 26,
     color: '#20b2aa',
-    marginLeft: 20,
+    marginHorizontal: 20,
   },
   saveIcon: {
     fontSize: 20,

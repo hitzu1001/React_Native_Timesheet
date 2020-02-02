@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Context } from '../context/BlogContext';
+import { Context as BlogContext} from '../context/BlogContext';
 import Card from '../components/Card';
-import { FontAwesome, Feather } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 
 const ShowScreen = ({ navigation }) => {
-  const { state, deleteBlogPost } = useContext(Context);
+  const { state, deleteBlogPost } = useContext(BlogContext);
 
   useEffect(() => {
     const callDeleteFromNav = () => {
@@ -39,7 +39,7 @@ ShowScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Show Date~~~',
     headerLeft: <TouchableOpacity onPress={() => navigation.pop()}>
-      <Feather style={styles.backIcon} name='arrow-left' />
+      <Ionicons style={styles.backIcon} name='ios-arrow-back' />
     </TouchableOpacity>,
     headerRight:
       <>
@@ -54,7 +54,7 @@ ShowScreen.navigationOptions = ({ navigation }) => {
           navigation.state.params.callDeleteFromNav()
         }}
         >
-          <FontAwesome style={styles.icon} name='trash' />
+          <Ionicons style={styles.icon} name='ios-trash' />
         </TouchableOpacity>
       </>
   };
@@ -75,9 +75,9 @@ const styles = StyleSheet.create({
     color: 'dimgray'
   },
   backIcon:{
-    fontSize: 22,
+    fontSize: 26,
     color: '#20b2aa',
-    marginLeft: 20,
+    marginHorizontal: 20,
   },
   icon: {
     fontSize: 22,

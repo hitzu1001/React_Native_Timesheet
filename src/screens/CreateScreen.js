@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Context } from "../context/BlogContext";
+import { Context as BlogContext} from "../context/BlogContext";
 import BlogPostForm from "../components/BlogPostForm";
 import { Entypo } from "@expo/vector-icons";
 import moment from 'moment';
 
 const CreateScreen = ({ navigation }) => {
-  const { addBlogPost } = useContext(Context);
+  const { addBlogPost } = useContext(BlogContext);
   var startTime = moment.utc(new Date()).local().format();
   var endTime = moment.utc(new Date()).local().format();
 
@@ -18,15 +18,16 @@ const CreateScreen = ({ navigation }) => {
         title: "",
         notes: "",
         startTime: startTime,
-        endTime: endTime
+        endTime: endTime,
+        images: [],
       }}
-      onSubmit={(title, notes, startTime, endTime) => {
-        addBlogPost(title, notes, startTime, endTime, () => {
+      onSubmit={(title, notes, startTime, endTime, images) => {
+        addBlogPost(title, notes, startTime, endTime, images, () => {
           // ensure the page is navigated to Index after the post has been added
           navigation.navigate("Timesheet");
         });
       }}
-      isChange={() => {}}   
+      isChange={() => { }}
       isCreate={true}
     />
   );
@@ -45,9 +46,9 @@ CreateScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   crossIcon: {
-    fontSize: 24,
+    fontSize: 26,
     color: "#20b2aa",
-    marginLeft: 20
+    marginHorizontal: 20,
   }
 });
 

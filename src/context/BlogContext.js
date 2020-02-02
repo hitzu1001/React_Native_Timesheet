@@ -23,19 +23,18 @@ const getBlogPosts = dispatch => {
     const response = await timesheetApi.get("/timesheets");
     // console.log(response)
     dispatch({ type: "get_blogposts", payload: response.data });
+    // const response = await timesheetApi.get("/timesheets")
+    // dispatch({ type: "get_blogposts", payload: response.data });
   };
 };
 
 const addBlogPost = dispatch => {
-  return async (title, notes, startTime, endTime, callback) => {
+  return async (startTime, endTime, title, notes, images, callback) => {
     if (callback) {
       callback();
     }
     await timesheetApi.post("/timesheets", {
-      title,
-      startTime,
-      endTime,
-      notes
+      startTime, endTime, title, notes, images,
     });
     //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
   };
@@ -52,21 +51,17 @@ const deleteBlogPost = dispatch => {
 };
 
 const editBlogPost = dispatch => {
-  return async (id, title, notes, startTime, endTime, callback) => {
+  return async (id, startTime, endTime, title, notes, images, callback) => {
     if (callback) {
       callback();
     }
-    // await timesheetApi.put(`/blogposts/${_id}`
     await timesheetApi.put(`/timesheets/${id}`, {
-      title,
-      notes,
-      startTime,
-      endTime
+      startTime, endTime, title, notes, images,
     });
 
     dispatch({
       type: "edit_blogpost",
-      payload: { title, notes, startTime, endTime, notes }
+      payload: { startTime, endTime, title, notes, images, }
     });
   };
 };

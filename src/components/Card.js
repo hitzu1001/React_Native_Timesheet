@@ -13,7 +13,7 @@ const Card = ({ title, item, onPress }) => {
 const styles = StyleSheet.create({
   card: {
     marginHorizontal: 20,
-    marginVertical: 20,
+    marginTop: 20,
   },
   cardTitle: {
     fontSize: 12,
