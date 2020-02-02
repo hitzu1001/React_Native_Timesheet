@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { navigate } from '../navigationRef';
-import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 export class AttachPhotos extends Component {
@@ -75,7 +75,7 @@ export class AttachPhotos extends Component {
                 ],
                 { cancelable: false },
               )}>
-              <Entypo style={styles.addIcon} name='plus' />
+              <Ionicons style={styles.addIcon} name='ios-add' />
             </TouchableOpacity>
             {images ? this.renderImages() : <Text style={styles.none}>None</Text>}
           </View>

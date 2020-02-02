@@ -18,7 +18,7 @@ import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
 import { Provider as ImageProvider } from './src/context/ImageContext';
 import { setNavigator } from './src/navigationRef';
-import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const overviewFlow = createStackNavigator({
   Overview: OverviewScreen,
@@ -38,7 +38,7 @@ const timesheetFlow = createStackNavigator({
 })
 timesheetFlow.navigationOptions = {
   title: 'Timesheets',
-  tabBarIcon: <MaterialCommunityIcons name='playlist-edit' size={26} color='gray' />
+  tabBarIcon: <MaterialCommunityIcons name='format-list-bulleted' size={22} color='gray' />
 }
 
 const scheduleFlow = createStackNavigator({
@@ -46,7 +46,7 @@ const scheduleFlow = createStackNavigator({
 })
 scheduleFlow.navigationOptions = {
   title: 'Schedule',
-  tabBarIcon: <FontAwesome name='calendar' size={20} color='gray' />
+  tabBarIcon: <MaterialCommunityIcons name='calendar-multiselect' size={22} color='gray' />
 }
 
 const moreFlow = createStackNavigator({
@@ -54,7 +54,7 @@ const moreFlow = createStackNavigator({
 })
 moreFlow.navigationOptions = {
   title: 'More',
-  tabBarIcon: <MaterialCommunityIcons name='dots-horizontal' size={22} color='gray' />
+  tabBarIcon: <MaterialCommunityIcons name='dots-horizontal' size={24} color='gray' />
 }
 
 const switchNavigator = createSwitchNavigator({

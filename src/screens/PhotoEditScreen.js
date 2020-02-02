@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import PhotoDetailForm from '../components/PhotoDetailForm';
 
 const PhotoEditScreen = ({ navigation }) => {
@@ -68,13 +68,13 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
       <TouchableOpacity onPress={() =>
         navigation.navigate('Edit', { id })
       }>
-        <FontAwesome style={styles.saveIcon} name='save' />
+        <Ionicons style={styles.saveIcon} name='ios-save' />
       </TouchableOpacity>
       {!isNew && <TouchableOpacity onPress={() => {
         deletePhoto(uri);
         navigation.navigate('Edit', { id });
       }}>
-        <FontAwesome style={styles.saveIcon} name='trash-o' />
+        <Ionicons style={styles.saveIcon} name='ios-trash' />
       </TouchableOpacity>}
     </>,
   };

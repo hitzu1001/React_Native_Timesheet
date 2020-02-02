@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView
 import { navigate } from '../navigationRef';
 import TimeForm from './TimeForm';
 import AttachPhotos from '../components/AttachPhotos';
-import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [title, setTitle] = useState(initialValues.title);
@@ -41,7 +41,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
         >
           {notes === '' ? (
             <View style={styles.emptyNote}>
-              <Entypo style={styles.addIcon} name='plus' />
+              <Ionicons style={styles.addIcon} name='plus' />
               <Text style={styles.emptyNoteText}>Add timesheet note</Text>
             </View>
           ) : (

@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Context as AuthContext } from '../context/AuthContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons'
 
 
 const MoreScreen = () => {
@@ -12,7 +11,7 @@ const MoreScreen = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.subContainer}>
-        <FontAwesome style={styles.Icon} name='gear' />
+        <MaterialCommunityIcons style={styles.Icon} name='settings' />
         <Text style={styles.Text}>Settings</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.subContainer}>
@@ -39,8 +38,8 @@ MoreScreen.navigationOptions = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container:{
-    margin: 20,    
+  container: {
+    margin: 20,
   },
   subContainer: {
     flexDirection: 'row',

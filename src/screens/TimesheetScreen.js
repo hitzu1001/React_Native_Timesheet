@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Context as BlogContext} from '../context/BlogContext';
-import { Entypo } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 
 
 const TimesheetScreen = ({ navigation }) => {
@@ -47,7 +47,7 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
     title: 'Timesheets',
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
     headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-      <Entypo style={styles.addIcon} name='plus' />
+      <Ionicons style={styles.addIcon} name='ios-add' />
     </TouchableOpacity>,
   };
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
   const [comment, setComment] = useState(initialComment);
@@ -17,7 +17,7 @@ const PhotoDetailForm = ({ uri, initialComment, updateComment, isChange }) => {
       <View style={styles.authContainer}>
         <Text style={styles.title}>WHO CAN SEE THIS</Text>
         <View style={styles.authContent}>
-          <FontAwesome style={styles.lockIcon} name='lock' />
+          <Ionicons style={styles.lockIcon} name='ios-lock' />
           <Text style={styles.auth}>Seen only by you and your admin</Text>
         </View>
       </View>

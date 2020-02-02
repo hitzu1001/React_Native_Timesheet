@@ -57,7 +57,7 @@ ShowScreen.navigationOptions = ({ navigation }) => {
           navigation.state.params.callDeleteFromNav()
         }}
         >
-          <FontAwesome style={styles.icon} name='trash-o' />
+          <Ionicons style={styles.icon} name='ios-trash' />
         </TouchableOpacity>
       </>
   };
