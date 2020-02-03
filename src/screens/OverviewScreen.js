@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Context as BlogContext } from '../context/BlogContext';
 
-const OverviewScreen = () => {
+const OverviewScreen = ({navigation}) => {
+  const { getBlogPosts } = useContext(BlogContext);
+  useEffect(() => {
+    getBlogPosts();
+    const listener = navigation.addListener('didFocus', () => {
+      getBlogPosts();
+    });
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
+
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.header}>OverviewScreen</Text>
