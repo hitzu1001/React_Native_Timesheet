@@ -14,23 +14,24 @@ const ShowScreen = ({ navigation }) => {
   const blogPost = state.find(
     blogPost => blogPost._id === navigation.getParam('id')
   );
-  // console.log(blogPost.images.pop());
-  // blogPost.images.pop();
-  // console.log('ShowScreen ==============');
-  // console.log(ImageContext._currentValue.state);
-  // ImageContext._currentValue.setImages(blogPost.images);
-  // console.log(ImageContext._currentValue.state);
 
   useEffect(() => {
-    console.log('ShowScreen ==============');
-    setImages(blogPost.images);
     const callDeleteFromNav = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
         navigation.navigate("Timesheet");
       });
     };
     navigation.setParams({ callDeleteFromNav: callDeleteFromNav });
-  }, [])
+    
+    const listener = navigation.addListener("didFocus", () => {
+      console.log('ShowScreen ==============');
+      setImages(blogPost.images);
+    });
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   return (
     <ScrollView>

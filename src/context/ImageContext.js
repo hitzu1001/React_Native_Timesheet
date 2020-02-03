@@ -20,7 +20,6 @@ const imageReducer = (state, action) => {
 };
 
 const setImages = dispatch => images => {
-  console.log(images);
   dispatch({ type: "set_images", payload: images });
 };
 

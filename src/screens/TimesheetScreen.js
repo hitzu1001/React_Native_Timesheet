@@ -10,8 +10,6 @@ import moment from "moment";
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-  // 
-  // console.log("123"+ImageContext._currentValue.state);
 
   useEffect(() => {
     getBlogPosts();
