@@ -15,10 +15,9 @@ const ScheduleScreen = ({ navigation }) => {
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
 
+  console.log("state:" + state)
 
   useEffect(() => {
-
-
     getBlogPosts();
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
@@ -30,6 +29,7 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     let markedDates = {}
+    console.log("state:" + state)
     for (let i = 0; i < state.length; i++) {
       let date = moment(state[i].startTime).format("YYYY-MM-DD")
       markedDates = { ...markedDates, [date]: { marked: true } }
@@ -54,7 +54,7 @@ const ScheduleScreen = ({ navigation }) => {
         selectedDotColor: 'orange',
       }
     }
-    
+
     setMarkedDate(labeledDate)
   }, [selectedDate])
 
