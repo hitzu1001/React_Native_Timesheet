@@ -17,9 +17,6 @@ const EditScreen = ({ navigation }) => {
   const [change, setChange] = useState(imgChange);
 
   useEffect(() => {
-    console.log('EditScreen ==============');
-    console.log(imageState);
-    console.log(imgChange);
     navigation.setParams({ change, imgChange });
   }, [change, imgChange]);
 

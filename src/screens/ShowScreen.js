@@ -22,9 +22,8 @@ const ShowScreen = ({ navigation }) => {
       });
     };
     navigation.setParams({ callDeleteFromNav: callDeleteFromNav });
-    
+
     const listener = navigation.addListener("didFocus", () => {
-      console.log('ShowScreen ==============');
       setImages(blogPost.images);
     });
 

@@ -47,8 +47,6 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
                 {
                   text: "Discard",
                   onPress: () => {
-                    console.log('PhotoEdit ==============');
-                    console.log(state);
                     deleteImage(uri);
                     navigation.navigate("Edit", { id });
                   }

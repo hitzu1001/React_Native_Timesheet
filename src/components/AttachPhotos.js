@@ -13,8 +13,6 @@ const AttachPhotos = ({ id, images }) => {
 
   
   useEffect(() => {
-    console.log('AttachPhotos ===============');
-    console.log(imageState);
     getPermissionAsync();
   }, []);
 
