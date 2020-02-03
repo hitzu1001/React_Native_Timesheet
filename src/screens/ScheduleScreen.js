@@ -14,29 +14,26 @@ const ScheduleScreen = ({ navigation }) => {
   const [selectedTask, setSelectedTask] = useState([]);
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
+  
+  let changeHook = false;
 
-  console.log("state:" + state)
+  // console.log("state:" + state)
 
   useEffect(() => {
     getBlogPosts();
-    const listener = navigation.addListener('didFocus', () => {
-      getBlogPosts();
-    });
-    return () => {
-      listener.remove();
-    };
-  }, []);
-
-  useEffect(() => {
-    let markedDates = {}
-    console.log("state:" + state)
+    // console.log("state:" + state)
+    let initialDates = {};
     for (let i = 0; i < state.length; i++) {
       let date = moment(state[i].startTime).format("YYYY-MM-DD")
-      markedDates = { ...markedDates, [date]: { marked: true } }
+      initialDates = { ...initialDates, [date]: { marked: true } }
     }
     // console.log("markedDates" + markedDates)
-    setMarkedTask(markedDates)
-
+    console.log(initialDates);
+    setMarkedTask(initialDates);
+  }, []);
+  
+  useEffect(() => {
+    //good
     let filteredTask = []
     for (let i = 0; i < state.length; i++) {
       if (moment(state[i].startTime).isSame(selectedDate, 'day')) {
@@ -45,8 +42,6 @@ const ScheduleScreen = ({ navigation }) => {
     }
     setSelectedTask(filteredTask)
 
-    // console.log(markedTask)
-
     let labeledDate = {
       ...markedTask, [selectedDate]: {
         selected: true,
@@ -54,11 +49,10 @@ const ScheduleScreen = ({ navigation }) => {
         selectedDotColor: 'orange',
       }
     }
-
     setMarkedDate(labeledDate)
-  }, [selectedDate])
+  }, [markedTask, selectedDate])
 
-  console.log(markedDate)
+  // console.log(markedDate)
 
 
   return (
