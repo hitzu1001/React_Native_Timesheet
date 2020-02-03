@@ -15,32 +15,37 @@ const ScheduleScreen = ({ navigation }) => {
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
 
+
   useEffect(() => {
+
+
     getBlogPosts();
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
-      let markedDates = {}
-      for (var i = 0; i < state.length; i++) {
-        console.log(moment(state[i].startTime).format("YYYY-MM-DD"))
-        const date = moment(state[i].startTime).format("YYYY-MM-DD")
-        markedDates = { ...markedDates, [date]: {marked: true} }
-      }
-      setMarkedTask(markedDates)
     });
-
     return () => {
       listener.remove();
     };
   }, []);
 
   useEffect(() => {
-    const filteredTask = []
-    for (var i = 0; i < state.length; i++) {
+    let markedDates = {}
+    for (let i = 0; i < state.length; i++) {
+      let date = moment(state[i].startTime).format("YYYY-MM-DD")
+      markedDates = { ...markedDates, [date]: { marked: true } }
+    }
+    // console.log("markedDates" + markedDates)
+    setMarkedTask(markedDates)
+
+    let filteredTask = []
+    for (let i = 0; i < state.length; i++) {
       if (moment(state[i].startTime).isSame(selectedDate, 'day')) {
         filteredTask.push(state[i])
       }
     }
     setSelectedTask(filteredTask)
+
+    // console.log(markedTask)
 
     let labeledDate = {
       ...markedTask, [selectedDate]: {
@@ -49,8 +54,12 @@ const ScheduleScreen = ({ navigation }) => {
         selectedDotColor: 'orange',
       }
     }
+    
     setMarkedDate(labeledDate)
   }, [selectedDate])
+
+  console.log(markedDate)
+
 
   return (
     <View>
