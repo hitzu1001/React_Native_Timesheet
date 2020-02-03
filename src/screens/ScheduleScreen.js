@@ -17,18 +17,15 @@ const ScheduleScreen = ({ navigation }) => {
   
   let changeHook = false;
 
-  // console.log("state:" + state)
-
   useEffect(() => {
     getBlogPosts();
-    // console.log("state:" + state)
+
     let initialDates = {};
     for (let i = 0; i < state.length; i++) {
       let date = moment(state[i].startTime).format("YYYY-MM-DD")
       initialDates = { ...initialDates, [date]: { marked: true } }
     }
-    // console.log("markedDates" + markedDates)
-    console.log(initialDates);
+    
     setMarkedTask(initialDates);
   }, []);
   
@@ -51,9 +48,6 @@ const ScheduleScreen = ({ navigation }) => {
     }
     setMarkedDate(labeledDate)
   }, [markedTask, selectedDate])
-
-  // console.log(markedDate)
-
 
   return (
     <View>

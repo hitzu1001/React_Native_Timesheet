@@ -43,7 +43,7 @@ export default class App extends Component {
       show: !this.state.show,
     });
   }
-  
+
   picker = () => {
     this.setState({
       show: !this.state.show,
@@ -77,7 +77,7 @@ export default class App extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {show && <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)} mode={mode} is24Hour={true} display="default" onChange={this.setDate} />}
+              {show && <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)} mode={mode} is24Hour={false} display="default" onChange={this.setDate} />}
             </View>
           </ScrollView>
         </SafeAreaView>
