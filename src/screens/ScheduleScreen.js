@@ -1,75 +1,107 @@
-import React, { useEffect, useContext } from "react";
-import { View,ScrollView, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from "react-native";
-import { Avatar } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
-import iconStyle from "../style/iconStyle";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import React, { useEffect, useContext, useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { Avatar } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle';
+import { Calendar } from 'react-native-calendars';
 import { Context as BlogContext } from '../context/BlogContext';
 import Card from '../components/Card';
 import moment from 'moment';
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
+  const [selectedDate, setSelectedDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
+  const [selectedTask, setSelectedTask] = useState([]);
+  const [markedTask, setMarkedTask] = useState({});
+  const [markedDate, setMarkedDate] = useState({})
 
   useEffect(() => {
     getBlogPosts();
-    const listener = navigation.addListener("didFocus", () => {
+    const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
+      let markedDates = {}
+      for (var i = 0; i < state.length; i++) {
+        console.log(moment(state[i].startTime).format("YYYY-MM-DD"))
+        const date = moment(state[i].startTime).format("YYYY-MM-DD")
+        markedDates = { ...markedDates, [date]: {marked: true} }
+      }
+      setMarkedTask(markedDates)
     });
+
     return () => {
       listener.remove();
     };
   }, []);
 
-return (
-  <View>
-    <ScrollView>
-      {/* <Text style={styles.header}>ScheduleScreen</Text> */}
-      <View style={styles.container}>
-        <Calendar markingType='multi-period'/>
-      </View>
-    </ScrollView>
+  useEffect(() => {
+    const filteredTask = []
+    for (var i = 0; i < state.length; i++) {
+      if (moment(state[i].startTime).isSame(selectedDate, 'day')) {
+        filteredTask.push(state[i])
+      }
+    }
+    setSelectedTask(filteredTask)
+
+    let labeledDate = {
+      ...markedTask, [selectedDate]: {
+        selected: true,
+        disableTouchEvent: true,
+        selectedDotColor: 'orange',
+      }
+    }
+    setMarkedDate(labeledDate)
+  }, [selectedDate])
+
+  return (
     <View>
-      <FlatList
-        data={state}
-        keyExtractor={blogPost => blogPost.task}
-        renderItem={({ item }) => {
-          var timeDiff = parseInt(
-            moment(item.endTime).diff(moment(item.startTime), "minutes")
-          );
-        
-          var hours = (timeDiff - (timeDiff % 60)) / 60;
-          var minutes = timeDiff % 60;
-          return (
-            <View style={styles.row}>
-              <TouchableOpacity
-                style={styles.titleContainer}
-                onPress={() => navigation.navigate("Show", { id: item._id })}
-              >
-                <Text style={styles.task}>{item.task}</Text>
-                <Text style={styles.time}>
-                  {moment(item.startTime).format("lll")} ~{" "}
-                  {moment(item.endTime).format("lll")}
-                </Text>
-                <Text style={styles.timeDiff}>
-                  {hours} hours {minutes} minutes
-                </Text>
-              </TouchableOpacity>
-            </View>
-          );
-        }}
-      />
+      <ScrollView>
+        <View style={styles.container}>
+          <Calendar
+            onDayPress={(day) => {
+              setSelectedDate(day.dateString);
+            }}
+            markedDates={markedDate}
+          />
+        </View>
+      </ScrollView>
+      <View>
+        <Text>{selectedDate}</Text>
+        <FlatList
+          data={selectedTask}
+          keyExtractor={(blogPost) => blogPost._id}
+          renderItem={({ item }) => {
+            var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
+            var hours = (timeDiff - timeDiff % 60) / 60;
+            var minutes = timeDiff % 60;
+            return (
+              <View style={styles.row}>
+                <TouchableOpacity
+                  style={styles.titleContainer}
+                  onPress={() => navigation.navigate('Show', { id: item._id })}
+                >
+                  <Text style={styles.task}>{item.task}</Text>
+                  <Text style={styles.time}>
+                    {moment(item.startTime).format('lll')} ~ {moment(item.endTime).format('lll')}
+                  </Text>
+                  <Text style={styles.timeDiff}>
+                    {hours} hours {minutes} minutes
+									</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        />
+      </View>
     </View>
-  </View>
   );
 };
 
 ScheduleScreen.navigationOptions = () => {
   return {
-    title: "Schedule",
+    title: 'Schedule',
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
     headerRight: (
-      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => {}}>
+      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => { }}>
         <Ionicons style={iconStyle.searchIcon} name="ios-search" />
       </TouchableOpacity>
     )
@@ -85,47 +117,48 @@ const styles = StyleSheet.create({
   },
   container: {
     margin: 5,
-    padding: 5, 
+    padding: 5,
     borderWidth: 3,
-    borderColor: "pink",
-  },addIcon: {
+    borderColor: 'pink'
+  },
+  addIcon: {
     fontSize: 26,
-    color: '#20b2aa',
+    color: '#20b2aa'
     // marginHorizontal: 20,
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderColor: "lightgray",
-    borderTopWidth: 1,
+    borderColor: 'lightgray',
+    borderTopWidth: 1
   },
   titleContainer: {
     flex: 1,
     borderWidth: 3,
-    borderColor: "pink"
+    borderColor: 'pink'
   },
   title: {
     fontSize: 18,
     padding: 5,
-    fontWeight: "bold"
+    fontWeight: 'bold'
   },
   time: {
     fontSize: 12,
     padding: 3,
-    alignSelf:"flex-end",
-    fontWeight: "bold"
+    alignSelf: 'flex-end',
+    fontWeight: 'bold'
   },
   timeDiff: {
     fontSize: 12,
     padding: 3,
-    alignSelf:"flex-end",
-    fontWeight: "bold",
-    color:"grey"
-  },
+    alignSelf: 'flex-end',
+    fontWeight: 'bold',
+    color: 'grey'
+  }
 });
 
 export default ScheduleScreen;
