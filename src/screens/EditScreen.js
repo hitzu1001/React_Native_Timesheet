@@ -1,20 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
+import { Context as ImageContext } from '../context/ImageContext';
 import BlogPostForm from '../components/BlogPostForm';
 import moment from 'moment';
 import { Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle'
 
 const EditScreen = ({ navigation }) => {
-  const id = navigation.getParam("id");
   const { state, editBlogPost } = useContext(BlogContext);
-  const [change, setChange] = useState(false);
+  const imageState = ImageContext._currentValue.state;
+  const id = navigation.getParam("id");
   const blogPost = state.find(blogPost => blogPost._id === id);
 
+  const imgChange = (blogPost.images !== imageState);
+  const [change, setChange] = useState(imgChange);
+
   useEffect(() => {
-    navigation.setParams({ change });
-  }, [change]);
+    console.log('EditScreen ==============');
+    console.log(imageState);
+    console.log(imgChange);
+    navigation.setParams({ change, imgChange });
+  }, [change, imgChange]);
 
   // var startTime = moment
   //   .utc(new Date())
@@ -34,7 +41,7 @@ const EditScreen = ({ navigation }) => {
         endTime: blogPost.endTime,
         task: blogPost.task,
         notes: blogPost.notes,
-        images: blogPost.images
+        images: ImageContext._currentValue.state
       }}
       onSubmit={(startTime, endTime, task, notes, images) => {
         editBlogPost(id, startTime, endTime, task, notes, images, () => {
@@ -48,24 +55,17 @@ const EditScreen = ({ navigation }) => {
 };
 
 EditScreen.navigationOptions = ({ navigation }) => {
+  const { change, imgChange } = navigation.state.params;
   return {
     title: 'Edit Timesheet',
     headerLeft: <TouchableOpacity
       style={iconStyle.iconTouchLeft}
       onPress={() => {
-        (navigation.state.params.change === true)
+        (change || imgChange)
           ? Alert.alert('Discard changes?', '',
             [
-              {
-                text: 'Keep Editing',
-                style: 'cancel'
-              },
-              {
-                text: 'Discard',
-                onPress: () => {
-                  navigation.pop();
-                }
-              }
+              { text: 'Keep Editing', style: 'cancel' },
+              { text: 'Discard', onPress: () => { navigation.pop(); } }
             ],
             { cancelable: false },
           )

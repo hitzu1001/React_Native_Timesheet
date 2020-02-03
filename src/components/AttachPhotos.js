@@ -1,13 +1,5 @@
 import React, { useContext, Component, useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Alert
-} from "react-native";
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
@@ -17,8 +9,12 @@ import { Ionicons } from "@expo/vector-icons";
 
 const AttachPhotos = ({ id, images }) => {
   const { state, addImage } = useContext(ImageContext);
+  const imageState = ImageContext._currentValue.state;
 
+  
   useEffect(() => {
+    console.log('AttachPhotos ===============');
+    console.log(imageState);
     getPermissionAsync();
   }, []);
 
@@ -41,7 +37,6 @@ const AttachPhotos = ({ id, images }) => {
 
     if (!result.cancelled) {
       addImage(result.uri);
-
       navigate("PhotoEdit", {
         id: id,
         uri: result.uri,
@@ -63,6 +58,7 @@ const AttachPhotos = ({ id, images }) => {
             isNew: false
           });
         }}
+        style={{ borderStyle: "dotted", borderColor: 'lightgray', borderWidth: 1 }}
       >
         <Image key={i} source={{ uri: i.uri }} style={styles.image} />
       </TouchableOpacity>
@@ -81,7 +77,7 @@ const AttachPhotos = ({ id, images }) => {
                 "Add attachments",
                 "",
                 [
-                  { text: "Take photos", onPress: () => {} },
+                  { text: "Take photos", onPress: () => { } },
                   { text: "Select photos", onPress: _pickImage },
                   { text: "Cancel", style: "cancel" }
                 ],
@@ -131,7 +127,7 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     marginRight: 8,
-    marginTop: 5
+    marginTop: 5,
   },
   none: {
     color: "dimgray"

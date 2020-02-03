@@ -1,21 +1,28 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as ImageContext } from '../context/ImageContext';
 import Card from '../components/Card';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import moment from 'moment';
+import uuid from 'uuid/v4';
 
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-
   const blogPost = state.find(
     blogPost => blogPost._id === navigation.getParam('id')
   );
+  // console.log(blogPost.images.pop());
+  // blogPost.images.pop();
+  // console.log('ShowScreen ==============');
+  // console.log(ImageContext._currentValue.state);
+  // ImageContext._currentValue.setImages(blogPost.images);
+  // console.log(ImageContext._currentValue.state);
 
   useEffect(() => {
+    console.log('ShowScreen ==============');
     setImages(blogPost.images);
     const callDeleteFromNav = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
@@ -36,12 +43,12 @@ const ShowScreen = ({ navigation }) => {
         <View style={styles.photoContainer}>
           {blogPost.images
             ? blogPost.images.map(i =>
-              <TouchableOpacity key={i.uri} onPress={() => {
+              <TouchableOpacity key={uuid()} onPress={() => {
                 navigation.navigate("PhotoShow", {
                   uri: i.uri,
                   initialComment: i.comment,
                 });
-              }} >
+              }} style={{ borderStyle: "dotted", borderColor: 'lightgray', borderWidth: 1 }}>
                 <Image key={i} source={{ uri: i.uri }} style={styles.image} />
               </TouchableOpacity>) : <Text style={styles.none}>None</Text>}
         </View>
@@ -69,7 +76,17 @@ ShowScreen.navigationOptions = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={iconStyle.iconTouchRight}
           onPress={() => {
-            navigation.state.params.callDeleteFromNav()
+            Alert.alert('Delete timesheet?', '',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Delete', onPress: () => {
+                    navigation.state.params.callDeleteFromNav()
+                  }
+                }
+              ],
+              { cancelable: false },
+            )
           }}
         >
           <Ionicons style={iconStyle.trashIcon} name='md-trash' />

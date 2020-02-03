@@ -2,28 +2,35 @@ import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Context as BlogContext} from '../context/BlogContext';
+import { Context as ImageContext } from '../context/ImageContext';
 import { Ionicons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
 import moment from "moment";
 
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
+  const { setImages } = useContext(ImageContext);
+  // 
+  // console.log("123"+ImageContext._currentValue.state);
 
   useEffect(() => {
     getBlogPosts();
+    setImages([]);
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
+      setImages([]);
     });
 
     return () => {
       listener.remove();
     };
   }, []);
+
   return (
     <View>
       <FlatList
         data={state}
-        keyExtractor={blogPost => blogPost.task}
+        keyExtractor={blogPost => blogPost._id}
         renderItem={({ item }) => {
           var timeDiff = parseInt(
             moment(item.endTime).diff(moment(item.startTime), "minutes")

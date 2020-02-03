@@ -5,7 +5,7 @@ import { Context as BlogContext } from "./BlogContext";
 const imageReducer = (state, action) => {
   switch (action.type) {
     case "set_images":
-      state = action.payload;
+      return action.payload;
     case "add_image":
       return [...state, action.payload];
     case "delete_image":
@@ -20,10 +20,8 @@ const imageReducer = (state, action) => {
 };
 
 const setImages = dispatch => images => {
-  // const { state } = useContext(BlogContext);
-  // const blogPost = state.find(blogPost => blogPost._id === id);
+  console.log(images);
   dispatch({ type: "set_images", payload: images });
-  console.log(images)
 };
 
 const addImage = dispatch => uri => {

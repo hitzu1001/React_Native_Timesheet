@@ -1,17 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ScrollView
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { navigate } from "../navigationRef";
 import TimeForm from "./TimeForm";
+import { Context as ImageContext } from "../context/ImageContext";
 import AttachPhotos from "../components/AttachPhotos";
 import { Ionicons } from "@expo/vector-icons";
-import { Context as ImageContext } from "../context/ImageContext";
 
 const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const { state } = useContext(ImageContext);
@@ -19,21 +12,17 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [endTime, setEndTime] = useState(initialValues.endTime);
   const [task, setTask] = useState(initialValues.task);
   const [notes, setNotes] = useState(initialValues.notes);
-  const images = initialValues.images;
 
   const change =
-    task !== initialValues.task ||
-    notes !== initialValues.notes ||
-    images !== initialValues.images;
+    task !== initialValues.task || notes !== initialValues.notes
 
   useEffect(() => {
     isChange(change);
-  }, [task, notes, images]);
+  }, [task, notes]);
 
   return (
     <ScrollView>
       <View style={styles.subContainer}>
-        {/* <Text style={styles.lable}>TIME</Text> */}
         <TimeForm
           startTime={startTime}
           endTime={endTime}
@@ -62,17 +51,17 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
               <Text style={styles.emptyNoteText}>Add timesheet note</Text>
             </View>
           ) : (
-            <Text
-              style={styles.noteContent}
-              numberOfLines={3}
-              ellipsizeMode="tail"
-            >
-              {notes}
-            </Text>
-          )}
+              <Text
+                style={styles.noteContent}
+                numberOfLines={3}
+                ellipsizeMode="tail"
+              >
+                {notes}
+              </Text>
+            )}
         </TouchableOpacity>
       </View>
-      {!isCreate && <AttachPhotos id={id} images={images} />}
+      {!isCreate && <AttachPhotos id={id} images={state} />}
       <TouchableOpacity
         style={styles.saveBtn}
         onPress={() => onSubmit(startTime, endTime, task, notes, state)}
@@ -88,7 +77,6 @@ BlogPostForm.defaultProps = {
     task: "",
     notes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nFaucibus pulvinar elementum integer enim neque volutpat. Ut lectus arcu bibendum at varius. Lorem donec massa sapien faucibus et molestie.",
-    images: []
   }
 };
 

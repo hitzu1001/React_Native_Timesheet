@@ -7,8 +7,8 @@ import { Context as ImageContext } from "../context/ImageContext";
 
 const PhotoEditScreen = ({ navigation }) => {
   const { state, deleteImage, editImage } = useContext(ImageContext);
-  const [comment, setComment] = useState(navigation.state.params.comment);
   const [change, setChange] = useState(false);
+  const comment = navigation.state.params.comment;
 
   const photo = state.find(i => i.uri === navigation.state.params.uri);
 
@@ -31,15 +31,7 @@ const PhotoEditScreen = ({ navigation }) => {
 };
 
 PhotoEditScreen.navigationOptions = ({ navigation }) => {
-  const {
-    id,
-    uri,
-    initialComment,
-    isNew,
-    change,
-    deleteImage,
-    editImage
-  } = navigation.state.params;
+  const { id, uri, initialComment, isNew, change, deleteImage, editImage } = navigation.state.params;
   return {
     title: "Photo details",
     headerLeft: (
@@ -55,6 +47,8 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
                 {
                   text: "Discard",
                   onPress: () => {
+                    console.log('PhotoEdit ==============');
+                    console.log(state);
                     deleteImage(uri);
                     navigation.navigate("Edit", { id });
                   }
@@ -104,8 +98,22 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
           <TouchableOpacity
             style={iconStyle.iconTouchRight}
             onPress={() => {
-              deleteImage(uri);
-              navigation.navigate("Edit", { id });
+              // deleteImage(uri);
+              // navigation.navigate("Edit", { id });
+              Alert.alert(
+                "Delete photo?",
+                "",
+                [
+                  { text: "Cancel", style: "cancel" },
+                  {
+                    text: "Delete", onPress: () => {
+                      deleteImage(uri);
+                      navigation.navigate("Edit", { id });
+                    }
+                  }
+                ],
+                { cancelable: false }
+              );
             }}
           >
             <Ionicons style={iconStyle.trashIcon} name="md-trash" />

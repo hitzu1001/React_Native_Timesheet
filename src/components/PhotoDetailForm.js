@@ -5,8 +5,8 @@ import { Ionicons } from "@expo/vector-icons";
 import iconStyle from "../style/iconStyle";
 
 const PhotoDetailForm = ({ uri, initialComment, isChange, readOnly }) => {
-  const [comment, setComment] = useState(initialComment);
   const { editImage } = useContext(ImageContext);
+  const [comment, setComment] = useState(initialComment);
   const changed = comment !== initialComment;
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const PhotoDetailForm = ({ uri, initialComment, isChange, readOnly }) => {
 };
 
 PhotoDetailForm.defaultProps = {
-  initialComment: ""
+  initialComment: '',
 };
 
 const styles = StyleSheet.create({
