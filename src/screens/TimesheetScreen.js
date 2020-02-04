@@ -11,12 +11,28 @@ const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
 
+  function futureToPast(dateA, dateB) {
+    return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
+  }
+
+  let sortedTimesheets = state.sort(futureToPast)
+  for (let i = 0; i < state.length; i++) {
+    // console.log(moment(state[i].startTime).valueOf())
+    console.log(moment(sortedTimesheets[i]))
+  }
+
+
+
+
+
   useEffect(() => {
-    // getBlogPosts();
-    // setImages([]);
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
       setImages([]);
+
+
+
+
     });
 
     return () => {
