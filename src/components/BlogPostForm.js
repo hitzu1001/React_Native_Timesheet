@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 
 import { navigate } from "../navigationRef";
 import TimeForm from "./TimeForm";
 import { Context as ImageContext } from "../context/ImageContext";
-import AttachPhotos from "../components/AttachPhotos";
+import PhotoPicker from "../components/PhotoPicker";
 import { Ionicons } from "@expo/vector-icons";
 
 const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
@@ -12,7 +12,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [endTime, setEndTime] = useState(initialValues.endTime);
   const [task, setTask] = useState(initialValues.task);
   const [notes, setNotes] = useState(initialValues.notes);
-  const [images, setImages] = useState(initialValues.images);
+  const images = initialValues.images;
 
   const change =
     task !== initialValues.task || notes !== initialValues.notes
@@ -42,9 +42,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
       <View style={styles.subContainer}>
         <Text style={styles.lable}>NOTES</Text>
         <TouchableOpacity
-          onPress={() => {
-            navigate("NoteEdit", { notes, setNotes });
-          }}
+          onPress={() => { navigate("NoteEdit", { notes, setNotes }); }}
         >
           {notes === "" ? (
             <View style={styles.emptyNote}>
@@ -62,7 +60,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
             )}
         </TouchableOpacity>
       </View>
-      {!isCreate && <AttachPhotos id={id} images={images} />}
+      {!isCreate && <PhotoPicker id={id} images={images} />}
       <TouchableOpacity
         style={styles.saveBtn}
         onPress={() => onSubmit(startTime, endTime, task, notes, state)}
@@ -72,6 +70,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
     </ScrollView>
   );
 };
+
 
 BlogPostForm.defaultProps = {
   initialValues: {
