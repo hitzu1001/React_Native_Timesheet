@@ -18,6 +18,7 @@ const SignupScreen = ({ navigation }) => {
         buttonText='Sign Up'
         // onSubmit={({ email, password }) => signup({ email, password })}
         onSubmit={signup}
+        isSingup={true}
       />
       <NavLink
         routeName='Signin'
