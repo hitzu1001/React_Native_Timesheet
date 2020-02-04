@@ -10,16 +10,19 @@ import iconStyle from '../style/iconStyle'
 const EditScreen = ({ navigation }) => {
   const { state, editBlogPost } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext)
-  const imageState = ImageContext._currentValue.state;
+  
   const id = navigation.getParam("id");
   const blogPost = state.find(blogPost => blogPost._id === id);
+  const imageState = blogPost.images;
+
 
   const imgChange = (blogPost.images !== imageState);
   const [change, setChange] = useState(imgChange);
 
   useEffect(() => {
     navigation.setParams({ change, imgChange });
-  }, [change, imgChange]);
+    // setImages(state.images)
+  }, [change, imgChange, blogPost]);
 
   // var startTime = moment
   //   .utc(new Date())
@@ -39,18 +42,18 @@ const EditScreen = ({ navigation }) => {
         endTime: blogPost.endTime,
         task: blogPost.task,
         notes: blogPost.notes,
-        images: ImageContext._currentValue.state
+        images: blogPost.images
       }}
       onSubmit={(startTime, endTime, task, notes, images) => {
         editBlogPost(id, startTime, endTime, task, notes, images, () => {
           navigation.pop();
-
         });
-        setImages(images);
+        setImages(images)
       }}
       isChange={setChange}
       isCreate={false}
     />
+    
   );
 };
 

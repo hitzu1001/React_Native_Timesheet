@@ -9,12 +9,14 @@ import { Ionicons } from '@expo/vector-icons';
 import uuid from 'uuid/v4';
 
 const AttachPhotos = ({ id, images }) => {
-  const { state, addImage } = useContext(ImageContext);
+  const { state, addImage, setImages } = useContext(ImageContext);
+  // const imageState = ImageContext._currentValue.state;
   
 
   useEffect(() => {
     requestCameraRollPermission();
     requestCameraPermission();
+    setImages(images)
   }, []);
 
   const requestCameraRollPermission = async () => {
