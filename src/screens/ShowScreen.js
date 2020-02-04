@@ -9,13 +9,16 @@ import moment from 'moment';
 import uuid from 'uuid/v4';
 
 const ShowScreen = ({ navigation }) => {
-  const { state, deleteBlogPost } = useContext(BlogContext);
+  const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
   const blogPost = state.find(
     blogPost => blogPost._id === navigation.getParam('id')
   );
 
+  // const [blogPost, setBlogPost] = useState({})
+
   useEffect(() => {
+    
     const callDeleteFromNav = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
         navigation.navigate("Timesheet");
@@ -24,6 +27,7 @@ const ShowScreen = ({ navigation }) => {
     navigation.setParams({ callDeleteFromNav: callDeleteFromNav });
 
     const listener = navigation.addListener("didFocus", () => {
+      getBlogPosts();
       setImages(blogPost.images);
     });
 
