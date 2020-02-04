@@ -19,7 +19,7 @@ const PhotoPicker = ({ id, images }) => {
     if (Constants.platform.ios) {
       const { status, granted } = await Permissions.askAsync(Permissions.CAMERA);
       if (granted === false) {
-        alert('Missing camera permission.'
+        alert('Sorry, missing camera permission!'
           + '\nChange permission at App > Settings > Camera');
       } else {
         _takePhoto()
@@ -31,14 +31,14 @@ const PhotoPicker = ({ id, images }) => {
     if (Constants.platform.ios) {
       const { status, granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (granted === false) {
-        alert('Missing photos permission.'
+        alert('Sorry, missing photos permission!'
           + '\nChange permission at App > Settings > Photos');
       } else {
         _pickImage();
       }
     }
   };
-  
+
   const _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,

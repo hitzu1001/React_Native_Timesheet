@@ -27,7 +27,10 @@ const overviewFlow = createStackNavigator({
 })
 overviewFlow.navigationOptions = {
   title: 'Overview',
-  tabBarIcon: <MaterialCommunityIcons name='view-dashboard-outline' size={22} color='#808080' />
+  tabBarIcon: <MaterialCommunityIcons name='view-dashboard-outline' size={22} color='#808080' />,
+  tabBarOptions: {
+    activeTintColor: '#20b2aa',
+  }
 }
 
 const timesheetFlow = createStackNavigator({
@@ -41,7 +44,10 @@ const timesheetFlow = createStackNavigator({
 })
 timesheetFlow.navigationOptions = {
   title: 'Timesheets',
-  tabBarIcon: <MaterialCommunityIcons name='format-list-bulleted' size={22} color='#808080' />
+  tabBarIcon: <MaterialCommunityIcons name='format-list-bulleted' size={22} color='#808080' />,
+  tabBarOptions: {
+    activeTintColor: '#20b2aa',
+  }
 }
 
 const scheduleFlow = createStackNavigator({
@@ -49,7 +55,10 @@ const scheduleFlow = createStackNavigator({
 })
 scheduleFlow.navigationOptions = {
   title: 'Schedule',
-  tabBarIcon: <MaterialCommunityIcons name='calendar-multiselect' size={22} color='#808080' />
+  tabBarIcon: <MaterialCommunityIcons name='calendar-multiselect' size={22} color='#808080' />,
+  tabBarOptions: {
+    activeTintColor: '#20b2aa',
+  }
 }
 
 const moreFlow = createStackNavigator({
@@ -58,7 +67,10 @@ const moreFlow = createStackNavigator({
 })
 moreFlow.navigationOptions = {
   title: 'More',
-  tabBarIcon: <MaterialCommunityIcons name='dots-horizontal' size={24} color='#808080' />
+  tabBarIcon: <MaterialCommunityIcons name='dots-horizontal' size={24} color='#808080' />,
+  tabBarOptions: {
+    activeTintColor: '#20b2aa',
+  }
 }
 
 const switchNavigator = createSwitchNavigator({
