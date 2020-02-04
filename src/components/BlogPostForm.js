@@ -12,6 +12,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [endTime, setEndTime] = useState(initialValues.endTime);
   const [task, setTask] = useState(initialValues.task);
   const [notes, setNotes] = useState(initialValues.notes);
+  const [images, setImages] = useState(initialValues.images);
 
   const change =
     task !== initialValues.task || notes !== initialValues.notes
@@ -61,7 +62,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
             )}
         </TouchableOpacity>
       </View>
-      {!isCreate && <AttachPhotos id={id} images={state} />}
+      {!isCreate && <AttachPhotos id={id} images={images} />}
       <TouchableOpacity
         style={styles.saveBtn}
         onPress={() => onSubmit(startTime, endTime, task, notes, state)}

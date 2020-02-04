@@ -16,8 +16,6 @@ const ShowScreen = ({ navigation }) => {
   )
   const timeHeader = blogPost.startTime;
 
-  console.log('ShowScreen')
-
   // const [blogPost, setBlogPost] = useState({})
 
   useEffect(() => {
