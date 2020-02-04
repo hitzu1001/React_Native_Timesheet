@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, Alert } from "react-native";
-import { Entypo, Ionicons } from "@expo/vector-icons";
-import iconStyle from "../style/iconStyle";
-import PhotoDetailForm from "../components/PhotoDetailForm";
-import { Context as ImageContext } from "../context/ImageContext";
+import React, { useContext, useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Entypo, Ionicons } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle';
+import PhotoDetailForm from '../components/PhotoDetailForm';
+import { Context as ImageContext } from '../context/ImageContext';
 
 const PhotoEditScreen = ({ navigation }) => {
   const { state, deleteImage, editImage } = useContext(ImageContext);
@@ -33,22 +33,22 @@ const PhotoEditScreen = ({ navigation }) => {
 PhotoEditScreen.navigationOptions = ({ navigation }) => {
   const { id, uri, initialComment, isNew, change, deleteImage, editImage } = navigation.state.params;
   return {
-    title: "Photo details",
+    title: 'Photo details',
     headerLeft: (
       <TouchableOpacity
         style={iconStyle.iconTouchLeft}
         onPress={() => {
           if (isNew && change) {
             Alert.alert(
-              "Discard changes?",
-              "",
+              'Discard changes?',
+              '',
               [
-                { text: "Keep Editing", style: "cancel" },
+                { text: 'Keep Editing', style: 'cancel' },
                 {
-                  text: "Discard",
+                  text: 'Discard',
                   onPress: () => {
                     deleteImage(uri);
-                    navigation.navigate("Edit", { id });
+                    navigation.navigate('Edit', { id });
                   }
                 }
               ],
@@ -56,29 +56,29 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
             );
           } else if (isNew) {
             deleteImage(uri);
-            navigation.navigate("Edit", { id });
+            navigation.navigate('Edit', { id });
           } else if (change) {
             Alert.alert(
-              "Discard changes?",
-              "",
+              'Discard changes?',
+              '',
               [
-                { text: "Keep Editing", style: "cancel" },
+                { text: 'Keep Editing', style: 'cancel' },
                 {
-                  text: "Discard",
+                  text: 'Discard',
                   onPress: () => {
                     editImage(uri, initialComment);
-                    navigation.navigate("Edit", { id });
+                    navigation.navigate('Edit', { id });
                   }
                 }
               ],
               { cancelable: false }
             );
           } else {
-            navigation.navigate("Edit", { id });
+            navigation.navigate('Edit', { id });
           }
         }}
       >
-        <Entypo style={iconStyle.crossIcon} name="cross" />
+        <Entypo style={iconStyle.crossIcon} name='cross' />
       </TouchableOpacity>
     ),
     headerRight: (
@@ -87,26 +87,26 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
           style={iconStyle.iconTouchRight}
           onPress={() => {
             // editImage(uri, comment);
-            navigation.navigate("Edit", { id });
+            navigation.navigate('Edit', { id });
           }}
         >
-          <Ionicons style={iconStyle.saveIcon} name="ios-save" />
+          <Ionicons style={iconStyle.saveIcon} name='ios-save' />
         </TouchableOpacity>
         {!isNew && (
           <TouchableOpacity
             style={iconStyle.iconTouchRight}
             onPress={() => {
               // deleteImage(uri);
-              // navigation.navigate("Edit", { id });
+              // navigation.navigate('Edit', { id });
               Alert.alert(
-                "Delete photo?",
-                "",
+                'Delete photo?',
+                '',
                 [
-                  { text: "Cancel", style: "cancel" },
+                  { text: 'Cancel', style: 'cancel' },
                   {
-                    text: "Delete", onPress: () => {
+                    text: 'Delete', onPress: () => {
                       deleteImage(uri);
-                      navigation.navigate("Edit", { id });
+                      navigation.navigate('Edit', { id });
                     }
                   }
                 ],
@@ -114,7 +114,7 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
               );
             }}
           >
-            <Ionicons style={iconStyle.trashIcon} name="md-trash" />
+            <Ionicons style={iconStyle.trashIcon} name='md-trash' />
           </TouchableOpacity>
         )}
       </>
@@ -125,7 +125,7 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
 const styles = StyleSheet.create({
   image: {
     height: 220,
-    backgroundColor: "#000"
+    backgroundColor: '#000'
   },
   authContainer: {
     paddingHorizontal: 20,
@@ -133,15 +133,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 5
   },
   authContent: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   auth: {
-    color: "dimgray"
+    color: 'dimgray'
   },
   commentContainer: {
     paddingHorizontal: 20,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   line: {
-    borderBottomColor: "lightgray",
+    borderBottomColor: '#d3d3d3',
     borderBottomWidth: 1
   }
 });

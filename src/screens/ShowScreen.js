@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as ImageContext } from '../context/ImageContext';
@@ -11,19 +11,22 @@ import uuid from 'uuid/v4';
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-  const blogPost = state.find(
-    blogPost => blogPost._id === navigation.getParam('id')
-  );
+  const blogPost = state.find(blogPost =>
+    blogPost._id === navigation.getParam('id')
+  )
+  const timeHeader = blogPost.startTime;
+
+  console.log('ShowScreen')
 
   useEffect(() => {
     const callDeleteFromNav = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
-        navigation.navigate("Timesheet");
+        navigation.navigate('Timesheet');
       });
     };
-    navigation.setParams({ callDeleteFromNav: callDeleteFromNav });
+    navigation.setParams({ callDeleteFromNav, timeHeader });
 
-    const listener = navigation.addListener("didFocus", () => {
+    const listener = navigation.addListener('didFocus', () => {
       setImages(blogPost.images);
     });
 
@@ -44,13 +47,14 @@ const ShowScreen = ({ navigation }) => {
           {blogPost.images
             ? blogPost.images.map(i =>
               <TouchableOpacity key={uuid()} onPress={() => {
-                navigation.navigate("PhotoShow", {
+                navigation.navigate('PhotoShow', {
                   uri: i.uri,
                   initialComment: i.comment,
                 });
-              }} style={{ borderStyle: "dotted", borderColor: 'lightgray', borderWidth: 1 }}>
+              }} style={{ borderStyle: 'dotted', borderColor: '#d3d3d3', borderWidth: 1 }}>
                 <Image key={i} source={{ uri: i.uri }} style={styles.image} />
-              </TouchableOpacity>) : <Text style={styles.none}>None</Text>}
+              </TouchableOpacity>) :
+            <Text style={styles.none}>None</Text>}
         </View>
       </View>
     </ScrollView >
@@ -58,10 +62,13 @@ const ShowScreen = ({ navigation }) => {
 };
 
 ShowScreen.navigationOptions = ({ navigation }) => {
+  const { timeHeader } = navigation.state.params;
+  let thisDay = moment(timeHeader);
   return {
-    title: 'Show Date~~~',
+    title:
+      `${thisDay.format('ddd')}, ${thisDay.format('DD MMM')} ${thisDay.format('YYYY')}`,
     headerLeft: <TouchableOpacity style={iconStyle.iconTouchLeft}
-      onPress={() => navigation.pop()}
+      onPress={() => navigation.navigate('Timesheet')}
     >
       <Ionicons style={iconStyle.backIcon} name='ios-arrow-back' />
     </TouchableOpacity>,

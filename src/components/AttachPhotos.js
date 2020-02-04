@@ -6,6 +6,7 @@ import * as Permissions from "expo-permissions";
 import { Context as ImageContext } from "../context/ImageContext";
 import { navigate } from "../navigationRef";
 import { Ionicons } from "@expo/vector-icons";
+import uuid from 'uuid/v4';
 
 const AttachPhotos = ({ id, images }) => {
   const { state, addImage } = useContext(ImageContext);
@@ -47,7 +48,8 @@ const AttachPhotos = ({ id, images }) => {
   const renderImages = () => {
     return state.map(i => (
       <TouchableOpacity
-        key={i.uri}
+        // key={i.uri}
+        key={uuid()}
         onPress={() => {
           navigate("PhotoEdit", {
             id: id,
@@ -56,7 +58,7 @@ const AttachPhotos = ({ id, images }) => {
             isNew: false
           });
         }}
-        style={{ borderStyle: "dotted", borderColor: 'lightgray', borderWidth: 1 }}
+        style={{ borderStyle: "dotted", borderColor: '#d3d3d3', borderWidth: 1 }}
       >
         <Image key={i} source={{ uri: i.uri }} style={styles.image} />
       </TouchableOpacity>

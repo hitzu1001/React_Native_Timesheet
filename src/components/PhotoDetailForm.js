@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   line: {
-    borderBottomColor: "lightgray",
+    borderBottomColor: "#d3d3d3",
     borderBottomWidth: 1
   }
 });

@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 10,
     paddingHorizontal: 5,
-    borderColor: "lightgray",
+    borderColor: "#d3d3d3",
     borderWidth: 1,
     borderRadius: 3
   },
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   noteContent: {
     paddingVertical: 10,
     paddingHorizontal: 5,
-    borderColor: "lightgray",
+    borderColor: "#d3d3d3",
     borderWidth: 1,
     borderRadius: 3
   },

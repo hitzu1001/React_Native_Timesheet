@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingVertical: 5,
     paddingHorizontal: 5,
-    borderColor: 'lightgray',
+    borderColor: '#d3d3d3',
     borderWidth: 1,
     borderRadius: 3,
     flex: 1,

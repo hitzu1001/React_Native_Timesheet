@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   cardItem: {
     paddingVertical: 10,
     paddingHorizontal: 5,
-    borderColor: 'lightgray',
+    borderColor: '#d3d3d3',
     borderWidth: 1,
     borderRadius: 3,
   },

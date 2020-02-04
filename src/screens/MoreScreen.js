@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 22,
-    color: 'gray',
+    color: '#808080',
   },
   Text: {
     fontFamily: 'lato-regular',
