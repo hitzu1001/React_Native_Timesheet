@@ -49,7 +49,7 @@ PhotoDetailForm.defaultProps = {
 
 const styles = StyleSheet.create({
   image: {
-    height: 220,
+    height: 250,
     backgroundColor: "#000"
   },
   authContainer: {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   commentContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    height: 100
+    height: 120
   },
   comment: {
     fontSize: 15
