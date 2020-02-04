@@ -10,13 +10,14 @@ import moment from "moment";
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
+  let sortedTimesheets = state.sort(futureToPast)
+  let dateList = []
 
   useEffect(() => {
-    // getBlogPosts();
-    // setImages([]);
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
       setImages([]);
+      sortedTimesheets = state.sort(futureToPast)
     });
 
     return () => {
@@ -24,12 +25,18 @@ const TimesheetScreen = ({ navigation }) => {
     };
   }, []);
 
+  function futureToPast(dateA, dateB) {
+    return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
+  }
+
   return (
     <View>
       <FlatList
-        data={state}
+        data={sortedTimesheets}
         keyExtractor={blogPost => blogPost._id}
         renderItem={({ item }) => {
+          var sameDate = false
+          dateList.includes(moment(item.startTime).format('L')) ? sameDate = true : dateList.push(moment(item.startTime).format('L'))
           var timeDiff = parseInt(
             moment(item.endTime).diff(moment(item.startTime), "minutes")
           );
@@ -37,10 +44,12 @@ const TimesheetScreen = ({ navigation }) => {
           var minutes = timeDiff % 60;
           return (
             <View style={styles.row}>
-              <Text style={styles.time}>
-                {/* {moment(item.startTime).format("lll")} - {moment(item.endTime).format("lll")} */}
-                {moment(item.startTime).format("dddd")}, {moment(item.startTime).format("LL")}
-              </Text>
+
+              {!sameDate &&
+                <Text style={styles.time}>
+                  {moment(item.startTime).format("dddd")}, {moment(item.startTime).format("LL")}
+                </Text>}
+                
               <TouchableOpacity
                 style={styles.taskContainer}
                 onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}

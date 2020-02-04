@@ -14,10 +14,9 @@ const ShowScreen = ({ navigation }) => {
   const blogPost = state.find(blogPost =>
     blogPost._id === navigation.getParam('id')
   )
-  // const [blogPost, setBlogPost] = useState({})
+  // const timeHeader = blogPost.startTime;
 
   useEffect(() => {
-    
     const callDeleteFromNav = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
         navigation.navigate('Timesheet');

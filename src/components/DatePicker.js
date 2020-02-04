@@ -53,8 +53,6 @@ export default class App extends Component {
   render() {
     const { show, date, mode } = this.state;
 
-    // console.log(`datePicker: ${date}`)
-
     return (
       <Fragment>
         <StatusBar barStyle="dark-content" />
