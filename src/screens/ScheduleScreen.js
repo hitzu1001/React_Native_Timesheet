@@ -15,15 +15,15 @@ const ScheduleScreen = ({ navigation }) => {
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
 
-  // console.log('state:' + state)
-
   useEffect(() => {
     getBlogPosts();
+
     let initialDates = {};
     for (let i = 0; i < state.length; i++) {
       let date = moment(state[i].startTime).format('YYYY-MM-DD')
       initialDates = { ...initialDates, [date]: { marked: true, selectedColor: '#FF7F50', } }
     }
+    
     setMarkedTask(initialDates);
   }, []);
 
