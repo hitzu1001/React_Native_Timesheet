@@ -14,10 +14,6 @@ const ShowScreen = ({ navigation }) => {
   const blogPost = state.find(blogPost =>
     blogPost._id === navigation.getParam('id')
   )
-  const timeHeader = blogPost.startTime;
-
-  console.log('ShowScreen')
-
   // const [blogPost, setBlogPost] = useState({})
 
   useEffect(() => {
@@ -27,11 +23,11 @@ const ShowScreen = ({ navigation }) => {
         navigation.navigate('Timesheet');
       });
     };
-    navigation.setParams({ callDeleteFromNav, timeHeader });
+    navigation.setParams({ callDeleteFromNav });
 
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
-      setImages(blogPost.images);
+      // setImages(blogPost.images);
     });
 
     return () => {
@@ -66,8 +62,8 @@ const ShowScreen = ({ navigation }) => {
 };
 
 ShowScreen.navigationOptions = ({ navigation }) => {
-  const { timeHeader } = navigation.state.params;
-  let thisDay = moment(timeHeader);
+  const { startTime } = navigation.state.params;
+  let thisDay = moment(startTime);
   return {
     title:
       `${thisDay.format('ddd')}, ${thisDay.format('DD MMM')} ${thisDay.format('YYYY')}`,

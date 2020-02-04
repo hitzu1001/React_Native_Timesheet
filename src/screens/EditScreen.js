@@ -9,7 +9,7 @@ import iconStyle from '../style/iconStyle'
 
 const EditScreen = ({ navigation }) => {
   const { state, editBlogPost } = useContext(BlogContext);
-  const { editImage } = useContext(ImageContext)
+  const { setImages } = useContext(ImageContext)
   const imageState = ImageContext._currentValue.state;
   const id = navigation.getParam("id");
   const blogPost = state.find(blogPost => blogPost._id === id);
@@ -46,7 +46,7 @@ const EditScreen = ({ navigation }) => {
           navigation.pop();
 
         });
-        editImage(images)
+        setImages(images);
       }}
       isChange={setChange}
       isCreate={false}
