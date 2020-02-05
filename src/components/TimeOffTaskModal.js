@@ -3,8 +3,9 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal'
 import { MaterialIcons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
+import modalStyle from '../style/modalStyle';
 
-const TimeOffModal = ({ task, setTask }) => {
+const TimeOffTaskModal = ({ task, setTask }) => {
   const [modalVisible, setmodalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -27,8 +28,8 @@ const TimeOffModal = ({ task, setTask }) => {
         backdropOpacity={0.5}
         coverScreen={true}
       >
-        <TouchableOpacity style={styles.modalContainer} onPress={() => toggleModal()}>
-          <View style={styles.modalOptions}>
+        <TouchableOpacity style={modalStyle.screenCenter} onPress={() => toggleModal()}>
+          <View style={{ ...modalStyle.container, width: 200 }}>
             <TouchableOpacity onPress={() => {
               toggleModal(); setTask('Sick leave');
             }}>
@@ -63,22 +64,6 @@ const styles = StyleSheet.create({
   taskInput: {
     marginLeft: 5,
   },
-  modalContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalOptions: {
-    width: 200,
-    height: 150,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 15,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   option: {
     paddingVertical: 10,
     width: 200,
@@ -89,4 +74,4 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
 });
-export default TimeOffModal;
+export default TimeOffTaskModal;
