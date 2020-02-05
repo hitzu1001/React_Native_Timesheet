@@ -11,7 +11,7 @@ export default class App extends Component {
     // date: new Date(moment('2020-01-01T19:00:00').toDate()),
     date: new Date(moment(this.props.time).local().toDate()),
     mode: 'time',
-    show: false,
+    show: false
   }
 
   setDate = (event, date) => {
@@ -32,16 +32,12 @@ export default class App extends Component {
 
   datepicker = () => {
     this.show('date');
-    this.setState({
-      show: !this.state.show,
-    });
+    this.state.mode === "date" && this.setState({show: !this.state.show})
   }
 
   timepicker = () => {
     this.show('time');
-    this.setState({
-      show: !this.state.show,
-    });
+    this.state.mode === "time" && this.setState({show: !this.state.show})
   }
 
   picker = () => {
