@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Context as BlogContext } from '../context/BlogContext';
@@ -10,11 +10,16 @@ import moment from "moment";
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
+  // const [dateList, setDateList] = useState([])
   let sortedTimesheets = state.sort(futureToPast)
   let dateList = []
 
+
   useEffect(() => {
+    
+    // navigation.setParams({ setDateList })
     const listener = navigation.addListener("didFocus", () => {
+      dateList = []
       getBlogPosts();
       setImages([]);
       sortedTimesheets = state.sort(futureToPast)
@@ -44,12 +49,12 @@ const TimesheetScreen = ({ navigation }) => {
           var minutes = timeDiff % 60;
           return (
             <View style={styles.row}>
-
+              {/* {console.log(sameDate)} */}
               {!sameDate &&
                 <Text style={styles.time}>
                   {moment(item.startTime).format("dddd")}, {moment(item.startTime).format("LL")}
                 </Text>}
-                
+
               <TouchableOpacity
                 style={styles.taskContainer}
                 onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}
@@ -72,6 +77,7 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
     title: "Timesheets",
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
     headerRight: <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
+      {/* , { setDateList: navigation.state.params.setDateList } */}
       <Ionicons style={styles.addIcon} name='ios-add' />
     </TouchableOpacity>,
   };

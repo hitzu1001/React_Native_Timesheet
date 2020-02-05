@@ -12,18 +12,19 @@ export class TimeForm extends Component {
     };
     this.setStartTime = this.setStartTime.bind(this);
     this.setEndTime = this.setEndTime.bind(this);
+    
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     this.props.setStartTime(this.state.startTime);
     this.props.setEndTime(this.state.endTime);
-    // console.log(moment.utc(this.state.startTime).local())
   }
-  // moment.utc(this.state.startTime).local().format()
+
   setStartTime(date) {
     this.props.setStartTime(moment.utc(date).local().format());
     this.setState({
-      startTime: moment.utc(date).local().format()
+      startTime: moment.utc(date).local().format(),
+      endTime: moment.utc(date).local().format()
     });
   }
 
@@ -46,15 +47,12 @@ export class TimeForm extends Component {
       <View>
         <DatePicker
           title="START TIME"
-          setTime={this.setStartTime}
-          time={this.props.startTime}
+          setStartTime={this.setStartTime}
+          startTime={this.props.startTime}
+          setEndTime={this.setEndTime}
+          endTime={this.props.endTime}
           disabled={this.props.disabled}
-        />
-        <DatePicker
-          title="END TIME"
-          setTime={this.setEndTime}
-          time={this.props.endTime}
-          disabled={this.props.disabled}
+          setDate={this.setEndTime}
         />
         <View style={styles.totalContainer}>
           <Text>Total</Text>

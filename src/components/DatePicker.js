@@ -4,50 +4,84 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import React, { Fragment, Component } from 'react';
 import moment from 'moment';
 
-
-// type Props = {};
 export default class App extends Component {
   state = {
-    // date: new Date(moment('2020-01-01T19:00:00').toDate()),
-    date: new Date(moment(this.props.time).local().toDate()),
-    mode: 'time',
-    show: false,
+    date1: new Date(moment(this.props.startTime).local().toDate()),
+    date2: new Date(moment(this.props.endTime).local().toDate()),
+    mode1: 'time',
+    mode2: 'time',
+    show1: false,
+    show2: false,
   }
 
-  setDate = (event, date) => {
-    date = date || this.state.date;
+  setDate1 = (event, date1) => {
+    date1 = date1 || this.state.date1;
     this.setState({
-      show: Platform.OS === 'ios' ? true : false,
-      date
+      show1: Platform.OS === 'ios' ? true : false,
+      date1,
+      date2: date1
     });
-    this.props.setTime(date)
+    this.props.setStartTime(date1)
+    this.props.setEndTime(date1)
   }
 
-  show = mode => {
+  setDate2 = (event, date2) => {
+    date2 = date2 || this.state.date2;
     this.setState({
-      show: true,
-      mode,
+      show2: Platform.OS === 'ios' ? true : false,
+      date2
+    });
+    this.props.setEndTime(date2)
+  }
+
+  show1 = mode1 => {
+    this.setState({
+      show1: true,
+      mode1,
     });
   }
 
-  datepicker = () => {
-    this.show('date');
-    this.state.mode === "date" && this.setState({ show: !this.state.show })
+  datepicker1 = () => {
+    this.show1('date');
+    this.state.mode1 === "date" && this.setState({ show1: !this.state.show1 })
   }
 
-  timepicker = () => {
-    this.show('time');
-    this.state.mode === "time" && this.setState({ show: !this.state.show })
+  timepicker1 = () => {
+    this.show1('time');
+    this.state.mode1 === "time" && this.setState({ show1: !this.state.show1 })
   }
 
-  picker = () => {
+  picker1 = () => {
     this.setState({
-      show: !this.state.show,
+      show1: !this.state.show1,
+    });
+  }
+
+  show2 = mode2 => {
+    this.setState({
+      show2: true,
+      mode2,
+    });
+  }
+
+  datepicker2 = () => {
+    this.show2('date');
+    this.state.mode2 === "date" && this.setState({ show2: !this.state.show2 })
+  }
+
+  timepicker2 = () => {
+    this.show2('time');
+    this.state.mode2 === "time" && this.setState({ show2: !this.state.show2 })
+  }
+
+  picker2 = () => {
+    this.setState({
+      show2: !this.state.show2,
     });
   }
 
   render() {
-    const { show, date, mode } = this.state;
+    const { show1, date1, mode1, show2, date2, mode2 } = this.state;
 
     return (
       <Fragment>
@@ -59,27 +93,43 @@ export default class App extends Component {
             <View style={styles.body}>
               <Text style={styles.task}>{this.props.title}</Text>
               <View testID="appRootView" style={styles.container}>
-                <TouchableOpacity onPress={this.datepicker} disabled={this.props.disabled}>
+                <TouchableOpacity onPress={this.datepicker1} disabled={this.props.disabled} >
                   <Text style={styles.btn}>Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.timepicker} disabled={this.props.disabled}>
+                <TouchableOpacity onPress={this.timepicker1} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.dateTimeBtn} onPress={this.picker} disabled={this.props.disabled}>
+                <TouchableOpacity style={styles.dateTimeBtn} onPress={this.picker1} disabled={this.props.disabled}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {moment(date).utc().local().format('YYYY-MM-DD HH:mm')}
+                    {moment(date1).utc().local().format('YYYY-MM-DD HH:mm')}
                   </Text>
                 </TouchableOpacity>
               </View>
-              {!this.props.disabled && show &&
-                <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)}
-                  mode={mode} is24Hour={false} display="default" onChange={this.setDate}
+              {!this.props.disabled && show1 &&
+                <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date1)}
+                  mode={mode1} is24Hour={false} display="default" onChange={this.setDate1}
+                />
+              }
+              <Text style={styles.task}>END TIME</Text>
+              <View testID="appRootView" style={styles.container}>
+                <TouchableOpacity onPress={this.timepicker2} disabled={this.props.disabled}>
+                  <Text style={styles.btn}>Time</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.dateTimeBtn} onPress={this.picker2} disabled={this.props.disabled}>
+                  <Text testID="dateTimeText" style={styles.dateTimeText}>
+                    {moment(date2).utc().local().format('YYYY-MM-DD HH:mm')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              {!this.props.disabled && show2 &&
+                <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date2)}
+                  mode={mode2} is24Hour={false} display="default" onChange={this.setDate2}
                 />
               }
             </View>
           </ScrollView>
         </SafeAreaView>
-      </Fragment>
+      </Fragment >
     );
   }
 }
@@ -117,7 +167,7 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
   },
   dateTimeBtn: {
-    marginLeft: 80,
+    marginLeft: 40,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     // borderColor: 'red',
