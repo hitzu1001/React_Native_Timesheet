@@ -61,13 +61,7 @@ const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit, isSingup }) 
               { label: 'Employee', value: 'Employee' },
             ]}
             onValueChange={(value) => setRole(value)}
-            style={{
-              ...pickerSelectStyles,
-              iconContainer: {
-                top: 10,
-                right: 22,
-              },
-            }}
+            style={{ pickerSelectStyles }}
             value={role}
             useNativeAndroidPickerStyle={false}
             textInputProps={{ underlineColor: 'yellow' }}
@@ -108,18 +102,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#20b2aa'
   },
   title: {
-    marginLeft:10,
+    marginLeft: 10,
     fontSize: 16,
-    color:"grey",
-    fontWeight:"bold",
-    marginBottom:5
+    color: "grey",
+    fontWeight: "bold",
+    marginBottom: 5
   }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    marginRight:10,
-    marginLeft:10,
+    marginRight: 10,
+    marginLeft: 10,
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,

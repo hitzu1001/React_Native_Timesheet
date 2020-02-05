@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, Switch } from 'react-native';
 import moment from 'moment';
-import Modal from 'react-native-modal';
 import TimeForm from "../components/TimeForm";
 import { Context as BlogContext } from '../context/BlogContext';
-import TimeOffModal from '../components/TimeOffModal';
-import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import TimeOffTaskModal from '../components/TimeOffTaskModal';
+import TimeOffNoteModal from '../components/TimeOffNoteModal';
+import { Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 
 const TimeOffScreen = ({ navigation }) => {
@@ -25,20 +25,20 @@ const TimeOffScreen = ({ navigation }) => {
     setIsChange(true);
   }, [allDay, startTime, endTime, task, notes]);
 
-  const toggleTimeForm = () => {
-    if (allDay) {
-      setStartTime(moment.utc());
-      setEndTime(moment.utc());
-    } else {
-      setStartTime(moment.utc(new Date()).local().format())
-      setEndTime(moment.utc(new Date()).local().format())
-    }
-  };
+  // const toggleTimeForm = () => {
+  //   if (allDay) {
+  //     setStartTime(moment.utc());
+  //     setEndTime(moment.utc());
+  //   } else {
+  //     setStartTime(moment.utc(new Date()).local().format())
+  //     setEndTime(moment.utc(new Date()).local().format())
+  //   }
+  // };
 
   return (
     <ScrollView>
       <View style={styles.switchContainer}>
-        <Text style={styles.switchLabel}>All Day</Text>
+        <Text style={styles.switchLabel}>All-Day</Text>
         <Switch
           value={allDay}
           onValueChange={v => { setAllDay(v); }}
@@ -54,32 +54,18 @@ const TimeOffScreen = ({ navigation }) => {
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>PURPOSE OF LEAVE</Text>
-        <TimeOffModal task={task} setTask={t => setTask(t)} />
+        <TimeOffTaskModal task={task} setTask={t => setTask(t)} />
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>NOTES</Text>
-        <TouchableOpacity
-          onPress={() => { navigate("NoteEdit", { notes, setNotes }); }}
-        >
-          {notes === "" ? (
-            <View style={styles.emptyNote}>
-              <Ionicons style={styles.addIcon} name="ios-add" />
-              <Text style={styles.emptyNoteText}>Add timesheet note</Text>
-            </View>
-          ) : (
-              <Text
-                style={styles.noteContent}
-                numberOfLines={3}
-                ellipsizeMode="tail"
-              >
-                {notes}
-              </Text>
-            )}
-        </TouchableOpacity>
+        <TimeOffNoteModal notes={notes} setNotes={n => setNotes(n)}/>
       </View>
       <TouchableOpacity
         style={styles.sendBtn}
-        onPress={() => addBlogPost(startTime, endTime, task, notes, state)}
+        onPress={() => {
+          addBlogPost(startTime, endTime, task, notes, []);
+          navigation.pop();
+        }}
       >
         <Text style={styles.sendText}>Send Leave Request</Text>
       </TouchableOpacity>
@@ -138,63 +124,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     marginBottom: 10
-  },
-  // input: {
-  //   paddingVertical: 10,
-  //   paddingHorizontal: 5,
-  //   borderColor: "#d3d3d3",
-  //   borderWidth: 1,
-  //   borderRadius: 3,
-  //   flexDirection: 'row', 
-  //   alignItems: 'center', 
-  // },
-  // taskInput:{
-  //   marginLeft: 5,
-  // },
-  // modalContainer: {
-  //   flex: 1,
-  //   flexDirection: 'column',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   borderColor: 'green',
-  //   borderWidth: 2,
-  // },
-  // modalOptions: {
-  //   width: 200,
-  //   height: 150,
-  //   borderWidth: 1,
-  //   borderColor: 'white',
-  //   borderRadius: 10,
-  //   backgroundColor: 'white',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-  // option: {
-  //   paddingVertical: 10,
-  //   paddingHorizontal: 20,
-  //   fontSize: 18,
-  //   color: "#20b2aa",
-  //   borderColor: 'green',
-  //   borderWidth: 1,
-  // },
-  emptyNote: {
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  addIcon: {
-    fontSize: 22,
-    color: "#20b2aa",
-    marginRight: 5
-  },
-  emptyNoteText: {
-    color: "#20b2aa"
-  },
-  noteContent: {
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    borderColor: "#d3d3d3",
-    borderWidth: 1,
-    borderRadius: 3
   },
   sendBtn: {
     marginTop: 30,
