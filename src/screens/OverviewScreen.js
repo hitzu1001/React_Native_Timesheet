@@ -1,10 +1,14 @@
-import React, {useContext, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Context as BlogContext } from '../context/BlogContext';
+import ProgressChart from '../components/ProgressChart'
+import BarComponent from '../components/BarComponent'
+// import { StackedBarChart, ProgressCircle } from 'react-native-svg-charts'
+import { Text, G } from 'react-native-svg'
 
-const OverviewScreen = ({navigation}) => {
+const OverviewScreen = ({ navigation }) => {
   const { getBlogPosts } = useContext(BlogContext);
   useEffect(() => {
     getBlogPosts();
@@ -19,9 +23,11 @@ const OverviewScreen = ({navigation}) => {
 
 
   return (
-    <View style={styles.headerContainer}>
+    <ScrollView style={styles.headerContainer}>
       <Text style={styles.header}>OverviewScreen</Text>
-    </View>
+      <BarComponent />
+      <ProgressChart />
+    </ScrollView>
   );
 };
 
