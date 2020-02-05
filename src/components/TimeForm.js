@@ -45,13 +45,21 @@ export class TimeForm extends Component {
 
     return (
       <View>
-        <DatePicker title="START TIME" setTime={this.setStartTime} time={this.props.startTime}/>
-        <DatePicker title="END TIME" setTime={this.setEndTime} time={this.props.endTime} />
+        <DatePicker
+          title="START TIME"
+          setTime={this.setStartTime}
+          time={this.props.startTime}
+          disabled={this.props.disabled}
+        />
+        <DatePicker
+          title="END TIME"
+          setTime={this.setEndTime}
+          time={this.props.endTime}
+          disabled={this.props.disabled}
+        />
         <View style={styles.totalContainer}>
           <Text>Total</Text>
-          <Text>
-            {hours} hours {minutes} minutes
-          </Text>
+          <Text> {hours} hours {minutes} minutes</Text>
         </View>
       </View>
     );

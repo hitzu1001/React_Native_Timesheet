@@ -8,31 +8,33 @@ import { navigate } from '../navigationRef';
 import { Ionicons } from '@expo/vector-icons';
 import uuid from 'uuid/v4';
 
-const AttachPhotos = ({ id, images }) => {
+const PhotoPicker = ({ id, images }) => {
   const { state, addImage, setImages } = useContext(ImageContext);
-  // const imageState = ImageContext._currentValue.state;
-  
 
   useEffect(() => {
-    requestCameraRollPermission();
-    requestCameraPermission();
     setImages(images)
   }, []);
 
-  const requestCameraRollPermission = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-      }
-    }
-  };
-
   const requestCameraPermission = async () => {
     if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera permissions to make this work!');
+      const { status, granted } = await Permissions.askAsync(Permissions.CAMERA);
+      if (granted === false) {
+        alert('Sorry, missing camera permission!'
+          + '\nChange permission at App > Settings > Camera');
+      } else {
+        _takePhoto()
+      }
+    }
+  }
+  
+  const requestCameraRollPermission = async () => {
+    if (Constants.platform.ios) {
+      const { status, granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (granted === false) {
+        alert('Sorry, missing photos permission!'
+          + '\nChange permission at App > Settings > Photos');
+      } else {
+        _pickImage();
       }
     }
   };
@@ -56,7 +58,7 @@ const AttachPhotos = ({ id, images }) => {
     }
   };
 
-  const _takeImage = async () => {
+  const _takePhoto = async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -102,17 +104,22 @@ const AttachPhotos = ({ id, images }) => {
         <View style={styles.photoContainer}>
           <TouchableOpacity
             style={styles.attachBtn}
-            onPress={() =>
+            onPress={() => {
               Alert.alert(
-                'Add attachments',
-                '',
-                [
-                  { text: 'Take photos', onPress: _takeImage },
-                  { text: 'Select photos', onPress: _pickImage },
-                  { text: 'Cancel', style: 'cancel' }
-                ],
+                'Add attachments', '', [
+                {
+                  text: 'Take photos',
+                  onPress: () => { requestCameraPermission(); }
+                },
+                {
+                  text: 'Select photos',
+                  onPress: () => { requestCameraRollPermission(); }
+                },
+                { text: 'Cancel', style: 'cancel' }
+              ],
                 { cancelable: false }
               )
+            }
             }
           >
             <Ionicons style={styles.addIcon} name='ios-add' />
@@ -120,7 +127,7 @@ const AttachPhotos = ({ id, images }) => {
           {images ? renderImages() : <Text style={styles.none}>None</Text>}
         </View>
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 };
 
@@ -164,4 +171,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AttachPhotos;
+export default PhotoPicker;
