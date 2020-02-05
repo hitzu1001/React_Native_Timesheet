@@ -15,6 +15,7 @@ import ScheduleScreen from './src/screens/ScheduleScreen';
 import MoreScreen from './src/screens/MoreScreen';
 import PhotoEditScreen from './src/screens/PhotoEditScreen';
 import PhotoShowScreen from './src/screens/PhotoShowScreen';
+import TimeOffScreen from './src/screens/TimeOffScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
 import { Provider as ImageProvider } from './src/context/ImageContext';
@@ -63,6 +64,7 @@ scheduleFlow.navigationOptions = {
 
 const moreFlow = createStackNavigator({
   More: MoreScreen,
+  TimeOff: TimeOffScreen,
   // ModalExample: ModalExample,
 })
 moreFlow.navigationOptions = {

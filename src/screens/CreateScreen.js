@@ -1,21 +1,15 @@
-import React, { useContext } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { Context as BlogContext } from "../context/BlogContext";
-import BlogPostForm from "../components/BlogPostForm";
+import React, { useContext } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Context as BlogContext } from '../context/BlogContext';
+import BlogPostForm from '../components/BlogPostForm';
 import moment from 'moment';
-import { Entypo } from "@expo/vector-icons";
+import { Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle'
 
 const CreateScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext);
-  var startTime = moment
-    .utc(new Date())
-    .local()
-    .format();
-  var endTime = moment
-    .utc(new Date())
-    .local()
-    .format();
+  var startTime = moment.utc(new Date()).local().format();
+  var endTime = moment.utc(new Date()).local().format();
 
   return (
     <BlogPostForm
@@ -23,17 +17,17 @@ const CreateScreen = ({ navigation }) => {
       initialValues={{
         startTime: startTime,
         endTime: endTime,
-        task: "",
-        notes: "",
+        task: '',
+        notes: '',
         images: []
       }}
       onSubmit={(startTime, endTime, task, notes, images) => {
         addBlogPost(startTime, endTime, task, notes, images, () => {
           // ensure the page is navigated to Index after the post has been added
-          navigation.navigate("Timesheet");
+          navigation.navigate('Timesheet');
         });
       }}
-      isChange={() => {}}
+      isChange={() => { }}
       isCreate={true}
     />
   );
@@ -41,13 +35,13 @@ const CreateScreen = ({ navigation }) => {
 
 CreateScreen.navigationOptions = ({ navigation }) => {
   return {
-    title: "Add Timesheet",
+    title: 'Add Timesheet',
     headerLeft: (
       <TouchableOpacity
         style={iconStyle.iconTouchLeft}
-        onPress={() => navigation.navigate("Timesheet")}
+        onPress={() => navigation.navigate('Timesheet')}
       >
-        <Entypo style={iconStyle.crossIcon} name="cross" />
+        <Entypo style={iconStyle.crossIcon} name='cross' />
       </TouchableOpacity>
     )
   };

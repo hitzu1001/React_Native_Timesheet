@@ -14,8 +14,6 @@ const EditScreen = ({ navigation }) => {
   const id = navigation.getParam("id");
   const blogPost = state.find(blogPost => blogPost._id === id);
   const imageState = blogPost.images;
-
-
   const imgChange = (blogPost.images !== imageState);
   const [change, setChange] = useState(imgChange);
 

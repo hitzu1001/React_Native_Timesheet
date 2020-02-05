@@ -14,6 +14,10 @@ export default class App extends Component {
     show: false,
   }
 
+  // componentDidMount() {
+  //   this.props.disabled && this.setState({ show: false });
+  // }
+
   setDate = (event, date) => {
     date = date || this.state.date;
     this.setState({
@@ -27,6 +31,12 @@ export default class App extends Component {
     this.setState({
       show: true,
       mode,
+    });
+  }
+
+  notShow = () => {
+    this.setState({
+      show: false,
     });
   }
 
@@ -63,19 +73,19 @@ export default class App extends Component {
             <View style={styles.body}>
               <Text style={styles.task}>{this.props.title}</Text>
               <View testID="appRootView" style={styles.container}>
-                <TouchableOpacity onPress={this.datepicker} >
+                <TouchableOpacity onPress={this.datepicker} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.timepicker} >
+                <TouchableOpacity onPress={this.timepicker} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.dateTime} onPress={this.picker}>
+                <TouchableOpacity style={styles.dateTime} onPress={this.picker} disabled={this.props.disabled}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
                     {moment(date).utc().local().format('YYYY-MM-DD HH:mm')}
                   </Text>
                 </TouchableOpacity>
               </View>
-              {show && <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)} mode={mode} is24Hour={false} display="default" onChange={this.setDate} />}
+              {!this.props.disabled && show && <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)} mode={mode} is24Hour={false} display="default" onChange={this.setDate} />}
             </View>
           </ScrollView>
         </SafeAreaView>
