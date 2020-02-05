@@ -8,7 +8,7 @@ export class TimeForm extends Component {
     super(props);
     this.state = {
       startTime: this.props.startTime,
-      endTime: this.props.endTime
+      endTime: this.props.endTime,
     };
     this.setStartTime = this.setStartTime.bind(this);
     this.setEndTime = this.setEndTime.bind(this);
@@ -36,8 +36,7 @@ export class TimeForm extends Component {
 
   render() {
     var timeDiff = parseInt(
-      moment(this.state.endTime).diff(this.state.startTime, "minutes"),
-      10
+      moment(this.state.endTime).diff(this.state.startTime, "minutes"), 10
     );
 
     var hours = (timeDiff - (timeDiff % 60)) / 60;
