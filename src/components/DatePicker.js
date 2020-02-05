@@ -11,12 +11,8 @@ export default class App extends Component {
     // date: new Date(moment('2020-01-01T19:00:00').toDate()),
     date: new Date(moment(this.props.time).local().toDate()),
     mode: 'time',
-    show: false,
+    show: !this.props.disabled,
   }
-
-  // componentDidMount() {
-  //   this.props.disabled && this.setState({ show: false });
-  // }
 
   setDate = (event, date) => {
     date = date || this.state.date;
@@ -31,12 +27,6 @@ export default class App extends Component {
     this.setState({
       show: true,
       mode,
-    });
-  }
-
-  notShow = () => {
-    this.setState({
-      show: false,
     });
   }
 
@@ -85,7 +75,9 @@ export default class App extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {!this.props.disabled && show && <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)} mode={mode} is24Hour={false} display="default" onChange={this.setDate} />}
+              {!this.props.disabled && show && <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)}
+                mode={mode} is24Hour={false} display="default" onChange={this.setDate}
+              />}
             </View>
           </ScrollView>
         </SafeAreaView>
