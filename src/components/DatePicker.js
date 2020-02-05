@@ -11,7 +11,7 @@ export default class App extends Component {
     // date: new Date(moment('2020-01-01T19:00:00').toDate()),
     date: new Date(moment(this.props.time).local().toDate()),
     mode: 'time',
-    show: !this.props.disabled,
+    show: false,
   }
 
   setDate = (event, date) => {
@@ -32,12 +32,12 @@ export default class App extends Component {
 
   datepicker = () => {
     this.show('date');
-    this.state.mode === "date" && this.setState({show: !this.state.show})
+    this.state.mode === "date" && this.setState({ show: !this.state.show })
   }
 
   timepicker = () => {
     this.show('time');
-    this.state.mode === "time" && this.setState({show: !this.state.show})
+    this.state.mode === "time" && this.setState({ show: !this.state.show })
   }
 
   picker = () => {
@@ -65,15 +65,17 @@ export default class App extends Component {
                 <TouchableOpacity onPress={this.timepicker} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.dateTime} onPress={this.picker} disabled={this.props.disabled}>
+                <TouchableOpacity style={styles.dateTimeBtn} onPress={this.picker} disabled={this.props.disabled}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
                     {moment(date).utc().local().format('YYYY-MM-DD HH:mm')}
                   </Text>
                 </TouchableOpacity>
               </View>
-              {!this.props.disabled && show && <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)}
-                mode={mode} is24Hour={false} display="default" onChange={this.setDate}
-              />}
+              {!this.props.disabled && show &&
+                <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date)}
+                  mode={mode} is24Hour={false} display="default" onChange={this.setDate}
+                />
+              }
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   btn: {
@@ -114,15 +116,17 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 2,
   },
-  dateTime: {
-    flex: 1,
+  dateTimeBtn: {
+    marginLeft: 80,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    // borderColor: 'red',
+    // borderWidth: 2,
   },
   dateTimeText: {
     paddingVertical: 5,
+    marginHorizontal: 5,
     fontSize: 15,
-    marginRight: 5,
     // borderColor: 'red',
     // borderWidth: 2,
   },
