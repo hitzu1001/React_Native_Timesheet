@@ -32,16 +32,12 @@ export default class App extends Component {
 
   datepicker = () => {
     this.show('date');
-    this.setState({
-      show: !this.state.show,
-    });
+    this.state.mode === "date" && this.setState({show: !this.state.show})
   }
 
   timepicker = () => {
     this.show('time');
-    this.setState({
-      show: !this.state.show,
-    });
+    this.state.mode === "time" && this.setState({show: !this.state.show})
   }
 
   picker = () => {
