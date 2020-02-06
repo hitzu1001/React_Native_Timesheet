@@ -8,8 +8,7 @@ export default class App extends Component {
   state = {
     date1: new Date(moment(this.props.startTime).local().toDate()),
     date2: new Date(moment(this.props.endTime).local().toDate()),
-    mode1: 'time',
-    mode2: 'time',
+    mode: '',
     show1: false,
     show2: false,
   }
@@ -34,99 +33,74 @@ export default class App extends Component {
     this.props.setEndTime(date2)
   }
 
-  show1 = mode1 => {
-    this.setState({
-      show1: true,
-      mode1,
-    });
+
+  changeMode = mode => {
+    console.log(mode)
+    if ((mode === 'date') || (mode === 'time1')) {
+      if (mode === this.state.mode) {
+        this.setState({ show1: !this.state.show1 });
+      } else {
+        this.setState({ show1: true, show2: false, mode });
+      }
+    } else if (mode === 'picker1') {
+      this.setState({ show1: !this.state.show1 });
+    } else {
+      this.setState({ show1: false, show2: !this.state.show2 });
+    }
   }
 
-  datepicker1 = () => {
-    this.show1('date');
-    this.state.mode1 === "date" && this.setState({ show1: !this.state.show1 })
-  }
-
-  timepicker1 = () => {
-    this.show1('time');
-    this.state.mode1 === "time" && this.setState({ show1: !this.state.show1 })
-  }
-
-  picker1 = () => {
-    this.setState({
-      show1: !this.state.show1,
-    });
-  }
-
-  show2 = mode2 => {
-    this.setState({
-      show2: true,
-      mode2,
-    });
-  }
-
-  datepicker2 = () => {
-    this.show2('date');
-    this.state.mode2 === "date" && this.setState({ show2: !this.state.show2 })
-  }
-
-  timepicker2 = () => {
-    this.show2('time');
-    this.state.mode2 === "time" && this.setState({ show2: !this.state.show2 })
-  }
-
-  picker2 = () => {
-    this.setState({
-      show2: !this.state.show2,
-    });
-  }
+  
 
   render() {
-    const { show1, date1, mode1, show2, date2, mode2 } = this.state;
+    const { mode, show1, show2, date1, date2 } = this.state;
+    console.log('mode: ' + mode)
+    console.log('show1: ' + show1)
+    console.log('show2: ' + show2 + '\n')
 
     return (
       <Fragment>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle='dark-content' />
         <SafeAreaView>
           <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
+            contentInsetAdjustmentBehavior='automatic'
             style={styles.scrollView}>
             <View style={styles.body}>
               <Text style={styles.task}>{this.props.title}</Text>
-              <View testID="appRootView" style={styles.container}>
-                <TouchableOpacity onPress={this.datepicker1} >
+              <View testID='appRootView' style={styles.container}>
+                <TouchableOpacity onPress={() => this.changeMode('date')} >
                   <Text style={styles.btn}>Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.timepicker1} disabled={this.props.disabled}>
+                <TouchableOpacity onPress={() => this.changeMode('time1')} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.dateTimeBtn} onPress={this.picker1} disabled={this.props.disabled}>
-                  <Text testID="dateTimeText" style={styles.dateTimeText}>
+                <TouchableOpacity style={styles.dateTimeBtn} onPress={() => this.changeMode('picker1')} disabled={this.props.disabled}>
+                  <Text testID='dateTimeText' style={styles.dateTimeText}>
                     {moment(date1).utc().local().format('YYYY-MM-DD HH:mm')}
                   </Text>
                 </TouchableOpacity>
               </View>
               {show1 &&
                 <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date1)}
-                  mode={mode1} is24Hour={false} display="default" onChange={this.setDate1}
+                  mode={mode} is24Hour={false} display='default' onChange={this.setDate1}
                 />
               }
               <Text style={styles.task}>END TIME</Text>
-              <View testID="appRootView" style={styles.container}>
+              <View testID='appRootView' style={styles.container}>
                 <TouchableOpacity disabled={true}>
-                  <Text style={{...styles.btn, opacity: 0}}>Date</Text>
+                  <Text style={{ ...styles.btn, opacity: 0 }}>Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.timepicker2} disabled={this.props.disabled}>
+                <TouchableOpacity onPress={() => this.changeMode('time2')} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.dateTimeBtn} onPress={this.picker2} disabled={this.props.disabled}>
-                  <Text testID="dateTimeText" style={styles.dateTimeText}>
+                <TouchableOpacity style={styles.dateTimeBtn} onPress={() => this.changeMode('picker2')} disabled={this.props.disabled}>
+                  <Text testID='dateTimeText' style={styles.dateTimeText}>
                     {moment(date2).utc().local().format('YYYY-MM-DD HH:mm')}
                   </Text>
                 </TouchableOpacity>
               </View>
               {!this.props.disabled && show2 &&
                 <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date2)}
-                  mode={mode2} is24Hour={false} display="default" onChange={this.setDate2}
+                  mode={mode} is24Hour={false} display='default' onChange={this.setDate2}
                 />
               }
             </View>
@@ -164,7 +138,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingVertical: 5,
     paddingHorizontal: 15,
-    color: "#20B2AA",
+    color: '#20B2AA',
     fontSize: 15,
     // borderColor: 'blue',
     // borderWidth: 2,
