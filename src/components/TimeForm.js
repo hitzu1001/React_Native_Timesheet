@@ -46,7 +46,6 @@ export class TimeForm extends Component {
     return (
       <View>
         <DatePicker
-          title="START TIME"
           setStartTime={this.setStartTime}
           startTime={this.props.startTime}
           setEndTime={this.setEndTime}
