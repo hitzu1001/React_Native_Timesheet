@@ -14,9 +14,8 @@ const TimesheetScreen = ({ navigation }) => {
   let sortedTimesheets = state.sort(futureToPast)
   let dateList = []
 
-
   useEffect(() => {
-    
+    navigation.setParams({ getBlogPosts })
     // navigation.setParams({ setDateList })
     const listener = navigation.addListener("didFocus", () => {
       dateList = []
@@ -28,7 +27,7 @@ const TimesheetScreen = ({ navigation }) => {
     return () => {
       listener.remove();
     };
-  }, []);
+  }, [state]);
 
   function futureToPast(dateA, dateB) {
     return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
@@ -73,13 +72,15 @@ const TimesheetScreen = ({ navigation }) => {
 };
 
 TimesheetScreen.navigationOptions = ({ navigation }) => {
+
   return {
     title: "Timesheets",
     headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
-    headerRight: <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
-      {/* , { setDateList: navigation.state.params.setDateList } */}
-      <Ionicons style={styles.addIcon} name='ios-add' />
-    </TouchableOpacity>,
+    headerRight:
+      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
+        {/* , { setDateList: navigation.state.params.setDateList } */}
+        <Ionicons style={styles.addIcon} name='ios-add' />
+      </TouchableOpacity>
   };
 };
 
