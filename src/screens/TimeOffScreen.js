@@ -12,9 +12,9 @@ const TimeOffScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext);
   const [allDay, setAllDay] = useState(false);
   const [startTime, setStartTime] =
-    useState(moment.utc(new Date()).local().format());
+    useState(moment.utc(new Date()).local().set('hour', 9).set('minute', 0));
   const [endTime, setEndTime] =
-    useState(moment.utc(new Date()).local().format());
+    useState(moment.utc(new Date()).local().set('hour', 17).set('minute', 0));
   const [task, setTask] = useState('Select leave reason');
   const [notes, setNotes] = useState('');
   const [isChange, setIsChange] = useState(false);
