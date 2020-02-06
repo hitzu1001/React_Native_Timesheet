@@ -8,7 +8,7 @@ export default class App extends Component {
   state = {
     date1: new Date(moment(this.props.startTime).local().toDate()),
     date2: new Date(moment(this.props.endTime).local().toDate()),
-    mode: 'date',
+    mode: this.props.disabled ? 'date' : 'time1',
     show1: false,
     show2: false,
   }
@@ -33,8 +33,8 @@ export default class App extends Component {
     this.props.setEndTime(date2)
   }
 
-
-  changeMode = mode => {
+  picker = mode => {
+    console.log(mode + '\n');
     if ((mode === 'date') || (mode === 'time1')) {
       if (mode === this.state.mode) {
         this.setState({ show1: !this.state.show1, show2: false });
@@ -44,7 +44,7 @@ export default class App extends Component {
     } else if (mode === 'picker1') {
       this.setState({ show1: !this.state.show1, show2: false });
     } else {
-      this.setState({ show1: false, show2: !this.state.show2 });
+      this.setState({ show1: false, show2: !this.state.show2, mode });
     }
   }
 
@@ -63,13 +63,17 @@ export default class App extends Component {
             <View style={styles.body}>
               <Text style={styles.task}>START TIME</Text>
               <View testID='appRootView' style={styles.container}>
-                <TouchableOpacity onPress={() => this.changeMode('date')} >
+                <TouchableOpacity onPress={() => this.picker('date')} >
                   <Text style={styles.btn}>Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.changeMode('time1')} disabled={this.props.disabled}>
+                <TouchableOpacity onPress={() => this.picker('time1')} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.dateTimeBtn} onPress={() => this.changeMode('picker1')}>
+                <TouchableOpacity
+                  style={styles.dateTimeBtn}
+                  onPress={() => this.picker('picker1')}
+                  disabled={this.props.disabled}
+                >
                   <Text testID='dateTimeText' style={styles.dateTimeText}>
                     {moment(date1).utc().local().format('YYYY-MM-DD HH:mm')}
                   </Text>
@@ -86,12 +90,12 @@ export default class App extends Component {
                 <TouchableOpacity disabled={true}>
                   <Text style={{ ...styles.btn, opacity: 0 }}>Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.changeMode('time2')} disabled={this.props.disabled}>
+                <TouchableOpacity onPress={() => this.picker('time2')} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.dateTimeBtn}
-                  onPress={() => this.changeMode('picker2')}
+                  onPress={() => this.picker('picker2')}
                   disabled={this.props.disabled}
                 >
                   <Text testID='dateTimeText' style={styles.dateTimeText}>

@@ -12,7 +12,7 @@ export class TimeForm extends Component {
     };
     this.setStartTime = this.setStartTime.bind(this);
     this.setEndTime = this.setEndTime.bind(this);
-    
+
   }
 
   componentDidUpdate() {
