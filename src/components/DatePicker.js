@@ -93,7 +93,7 @@ export default class App extends Component {
             <View style={styles.body}>
               <Text style={styles.task}>{this.props.title}</Text>
               <View testID="appRootView" style={styles.container}>
-                <TouchableOpacity onPress={this.datepicker1} disabled={this.props.disabled} >
+                <TouchableOpacity onPress={this.datepicker1} >
                   <Text style={styles.btn}>Date</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.timepicker1} disabled={this.props.disabled}>
@@ -105,13 +105,16 @@ export default class App extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {!this.props.disabled && show1 &&
+              {show1 &&
                 <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date1)}
                   mode={mode1} is24Hour={false} display="default" onChange={this.setDate1}
                 />
               }
               <Text style={styles.task}>END TIME</Text>
               <View testID="appRootView" style={styles.container}>
+                <TouchableOpacity disabled={true}>
+                  <Text style={{...styles.btn, opacity: 0}}>Date</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={this.timepicker2} disabled={this.props.disabled}>
                   <Text style={styles.btn}>Time</Text>
                 </TouchableOpacity>
@@ -160,13 +163,14 @@ const styles = StyleSheet.create({
   },
   btn: {
     paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     color: "#20B2AA",
     fontSize: 15,
-    // borderColor: 'red',
+    // borderColor: 'blue',
     // borderWidth: 2,
   },
   dateTimeBtn: {
+    flex: 1,
     marginLeft: 40,
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -175,9 +179,9 @@ const styles = StyleSheet.create({
   },
   dateTimeText: {
     paddingVertical: 5,
-    marginHorizontal: 5,
+    // marginHorizontal: 5,
     fontSize: 15,
-    // borderColor: 'red',
+    // borderColor: 'green',
     // borderWidth: 2,
   },
 });

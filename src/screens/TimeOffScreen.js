@@ -18,6 +18,7 @@ const TimeOffScreen = ({ navigation }) => {
   const [task, setTask] = useState('Select leave reason');
   const [notes, setNotes] = useState('');
   const [isChange, setIsChange] = useState(false);
+  const [error, setError] = useState(true);
   // const [modalVisible, setmodalVisible] = useState(false);
 
   useEffect(() => {
@@ -58,13 +59,21 @@ const TimeOffScreen = ({ navigation }) => {
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>NOTES</Text>
-        <TimeOffNoteModal notes={notes} setNotes={n => setNotes(n)}/>
+        <TimeOffNoteModal notes={notes} setNotes={n => setNotes(n)} />
       </View>
       <TouchableOpacity
         style={styles.sendBtn}
         onPress={() => {
-          addBlogPost(startTime, endTime, task, notes, []);
-          navigation.pop();
+          if (task === 'Select leave reason' || error) {
+            Alert.alert(`Can't save timesheet`,
+              'Start time needs to be before end time.',
+              [{ text: 'Close', style: 'cancel' },],
+              { cancelable: false },
+            )
+          } else {
+            addBlogPost(startTime, endTime, task, notes, []);
+            navigation.pop();
+          }
         }}
       >
         <Text style={styles.sendText}>Send Leave Request</Text>
@@ -74,13 +83,13 @@ const TimeOffScreen = ({ navigation }) => {
 };
 
 TimeOffScreen.navigationOptions = ({ navigation }) => {
-  const { change, isChange } = navigation.state.params;
+  // const { isChange } = navigation.state.params;
   return {
     title: 'Request Time Off',
     headerLeft: <TouchableOpacity
       style={iconStyle.iconTouchLeft}
       onPress={() => {
-        (change || isChange)
+        (false || navigation.state.params.isChange)
           ? Alert.alert('Discard?', '',
             [
               { text: 'Keep Editing', style: 'cancel' },

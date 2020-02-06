@@ -29,7 +29,7 @@ const MoreScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.subContainer}
-          onPress={() => navigation.navigate('TimeOff', { change: false })}
+          onPress={() => navigation.navigate('TimeOff')}
         >
           <MaterialCommunityIcons style={styles.icon} name='timer-off' />
           <Text style={styles.Text}>Time Off</Text>
@@ -42,7 +42,6 @@ const MoreScreen = ({ navigation }) => {
           <MaterialCommunityIcons style={styles.icon} name='logout' />
           <Text style={styles.Text}>Log out</Text>
         </TouchableOpacity>
-        {/* <Button title='Modal Example' onPress={() => { navigation.navigate('ModalExample') }} /> */}
       </View>}
     </View >
   );
