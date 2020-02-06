@@ -6,7 +6,7 @@ import moment from 'moment'
 
 class PregressChart extends React.PureComponent {
   render() {
-    let textColor = 'rgb(134, 65, 244)'
+    let textColor = '#20b2aa'
     let time = 0
     if (this.props.percentage > 1) {
       textColor = 'red'
