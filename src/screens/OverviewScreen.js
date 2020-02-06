@@ -7,10 +7,13 @@ import ProgressChart from '../components/ProgressChart'
 import BarComponent from '../components/BarComponent'
 // import { StackedBarChart, ProgressCircle } from 'react-native-svg-charts'
 import { Text, G } from 'react-native-svg'
+import moment from 'moment'
 
 const OverviewScreen = ({ navigation }) => {
   const { getBlogPosts } = useContext(BlogContext);
   const [option, setOption] = useState("Day")
+  const from_date = moment().startOf('week').format('DD-MMM');
+  const to_date = moment().endOf('week').format('DD-MMM');
 
   useEffect(() => {
     getBlogPosts();
@@ -40,11 +43,11 @@ const OverviewScreen = ({ navigation }) => {
         <View style={styles.optionContainer}>
           <View style={styles.dateContainer}>
             <T style={styles.dateDisplay}>Start Week</T>
-            <T style={styles.dateDisplay}>02/02</T>
+            <T style={styles.dateDisplay}>{from_date}</T>
           </View>
           <View style={styles.dateContainer}>
             <T style={styles.dateDisplay}>End Week</T>
-            <T style={styles.dateDisplay}>02/08</T>
+            <T style={styles.dateDisplay}>{to_date}</T>
           </View>
         </View>
       </View>
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'stretch',
     borderRadius: 20,
-    alignItems:"center"
+    alignItems: "center"
   },
 });
 

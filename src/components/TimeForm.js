@@ -12,7 +12,6 @@ export class TimeForm extends Component {
     };
     this.setStartTime = this.setStartTime.bind(this);
     this.setEndTime = this.setEndTime.bind(this);
-
   }
 
   componentDidUpdate() {
@@ -36,12 +35,6 @@ export class TimeForm extends Component {
   }
 
   render() {
-    var timeDiff = parseInt(
-      moment(this.state.endTime).diff(this.state.startTime, "minutes"), 10
-    );
-    var hours = (timeDiff - (timeDiff % 60)) / 60;
-    var minutes = timeDiff % 60;
-
     return (
       <View>
         <DatePicker
@@ -52,22 +45,12 @@ export class TimeForm extends Component {
           disabled={this.props.disabled}
           setDate={this.setEndTime}
         />
-        <View style={styles.totalContainer}>
-          <Text>Total</Text>
-          <Text> {hours} hours {minutes} minutes</Text>
-        </View>
+
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  totalContainer: {
-    marginVertical: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  }
-});
+const styles = StyleSheet.create({});
 
 export default TimeForm;

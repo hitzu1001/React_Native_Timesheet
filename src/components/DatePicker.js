@@ -13,6 +13,11 @@ export default class App extends Component {
     show2: false,
   }
 
+  // componentDidUpdate() {
+  //   if (this.props.disabled === true) {
+  //     this.changeMode('time1')
+  //   }
+  // }
 
   setDate1 = (event, date1, date2) => {
     date1 = date1 || this.state.date1;
@@ -28,8 +33,8 @@ export default class App extends Component {
         date2: moment(date1).local().set('hour', 17).set('minute', 0)
       })
     }
-    this.props.setStartTime(this.state.date1)
-    this.props.setEndTime(this.state.date2)
+    this.props.setStartTime(date1)
+    this.props.setEndTime(date2)
   }
 
   setDate2 = (event, date2) => {
@@ -58,6 +63,13 @@ export default class App extends Component {
 
   render() {
     const { mode, show1, show2, date1, date2 } = this.state;
+    var timeDiff = parseInt(
+      moment(this.state.date2).diff(this.state.date1, "minutes"), 10
+    );
+    var hours = (timeDiff - (timeDiff % 60)) / 60;
+    var minutes = timeDiff % 60;
+ 
+
 
     return (
       <Fragment>
@@ -121,6 +133,10 @@ export default class App extends Component {
               }
             </View>
           </ScrollView>
+          <View style={styles.totalContainer}>
+            <Text>Total</Text>
+            <Text> {hours} hours {minutes} minutes</Text>
+          </View>
         </SafeAreaView>
       </Fragment >
     );
@@ -174,4 +190,11 @@ const styles = StyleSheet.create({
     // borderColor: 'green',
     // borderWidth: 2,
   },
+  totalContainer: {
+    marginVertical: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white"
+  }
 });
