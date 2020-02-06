@@ -10,7 +10,7 @@ import iconStyle from '../style/iconStyle';
 
 const TimeOffScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext);
-  const [allDay, setAllDay] = useState(false);
+  const [allDay, setAllDay] = useState(true);
   const [startTime, setStartTime] =
     useState(moment.utc(new Date()).local().set('hour', 9).set('minute', 0));
   const [endTime, setEndTime] =
@@ -27,7 +27,6 @@ const TimeOffScreen = ({ navigation }) => {
   //     setError([...errorMsg, `Can't input more than 8 hours.`]);
   // }
 
-  
   useEffect(() => {
     navigation.setParams({ isChange });
     setIsChange(true);
@@ -140,6 +139,12 @@ const styles = StyleSheet.create({
   sendText: {
     fontSize: 18,
     color: "#20b2aa"
+  },
+  totalContainer: {
+    marginVertical: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
 
