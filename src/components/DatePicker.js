@@ -8,7 +8,7 @@ export default class App extends Component {
   state = {
     date1: new Date(moment(this.props.startTime).local().toDate()),
     date2: new Date(moment(this.props.endTime).local().toDate()),
-    mode: 'date',
+    mode: this.props.disabled ? 'date' : 'time1',
     show1: false,
     show2: false,
   }
@@ -42,6 +42,7 @@ export default class App extends Component {
   }
 
   changeMode = mode => {
+    console.log(mode + '\n');
     if ((mode === 'date') || (mode === 'time1')) {
       if (mode === this.state.mode) {
         this.setState({ show1: !this.state.show1, show2: false });
@@ -51,7 +52,7 @@ export default class App extends Component {
     } else if (mode === 'picker1') {
       this.setState({ show1: !this.state.show1, show2: false });
     } else {
-      this.setState({ show1: false, show2: !this.state.show2 });
+      this.setState({ show1: false, show2: !this.state.show2, mode });
     }
   }
 

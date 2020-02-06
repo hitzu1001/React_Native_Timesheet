@@ -18,23 +18,21 @@ const TimeOffScreen = ({ navigation }) => {
   const [task, setTask] = useState('Select leave reason');
   const [notes, setNotes] = useState('');
   const [isChange, setIsChange] = useState(false);
-  const [error, setError] = useState(true);
-  // const [modalVisible, setmodalVisible] = useState(false);
+  const [errorMsg, setErrorMsg] = useState([]);
 
+  // switch (hours, minutes) {
+  //   case (hours < 0 || minutes < 0):
+  //     setError([...errorMsg, 'Start time needs to be before end time.']);
+  //   case (hours > 8 || (hours === 8 && minutes > 0)):
+  //     setError([...errorMsg, `Can't input more than 8 hours.`]);
+  // }
+
+  
   useEffect(() => {
     navigation.setParams({ isChange });
     setIsChange(true);
+    (task === 'Select leave reason') && setErrorMsg('Please select a leave reason.');
   }, [allDay, startTime, endTime, task, notes]);
-
-  // const toggleTimeForm = () => {
-  //   if (allDay) {
-  //     setStartTime(moment.utc());
-  //     setEndTime(moment.utc());
-  //   } else {
-  //     setStartTime(moment.utc(new Date()).local().format())
-  //     setEndTime(moment.utc(new Date()).local().format())
-  //   }
-  // };
 
   return (
     <ScrollView>
@@ -50,7 +48,8 @@ const TimeOffScreen = ({ navigation }) => {
       <View style={styles.subContainer}>
         <TimeForm
           startTime={startTime} endTime={endTime}
-          setStartTime={setStartTime} setEndTime={setEndTime} disabled={allDay}
+          setStartTime={setStartTime} setEndTime={setEndTime}
+          disabled={allDay} errorMsg={errorMsg} setErrorMsg={e => setErrorMsg(e)}
         />
       </View>
       <View style={styles.subContainer}>
@@ -64,9 +63,9 @@ const TimeOffScreen = ({ navigation }) => {
       <TouchableOpacity
         style={styles.sendBtn}
         onPress={() => {
-          if (task === 'Select leave reason' || error) {
-            Alert.alert(`Can't save timesheet`,
-              'Start time needs to be before end time.',
+          if (errorMsg !== '') {
+            console.log(errorMsg.toString());
+            Alert.alert(`Can't save timesheet`, '',
               [{ text: 'Close', style: 'cancel' },],
               { cancelable: false },
             )
