@@ -18,20 +18,27 @@ const TimeOffScreen = ({ navigation }) => {
   const [task, setTask] = useState('Select leave reason');
   const [notes, setNotes] = useState('');
   const [isChange, setIsChange] = useState(false);
-  const [errorMsg, setErrorMsg] = useState([]);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  // switch (hours, minutes) {
-  //   case (hours < 0 || minutes < 0):
-  //     setError([...errorMsg, 'Start time needs to be before end time.']);
-  //   case (hours > 8 || (hours === 8 && minutes > 0)):
-  //     setError([...errorMsg, `Can't input more than 8 hours.`]);
-  // }
+  var timeDiff = parseInt(
+    moment(endTime).diff(startTime, "minutes"), 10
+  );
 
-  
   useEffect(() => {
+    let message = '';
+    if (timeDiff < 0) {
+      message += 'Start time needs to be before end time.\n';
+    }
+    if (timeDiff > 480) {
+      message += `Can't input more than 8 hours.\n`;
+    }
+    if (task === 'Select leave reason') {
+      message += 'Please select a leave reason.';
+    }
+    setErrorMsg(message);
     navigation.setParams({ isChange });
     setIsChange(true);
-    (task === 'Select leave reason') && setErrorMsg('Please select a leave reason.');
+
   }, [allDay, startTime, endTime, task, notes]);
 
   return (
@@ -49,7 +56,7 @@ const TimeOffScreen = ({ navigation }) => {
         <TimeForm
           startTime={startTime} endTime={endTime}
           setStartTime={setStartTime} setEndTime={setEndTime}
-          disabled={allDay} errorMsg={errorMsg} setErrorMsg={e => setErrorMsg(e)}
+          disabled={allDay} setDuration={(h, m) => setDuration([h, m])}
         />
       </View>
       <View style={styles.subContainer}>
@@ -64,8 +71,7 @@ const TimeOffScreen = ({ navigation }) => {
         style={styles.sendBtn}
         onPress={() => {
           if (errorMsg !== '') {
-            console.log(errorMsg.toString());
-            Alert.alert(`Can't save timesheet`, '',
+            Alert.alert(`Can't send request`, errorMsg,
               [{ text: 'Close', style: 'cancel' },],
               { cancelable: false },
             )

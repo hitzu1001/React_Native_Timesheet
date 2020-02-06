@@ -39,7 +39,6 @@ export class TimeForm extends Component {
     var timeDiff = parseInt(
       moment(this.state.endTime).diff(this.state.startTime, "minutes"), 10
     );
-
     var hours = (timeDiff - (timeDiff % 60)) / 60;
     var minutes = timeDiff % 60;
 

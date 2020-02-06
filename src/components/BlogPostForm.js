@@ -13,11 +13,23 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [task, setTask] = useState(initialValues.task);
   const [notes, setNotes] = useState(initialValues.notes);
   const images = initialValues.images;
+  const [errorMsg, setErrorMsg] = useState('123');
 
   const change =
     task !== initialValues.task || notes !== initialValues.notes
 
   useEffect(() => {
+    // let message = '';
+    // if (timeDiff < 0) {
+    //   message += 'Start time needs to be before end time.\n';
+    // }
+    // if (timeDiff > 480) {
+    //   message += `Can't input more than 8 hours.\n`;
+    // }
+    // if (task === 'Select leave reason') {
+    //   message += 'Please select a leave reason.';
+    // }
+    // setErrorMsg(message);
     isChange(change);
   }, [task, notes]);
 
@@ -63,7 +75,16 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
       {!isCreate && <PhotoPicker id={id} images={images} />}
       <TouchableOpacity
         style={styles.saveBtn}
-        onPress={() => onSubmit(startTime, endTime, task, notes, state)}
+        onPress={() => {
+          if (errorMsg !== '') {
+            Alert.alert(`Can't save timesheet`, errorMsg,
+              [{ text: 'Close', style: 'cancel' },],
+              { cancelable: false },
+            )
+          } else {
+            onSubmit(startTime, endTime, task, notes, state);
+          }
+        }}
       >
         <Text style={styles.saveText}>Save Timesheet</Text>
       </TouchableOpacity>
