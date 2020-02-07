@@ -17,22 +17,18 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const change =
-    task !== initialValues.task || notes !== initialValues.notes
+    startTime !== initialValues.startTime || setEndTime !== initialValues.endTime
+    || task !== initialValues.task || notes !== initialValues.notes
 
+  const timeDiff = parseInt(
+    moment(endTime).diff(startTime, 'minutes'), 10
+  );
+  let message = '';
+  if (timeDiff < 0) { message += '\nStart time needs to be before end time.'; }
+  if (timeDiff > 480) { message += `\nCan't input more than 8 hours.`; }
+  if (task === '') { message += '\nPlease select a task'; }
+  
   useEffect(() => {
-    let timeDiff = parseInt(
-      moment(endTime).diff(startTime, 'minutes'), 10
-    );
-    let message = '';
-    if (timeDiff < 0) {
-      message += '\nStart time needs to be before end time.';
-    }
-    if (timeDiff > 480) {
-      message += `\nCan't input more than 8 hours.`;
-    }
-    if (task === '') {
-      message += '\nPlease select a task';
-    }
     setErrorMsg(message);
     isChange(change);
   }, [startTime, endTime, task, notes]);
