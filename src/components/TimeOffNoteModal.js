@@ -38,7 +38,7 @@ const TimeOffNoteModal = ({ notes, setNotes }) => {
         coverScreen={true}
       >
         <View style={modalStyle.screenCenter} >
-          <View style={{ ...modalStyle.container, width: 300 }}>
+          <View style={{ ...modalStyle.shadowContainer8, width: 300 }}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalText}>Time Off Notes</Text>
               <TouchableOpacity

@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, Switch } from 'react-native';
 import moment from 'moment';
 import TimeForm from "../components/TimeForm";
-import { Context as BlogContext } from '../context/BlogContext';
 import TimeOffTaskModal from '../components/TimeOffTaskModal';
 import TimeOffNoteModal from '../components/TimeOffNoteModal';
+import { Context as BlogContext } from '../context/BlogContext';
 import { Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 
@@ -20,25 +20,27 @@ const TimeOffScreen = ({ navigation }) => {
   const [isChange, setIsChange] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  var timeDiff = parseInt(
-    moment(endTime).diff(startTime, "minutes"), 10
-  );
+  useEffect(() => {
+    navigation.setParams({ isChange });
+  }, []);
 
   useEffect(() => {
+    let timeDiff = parseInt(
+      moment(endTime).diff(startTime, "minutes"), 10
+    );
     let message = '';
     if (timeDiff < 0) {
-      message += 'Start time needs to be before end time.\n';
+      message += '\nStart time needs to be before end time.';
     }
     if (timeDiff > 480) {
-      message += `Can't input more than 8 hours.\n`;
+      message += `\nCan't input more than 8 hours.`;
     }
     if (task === 'Select leave reason') {
-      message += 'Please select a leave reason.';
+      message += '\nPlease select a leave reason.';
     }
     setErrorMsg(message);
-    navigation.setParams({ isChange });
     setIsChange(true);
-
+    navigation.setParams({ isChange });
   }, [allDay, startTime, endTime, task, notes]);
 
   return (

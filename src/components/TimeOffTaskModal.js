@@ -29,7 +29,7 @@ const TimeOffTaskModal = ({ task, setTask }) => {
         coverScreen={true}
       >
         <TouchableOpacity style={modalStyle.screenCenter} onPress={() => toggleModal()}>
-          <View style={{ ...modalStyle.container, width: 200 }}>
+          <View style={{ ...modalStyle.shadowContainer8, width: 200 }}>
             <TouchableOpacity onPress={() => {
               toggleModal(); setTask('Sick leave');
             }}>

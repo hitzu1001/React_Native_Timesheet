@@ -8,7 +8,7 @@ const modalStyle = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 50,
   },
-  container: {
+  shadowContainer8: {
     borderWidth: 1,
     borderRadius: 8,
     borderColor: 'white',
@@ -27,5 +27,24 @@ const modalStyle = StyleSheet.create({
     // borderColor: 'pink',
     // borderWidth: 2,
   },
+  shadowContainer3: {
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: '#fff',
+    borderRadius: 5,
+    backgroundColor: 'white',
+    
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  }
+
 });
+
+//https://ethercreative.github.io/react-native-shadow-generator/
 module.exports = modalStyle;
