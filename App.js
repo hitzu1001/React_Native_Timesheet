@@ -21,7 +21,7 @@ import { Provider as BlogProvider } from './src/context/BlogContext';
 import { Provider as ImageProvider } from './src/context/ImageContext';
 import { setNavigator } from './src/navigationRef';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-// import ModalExample from './src/screens/ModalExample';
+
 
 const overviewFlow = createStackNavigator({
   Overview: OverviewScreen,
@@ -65,7 +65,6 @@ scheduleFlow.navigationOptions = {
 const moreFlow = createStackNavigator({
   More: MoreScreen,
   TimeOff: TimeOffScreen,
-  // ModalExample: ModalExample,
 })
 moreFlow.navigationOptions = {
   title: 'More',
@@ -87,7 +86,6 @@ const switchNavigator = createSwitchNavigator({
     scheduleFlow,
     moreFlow
   })
-
 });
 
 const App = createAppContainer(switchNavigator);

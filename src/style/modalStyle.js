@@ -29,7 +29,7 @@ const modalStyle = StyleSheet.create({
   },
   shadowContainer3: {
     borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 8,
     borderColor: '#fff',
     borderRadius: 5,
     backgroundColor: 'white',
