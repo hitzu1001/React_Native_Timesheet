@@ -33,7 +33,6 @@ const OverviewScreen = ({ navigation }) => {
     };
   }, []);
 
-
   return (
     <ScrollView style={styles.headerContainer}>
       <View style={styles.personalOverview}>
@@ -63,9 +62,11 @@ const OverviewScreen = ({ navigation }) => {
           </View>}
       </View>
       <View style={styles.scheduleContainer}>
-        <Text>Team Week Summary</Text>
-        <Text>Weekly Jobs</Text>
-        <BarComponent />
+        <View style={styles.personalOverview}>
+          <Text>Team Week Summary</Text>
+          <Text>Weekly Jobs</Text>
+          <BarComponent />
+        </View>
       </View>
     </ScrollView>
   );
