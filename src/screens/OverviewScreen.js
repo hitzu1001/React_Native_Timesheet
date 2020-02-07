@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, TouchableOpacity, Text as T } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Context as BlogContext } from '../context/BlogContext';
 import ProgressChart from '../components/ProgressChart'
 import BarComponent from '../components/BarComponent'
-// import { StackedBarChart, ProgressCircle } from 'react-native-svg-charts'
-import { Text, G } from 'react-native-svg'
+import PieChartComponent from '../components/PieChartComponent'
+import { G } from 'react-native-svg'
 import moment from 'moment'
 
 const OverviewScreen = ({ navigation }) => {
@@ -32,29 +32,39 @@ const OverviewScreen = ({ navigation }) => {
       <View style={styles.scheduleContainer}>
         <View style={styles.optionContainer}>
           <TouchableOpacity onPress={() => { setOption("Day") }}>
-            <T style={styles.option}>DAY TOTAL</T>
+            <Text style={styles.option}>DAY TOTAL</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { setOption("Week") }}>
-            <T style={styles.option}>WEEK TOTAL</T>
+            <Text style={styles.option}>WEEK TOTAL</Text>
           </TouchableOpacity>
         </View>
         {option === "Day" && <ProgressChart percentage={0.4} title={"of 8hrs"} style={styles.progressChart} />}
         {option === "Week" && <ProgressChart percentage={0.4} title={"of 40hrs"} style={styles.progressChart} />}
-        <View style={styles.optionContainer}>
-          <View style={styles.dateContainer}>
-            <T style={styles.dateDisplay}>Start Week</T>
-            <T style={styles.dateDisplay}>{from_date}</T>
+        {option === "Day" &&
+          <View style={styles.optionContainer}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateDisplay}>Today</Text>
+              <Text style={styles.dateDisplay}>{moment().format('DD-MMM')}</Text>
+            </View>
           </View>
-          <View style={styles.dateContainer}>
-            <T style={styles.dateDisplay}>End Week</T>
-            <T style={styles.dateDisplay}>{to_date}</T>
-          </View>
-        </View>
+        }
+        {option === "Week" &&
+          <View style={styles.optionContainer}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateDisplay}>Start Week</Text>
+              <Text style={styles.dateDisplay}>{from_date}</Text>
+            </View>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateDisplay}>End Week</Text>
+              <Text style={styles.dateDisplay}>{to_date}</Text>
+            </View>
+          </View>}
       </View>
       <View style={styles.scheduleContainer}>
+        <Text>Team Week Summary</Text>
+        <Text>Weekly Jobs</Text>
         <BarComponent />
       </View>
-
     </ScrollView>
   );
 };

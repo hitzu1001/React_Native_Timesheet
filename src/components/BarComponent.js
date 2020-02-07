@@ -89,6 +89,7 @@ class BarComponent extends React.PureComponent {
                     contentInset={{ top: 10, bottom: 10 }}
                     spacingInner={0.2}
                     gridMin={0}
+                    showGrid={false}
                 >
                     <Grid direction={Grid.Direction.VERTICAL} />
                     <Gradient />
