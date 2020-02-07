@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Context as BlogContext } from '../context/BlogContext';
 import ProgressChart from '../components/ProgressChart'
 import BarComponent from '../components/BarComponent'
-import PieChartComponent from '../components/PieChartComponent'
 import { G } from 'react-native-svg'
 import moment from 'moment'
 
@@ -28,7 +27,6 @@ const OverviewScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.headerContainer}>
-      <Text style={styles.header}>OverviewScreen</Text>
       <View style={styles.scheduleContainer}>
         <View style={styles.optionContainer}>
           <TouchableOpacity onPress={() => { setOption("Day") }}>
