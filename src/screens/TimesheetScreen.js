@@ -65,7 +65,7 @@ const TimesheetScreen = ({ navigation }) => {
             </>
           );
         }}
-      ></FlatList>
+      />
     </View>
   );
 };

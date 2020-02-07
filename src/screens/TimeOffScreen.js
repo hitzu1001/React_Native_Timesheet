@@ -21,7 +21,7 @@ const TimeOffScreen = ({ navigation }) => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const change = (allDay !== true)
-    // || (startTime !== nineAM) || (setEndTime !== fivePM)
+    || (startTime !== nineAM) || (setEndTime !== fivePM)
     || (task !== 'Select leave reason') || (notes !== '');
 
   const timeDiff = parseInt(

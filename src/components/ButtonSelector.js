@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ButtonGroup } from 'react-native-elements';
 
-const ButtonSelector = ({ setOption }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const buttons = ['DAY TOTAL', 'WEEK TOTAL']
+const ButtonSelector = ({ buttons, setOption }) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
     <View style={styles.buttonGroup}>
