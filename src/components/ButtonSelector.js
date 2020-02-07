@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import { ButtonGroup } from 'react-native-elements';
 import { StyleSheet } from 'react-native'
@@ -19,7 +18,7 @@ const ButtonSelector = ({ setOption }) => {
       containerStyle={styles.containerStyle}
       textStyle={styles.textStyle}
       buttonStyle={styles.buttonStyle}
-      // innerBorderStyle={styles.innerBorderStyle}
+      innerBorderStyle={styles.innerBorderStyle}
       selectedTextStyle={styles.selectedTextStyle}
       selectedButtonStyle={styles.selectedButtonStyle}
     />
@@ -37,17 +36,16 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#a9a9a9',
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   buttonStyle: {
     // title: "Clear button",
     borderColor: 'white',
     backgroundColor: '#fff',
   },
-  // innerBorderStyle: {
-  //   borderWidth: 3,
-  //   borderColor: 'blue',
-  // },
+  innerBorderStyle: {
+    width: 0,
+  },
   selectedTextStyle: {
     // fontSize: 12,
     color: '#20b2aa',

@@ -39,17 +39,18 @@ const OverviewScreen = ({ navigation }) => {
       <View style={styles.personalOverview}>
         <View style={styles.buttonGroup}>
           <ButtonSelector setOption={option => setOption(option)} />
-          {option === 0 && <ProgressChart percentage={0.4} title={"of 8hrs"} style={styles.progressChart} />}
-          {option === 1 && <ProgressChart percentage={0.4} title={"of 40hrs"} style={styles.progressChart} />}
-          <View style={styles.optionContainer}>
-            <View style={styles.dateContainer}>
-              <Text style={styles.dateDisplay}>Start Week</Text>
-              <Text style={styles.dateDisplay}>{from_date}</Text>
-            </View>
-            <View style={styles.dateContainer}>
-              <Text style={styles.dateDisplay}>End Week</Text>
-              <Text style={styles.dateDisplay}>{to_date}</Text>
-            </View>
+        </View>
+        {option === 0 && <ProgressChart percentage={0.4} title={"of 8hrs"} />}
+        {option === 1 && <ProgressChart percentage={0.4} title={"of 40hrs"} />}
+        <View style={styles.optionContainer}>
+          <View style={styles.dateContainer}>
+            <Text style={styles.label}>Start Week</Text>
+            <Text style={styles.date}>{from_date}</Text>
+          </View>
+          <View style={styles.line}></View>
+          <View style={styles.dateContainer}>
+            <Text style={styles.label}>End Week</Text>
+            <Text style={styles.date}>{to_date}</Text>
           </View>
         </View>
       </View>
@@ -92,43 +93,36 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   buttonGroup: {
-    marginVertical: -6,
+    marginTop: -6,
     marginHorizontal: -11,
-  },
-
-
-
-  progressChart: {
-    paddingVertical: 5,
-    paddingHorizontal: 10
   },
   optionContainer: {
     flexDirection: "row",
     justifyContent: "space-around"
   },
-  option: {
-    marginVertical: 10,
-    fontWeight: "bold",
-    borderColor: "grey",
-    borderRadius: 5,
-    borderWidth: 2,
-    padding: 5,
-    paddingHorizontal: 25
-  },
-  dateDisplay: {
-    marginVertical: 5,
-    fontSize: 12,
-    fontWeight: "bold",
-    paddingHorizontal: 5
-  },
   dateContainer: {
-    marginHorizontal: 15,
     paddingVertical: 0,
     paddingHorizontal: 10,
-    borderColor: '#909090',
     backgroundColor: 'white',
-    borderRadius: 20,
-    alignItems: "center"
+    alignItems: "center",
+  },
+  line:{
+    width: 1,
+    height: 40,
+    backgroundColor: 'lightgray',
+    alignSelf: 'flex-end',
+  },
+  label: {
+    marginBottom: 8,
+    color: '#a9a9a9',
+    fontSize: 12,
+    fontWeight: '500',
+    paddingHorizontal: 25
+  },
+  date: {
+    color: '#555',
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
 
