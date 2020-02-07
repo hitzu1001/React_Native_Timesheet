@@ -6,38 +6,30 @@ import * as scale from 'd3-scale'
 
 class BarComponent extends React.PureComponent {
     render() {
+        const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7)
         const data = [
             {
                 value: 50,
-                label: 'Default',
+                label: 'task1',
             },
             {
                 value: 10,
-                label: 'PurpleOpacity',
+                label: 'task2',
                 svg: {
-                    fill: 'rgba(134, 65, 244, 0.5)',
-                },
-            },
-            {
-                value: 40,
-                label: 'PurpleDash',
-                svg: {
-                    stroke: 'purple',
-                    strokeWidth: 2,
-                    fill: 'white',
-                    strokeDasharray: [4, 2],
+                    // fill: 'rgba(134, 65, 244, 0.5)',
+                    fill: randomColor()
                 },
             },
             {
                 value: 95,
-                label: 'Gradient',
+                label: 'task3',
                 svg: {
                     fill: 'url(#gradient)',
                 },
             },
             {
                 value: 85,
-                label: 'Green',
+                label: 'task4',
                 svg: {
                     fill: 'green',
                 },
@@ -47,8 +39,8 @@ class BarComponent extends React.PureComponent {
         const Gradient = () => (
             <Defs key={'gradient'}>
                 <LinearGradient id={'gradient'} x1={'0'} y={'0%'} x2={'100%'} y2={'0%'}>
-                    <Stop offset={'0%'} stopColor={'rgb(134, 65, 244)'} />
-                    <Stop offset={'100%'} stopColor={'rgb(66, 194, 244)'} />
+                    <Stop offset={'0%'} stopColor={randomColor()} />
+                    <Stop offset={'100%'} stopColor={randomColor()} />
                 </LinearGradient>
             </Defs>
         )
@@ -63,8 +55,9 @@ class BarComponent extends React.PureComponent {
                     fontSize={14}
                     fill={item.value > CUT_OFF ? 'white' : 'black'}
                     alignmentBaseline={'middle'}
+
                 >
-                    {item.label}
+                    5 hrs 40 mins
                 </Text>
             ))
 
@@ -79,19 +72,19 @@ class BarComponent extends React.PureComponent {
                     formatLabel={(_, index) => data[index].label}
                 />
                 <BarChart
-                    style={{ flex: 1, marginLeft: 8 }}
+                    style={{ flex: 0.85, marginLeft: 8 }}
                     data={data}
                     horizontal={true}
                     yAccessor={({ item }) => item.value}
                     svg={{
                         fill: 'blue',
+                        fillOpacity:0.5
                     }}
                     contentInset={{ top: 10, bottom: 10 }}
                     spacingInner={0.2}
                     gridMin={0}
-                    showGrid={false}
                 >
-                    <Grid direction={Grid.Direction.VERTICAL} />
+                    {/* <Grid direction={Grid.Direction.VERTICAL} /> */}
                     <Gradient />
                     <Labels />
                 </BarChart>

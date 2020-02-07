@@ -47,7 +47,6 @@ export default class App extends Component {
   }
 
   changeMode = mode => {
-    console.log(mode + '\n');
     if ((mode === 'date') || (mode === 'time1')) {
       if (mode === this.state.mode) {
         this.setState({ show1: !this.state.show1, show2: false });
@@ -68,8 +67,6 @@ export default class App extends Component {
     );
     var hours = (timeDiff - (timeDiff % 60)) / 60;
     var minutes = timeDiff % 60;
- 
-
 
     return (
       <Fragment>
@@ -95,12 +92,16 @@ export default class App extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {show1 &&
+              {!this.props.disabled && show1 &&
                 <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date1)}
                   mode={mode} is24Hour={false} display='default' onChange={this.setDate1}
                 />
               }
-
+              {this.props.disabled && show1 &&
+                <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date1)}
+                  mode={'date'} is24Hour={false} display='default' onChange={this.setDate1}
+                />
+              }
               <Text style={styles.task}>END TIME</Text>
               <View testID='appRootView' style={styles.container}>
                 <TouchableOpacity disabled={true}>
