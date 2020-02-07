@@ -18,23 +18,19 @@ const blogReducer = (state, action) => {
 
 const getBlogPosts = dispatch => {
   return async () => {
-    // const response = await timesheetApi.get("/blogposts");
-    // dispatch({ type: "get_blogposts", payload: response.data });
     const response = await timesheetApi.get("/timesheets");
-    // console.log(response)
     dispatch({ type: "get_blogposts", payload: response.data });
-    // const response = await timesheetApi.get("/timesheets")
-    // dispatch({ type: "get_blogposts", payload: response.data });
   };
 };
 
 const addBlogPost = dispatch => {
-  return async (startTime, endTime, task, notes, images, callback) => {
+  return async (startTime, endTime, task, notes, images, isTimeOff, callback) => {
     if (callback) {
       callback();
     }
+
     await timesheetApi.post("/timesheets", {
-      startTime, endTime, task, notes, images,
+      startTime, endTime, task, notes, images, isTimeOff
     });
     //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
   };

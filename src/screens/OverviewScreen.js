@@ -5,14 +5,17 @@ import UserAvatar from '../components/UserAvatar';
 import PersonalOverview from '../components/PersonalOverview';
 import TeamOverview from '../components/TeamOverview';
 import { Context as BlogContext } from '../context/BlogContext';
+import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
 // import { StackedBarChart, ProgressCircle } from 'react-native-svg-charts'
 
 const OverviewScreen = ({ navigation }) => {
   const { getBlogPosts } = useContext(BlogContext);
-  
+  const { getUser, state } = useContext(UserContext);
+
   useEffect(() => {
     getBlogPosts();
+    getUser();
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
     });
