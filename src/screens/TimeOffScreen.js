@@ -27,6 +27,7 @@ const TimeOffScreen = ({ navigation }) => {
   const timeDiff = parseInt(
     moment(endTime).diff(startTime, "minutes"), 10
   );
+
   let message = '';
   if (timeDiff < 0) { message += '\nStart time needs to be before end time.'; }
   if (timeDiff > 480) { message += `\nCan't input more than 8 hours.`; }
@@ -39,7 +40,6 @@ const TimeOffScreen = ({ navigation }) => {
   useEffect(() => {
     change && setIsChange(true);
     setErrorMsg(message);
-    // console.log(`${allDay}, ${startTime}, ${endTime}, ${task}, ${notes}`)
   }, [allDay, startTime, endTime, task, notes]);
 
   return (
@@ -77,7 +77,7 @@ const TimeOffScreen = ({ navigation }) => {
               { cancelable: false },
             )
           } else {
-            addBlogPost(startTime, endTime, task, notes, []);
+            addBlogPost(startTime, endTime, task, notes, [], true);
             navigation.pop();
           }
         }}

@@ -1,23 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar, SafeAreaView } from 'react-native';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
-import moment from 'moment'
+import moment from 'moment';
 import UserAvatar from '../components/UserAvatar';
 import ProgressChart from '../components/ProgressChart';
 import BarComponent from '../components/BarComponent';
 import ButtonSelector from '../components/ButtonSelector';
 import { Context as BlogContext } from '../context/BlogContext';
+import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
 // import { StackedBarChart, ProgressCircle } from 'react-native-svg-charts'
 
 const OverviewScreen = ({ navigation }) => {
   const { getBlogPosts } = useContext(BlogContext);
+  const { getUser, state } = useContext(UserContext);
   const [option, setOption] = useState(0)
   const from_date = moment().startOf('week').format('DD-MMM');
   const to_date = moment().endOf('week').format('DD-MMM');
 
   useEffect(() => {
     getBlogPosts();
+    getUser();
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
     });
@@ -28,7 +31,7 @@ const OverviewScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView >
-      <StatusBar barStyle="dark-content" />
+      {/* <StatusBar barStyle="dark-content" />
       <ScrollView style={styles.screen}>
         <View style={styles.overviewContainer}>
           <ButtonSelector setOption={option => setOption(option)} />
@@ -62,7 +65,7 @@ const OverviewScreen = ({ navigation }) => {
           <Text>Weekly Jobs</Text>
           <BarComponent />
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView >
   );
 };
