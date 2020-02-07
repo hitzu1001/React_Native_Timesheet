@@ -87,11 +87,9 @@ const styles = StyleSheet.create({
   addIcon: {
     fontSize: 26,
     color: '#20b2aa',
-    // marginHorizontal: 20,
   },
   screen: {
     flex: 1,
-    // backgroundColor: '#f6f6f6',
     backgroundColor: '#e9e9e9',
   },
   time: {
@@ -99,8 +97,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     alignSelf: 'stretch',
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   taskContainer: {
     backgroundColor: '#fff',

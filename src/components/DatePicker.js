@@ -61,8 +61,6 @@ export default class App extends Component {
     );
     var hours = (timeDiff - (timeDiff % 60)) / 60;
     var minutes = timeDiff % 60;
- 
-    console.log(`Picker: ${this.props.disabled}, ${mode}`)
 
     return (
       <Fragment>

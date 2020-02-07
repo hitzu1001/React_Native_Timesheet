@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar, SafeAreaView } from 'react-native';
-import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { Text as T, G } from 'react-native-svg'
+import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import moment from 'moment'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import UserAvatar from '../components/UserAvatar';
 import ProgressChart from '../components/ProgressChart';
 import BarComponent from '../components/BarComponent';
