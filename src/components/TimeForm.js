@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import DatePicker from "./DatePicker";
 import moment from "moment";
-moment.utc(new Date()).local().format()
 export class TimeForm extends Component {
   constructor(props) {
     super(props);
@@ -42,8 +41,8 @@ export class TimeForm extends Component {
           startTime={this.props.startTime}
           setEndTime={this.setEndTime}
           endTime={this.props.endTime}
-          disabled={this.props.disabled}
           setDate={this.setEndTime}
+          disabled={this.props.disabled}
         />
 
       </View>

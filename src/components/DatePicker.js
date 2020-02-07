@@ -8,16 +8,10 @@ export default class App extends Component {
   state = {
     date1: new Date(moment(this.props.startTime).local().toDate()),
     date2: new Date(moment(this.props.endTime).local().toDate()),
-    mode: this.props.disabled ? 'date' : 'time1',
+    mode: 'date',
     show1: false,
     show2: false,
   }
-
-  // componentDidUpdate() {
-  //   if (this.props.disabled === true) {
-  //     this.changeMode('time1')
-  //   }
-  // }
 
   setDate1 = (event, date1, date2) => {
     date1 = date1 || this.state.date1;
@@ -67,6 +61,8 @@ export default class App extends Component {
     );
     var hours = (timeDiff - (timeDiff % 60)) / 60;
     var minutes = timeDiff % 60;
+ 
+    console.log(`Picker: ${this.props.disabled}, ${mode}`)
 
     return (
       <Fragment>

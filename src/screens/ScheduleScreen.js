@@ -5,6 +5,7 @@ import iconStyle from '../style/iconStyle';
 import { Calendar } from 'react-native-calendars';
 import UserAvatar from '../components/UserAvatar';
 import { Context as BlogContext } from '../context/BlogContext';
+import modalStyle from '../style/modalStyle';
 import moment from 'moment';
 
 const ScheduleScreen = ({ navigation }) => {
@@ -23,7 +24,7 @@ const ScheduleScreen = ({ navigation }) => {
       let date = moment(state[i].startTime).format('YYYY-MM-DD')
       initialDates = { ...initialDates, [date]: { marked: true, selectedColor: '#FF7F50', } }
     }
-    
+
     setMarkedTask(initialDates);
   }, []);
 
@@ -56,25 +57,13 @@ const ScheduleScreen = ({ navigation }) => {
               setSelectedDate(day.dateString);
             }}
             markedDates={markedDate}
-            theme={{
-              calendarBackground: '#ffffff',
-              todayTextColor: '#ff7f50',
-              arrowColor: '#20b2aa',
-              dotColor: '#20b2aa',
-              textDayFontWeight: '500',
-              textMonthFontWeight: '500',
-              textDayHeaderFontWeight: '500',
-              textDayFontSize: 18,
-              textMonthFontSize: 18,
-              textDayHeaderFontSize: 14,
-            }}
+            theme={themeStyle}
           />
         </View>
       </ScrollView>
       <View>
         <Text style={styles.selectedDate}>{moment(selectedDate).format('DD-MM-YYYY')}</Text>
         <FlatList
-          // style={{ marginTop: 10, borderTopWidth: 1, borderColor: '#d3d3d3' }}
           data={selectedTask}
           keyExtractor={(blogPost) => blogPost._id}
           renderItem={({ item }) => {
@@ -114,18 +103,31 @@ ScheduleScreen.navigationOptions = () => {
   };
 };
 
+const themeStyle = {
+  calendarBackground: '#ffffff',
+  todayTextColor: '#ff7f50',
+  arrowColor: '#20b2aa',
+  dotColor: '#20b2aa',
+  textDayFontWeight: '500',
+  textMonthFontWeight: '500',
+  textDayHeaderFontWeight: '500',
+  textDayFontSize: 18,
+  textMonthFontSize: 18,
+  textDayHeaderFontSize: 14,
+}
+
 const styles = StyleSheet.create({
   calendar: {
-    // margin: 5,
+    ...modalStyle.shadowContainer3,
+    margin: 15,
     // borderWidth: 3,
     // borderColor: 'pink'
   },
   selectedDate: {
-    marginTop: 10,
     marginBottom: 5,
     paddingHorizontal: 25,
     color: '#808080',
-    fontSize: 12, 
+    fontSize: 12,
     fontWeight: '500'
   },
   row: {
@@ -148,8 +150,8 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   time: {
-    fontSize: 12, 
-    color: '#ffffff', 
+    fontSize: 12,
+    color: '#ffffff',
   },
   // timeDiff: {
   //   fontSize: 12,

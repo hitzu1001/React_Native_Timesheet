@@ -10,37 +10,36 @@ import iconStyle from '../style/iconStyle';
 
 const TimeOffScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext);
+  const nineAM = moment.utc(new Date()).local().set('hour', 9).set('minute', 0);
+  const fivePM = moment.utc(new Date()).local().set('hour', 17).set('minute', 0);
   const [allDay, setAllDay] = useState(true);
-  const [startTime, setStartTime] =
-    useState(moment.utc(new Date()).local().set('hour', 9).set('minute', 0));
-  const [endTime, setEndTime] =
-    useState(moment.utc(new Date()).local().set('hour', 17).set('minute', 0));
+  const [startTime, setStartTime] = useState(nineAM);
+  const [endTime, setEndTime] = useState(fivePM);
   const [task, setTask] = useState('Select leave reason');
   const [notes, setNotes] = useState('');
   const [isChange, setIsChange] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  const change = (allDay !== true)
+    // || (startTime !== nineAM) || (setEndTime !== fivePM)
+    || (task !== 'Select leave reason') || (notes !== '');
+
+  const timeDiff = parseInt(
+    moment(endTime).diff(startTime, "minutes"), 10
+  );
+  let message = '';
+  if (timeDiff < 0) { message += '\nStart time needs to be before end time.'; }
+  if (timeDiff > 480) { message += `\nCan't input more than 8 hours.`; }
+  if (task === 'Select leave reason') { message += '\nPlease select a leave reason.'; }
 
   useEffect(() => {
     navigation.setParams({ isChange });
   }, []);
 
   useEffect(() => {
-    let timeDiff = parseInt(
-      moment(endTime).diff(startTime, "minutes"), 10
-    );
-    let message = '';
-    if (timeDiff < 0) {
-      message += '\nStart time needs to be before end time.';
-    }
-    if (timeDiff > 480) {
-      message += `\nCan't input more than 8 hours.`;
-    }
-    if (task === 'Select leave reason') {
-      message += '\nPlease select a leave reason.';
-    }
+    change && setIsChange(true);
     setErrorMsg(message);
-    setIsChange(true);
-    navigation.setParams({ isChange });
+    // console.log(`${allDay}, ${startTime}, ${endTime}, ${task}, ${notes}`)
   }, [allDay, startTime, endTime, task, notes]);
 
   return (
@@ -90,7 +89,6 @@ const TimeOffScreen = ({ navigation }) => {
 };
 
 TimeOffScreen.navigationOptions = ({ navigation }) => {
-  // const { isChange } = navigation.state.params;
   return {
     title: 'Request Time Off',
     headerLeft: <TouchableOpacity

@@ -48,7 +48,6 @@ const TimesheetScreen = ({ navigation }) => {
           var minutes = timeDiff % 60;
           return (
             <>
-              {/* {console.log(sameDate)} */}
               {!sameDate &&
                 <Text style={styles.time}>
                   {moment(item.startTime).format("dddd")}, {moment(item.startTime).format("LL")}
