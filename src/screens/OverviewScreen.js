@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, TouchableOpacity, Text as T } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { Text, G } from 'react-native-svg'
+import { Text as T, G } from 'react-native-svg'
 import moment from 'moment'
-import SwitchSelector from "react-native-switch-selector";
+// import SwitchSelector from "react-native-switch-selector";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import ProgressChart from '../components/ProgressChart'
-import BarComponent from '../components/BarComponent'
+import ProgressChart from '../components/ProgressChart';
+import BarComponent from '../components/BarComponent';
+import ButtonSelector from '../components/ButtonSelector';
 import { Context as BlogContext } from '../context/BlogContext';
 import modalStyle from '../style/modalStyle';
 // import { StackedBarChart, ProgressCircle } from 'react-native-svg-charts'
 
 const OverviewScreen = ({ navigation }) => {
   const { getBlogPosts } = useContext(BlogContext);
-  const [option, setOption] = useState("Day")
+  const [option, setOption] = useState(0)
   const from_date = moment().startOf('week').format('DD-MMM');
   const to_date = moment().endOf('week').format('DD-MMM');
 
@@ -35,38 +36,20 @@ const OverviewScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.headerContainer}>
-      <Text style={styles.header}>OverviewScreen</Text>
-      <View style={{ ...modalStyle.shadowContainer3, scheduleContainer }}>
-        {/* <SwitchSelector
-          options={options}
-          initial={0}
-          onPress={value => setOption(value)}
-          fontSize={12}
-          textColor='#fff'
-          buttonColor='#fff'
-          selectedColor='#20b2aa'
-          selectedTextContainerStyle={{ borderBottomWidth: 2, borderBottomColor: '#20b2aa', }}
-          hasPadding
-          animationDuration={250}
-        /> */}
-        <View style={styles.optionContainer}>
-          <TouchableOpacity onPress={() => setOption("Day")}>
-            <T style={styles.option}>DAY TOTAL</T>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setOption("Week")}>
-            <T style={styles.option}>WEEK TOTAL</T>
-          </TouchableOpacity>
-        </View>
-        {option === "Day" && <ProgressChart percentage={0.4} title={"of 8hrs"} style={styles.progressChart} />}
-        {option === "Week" && <ProgressChart percentage={0.4} title={"of 40hrs"} style={styles.progressChart} />}
-        <View style={styles.optionContainer}>
-          <View style={styles.dateContainer}>
-            <T style={styles.dateDisplay}>Start Week</T>
-            <T style={styles.dateDisplay}>{from_date}</T>
-          </View>
-          <View style={styles.dateContainer}>
-            <T style={styles.dateDisplay}>End Week</T>
-            <T style={styles.dateDisplay}>{to_date}</T>
+      <View style={styles.personalOverview}>
+        <View style={styles.buttonGroup}>
+          <ButtonSelector setOption={option => setOption(option)} />
+          {option === 0 && <ProgressChart percentage={0.4} title={"of 8hrs"} style={styles.progressChart} />}
+          {option === 1 && <ProgressChart percentage={0.4} title={"of 40hrs"} style={styles.progressChart} />}
+          <View style={styles.optionContainer}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateDisplay}>Start Week</Text>
+              <Text style={styles.dateDisplay}>{from_date}</Text>
+            </View>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateDisplay}>End Week</Text>
+              <Text style={styles.dateDisplay}>{to_date}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -101,6 +84,20 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: '#f6f6f6',
   },
+  personalOverview: {
+    ...modalStyle.shadowContainer3,
+    marginBottom: 15,
+    marginTop: 15,
+    marginHorizontal: 15,
+    paddingBottom: 15,
+  },
+  buttonGroup: {
+    marginVertical: -6,
+    marginHorizontal: -11,
+  },
+
+
+
   progressChart: {
     paddingVertical: 5,
     paddingHorizontal: 10
@@ -120,6 +117,7 @@ const styles = StyleSheet.create({
   },
   dateDisplay: {
     marginVertical: 5,
+    fontSize: 12,
     fontWeight: "bold",
     paddingHorizontal: 5
   },
@@ -129,19 +127,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderColor: '#909090',
     backgroundColor: 'white',
-    alignSelf: 'stretch',
     borderRadius: 20,
     alignItems: "center"
   },
-});
-
-const scheduleContainer = StyleSheet.create({
-  marginBottom: 15,
-  marginTop: 15,
-  marginHorizontal: 15,
-  paddingVertical: 5,
-  paddingHorizontal: 10,
-  alignSelf: 'stretch',
 });
 
 export default OverviewScreen;
