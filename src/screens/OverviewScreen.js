@@ -33,7 +33,6 @@ const OverviewScreen = ({ navigation }) => {
     };
   }, []);
 
-
   return (
     <ScrollView style={styles.headerContainer}>
       <View style={styles.personalOverview}>
@@ -42,20 +41,34 @@ const OverviewScreen = ({ navigation }) => {
         </View>
         {option === 0 && <ProgressChart percentage={0.4} title={"of 8hrs"} />}
         {option === 1 && <ProgressChart percentage={0.4} title={"of 40hrs"} />}
-        <View style={styles.optionContainer}>
-          <View style={styles.dateContainer}>
-            <Text style={styles.label}>Start Week</Text>
-            <Text style={styles.date}>{from_date}</Text>
+        {option === 0 &&
+          <View style={styles.optionContainer}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.label}>Today</Text>
+              <Text style={styles.date}>{moment().format('DD-MMM')}</Text>
+            </View>
           </View>
-          <View style={styles.line}></View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.label}>End Week</Text>
-            <Text style={styles.date}>{to_date}</Text>
+        }
+        {option === 1 &&
+          <View style={styles.optionContainer}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.label}>Start Week</Text>
+              <Text style={styles.date}>{from_date}</Text>
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.dateContainer}>
+              <Text style={styles.label}>End Week</Text>
+              <Text style={styles.date}>{to_date}</Text>
+            </View>
           </View>
-        </View>
+        }
       </View>
       <View style={styles.scheduleContainer}>
-        <BarComponent />
+        <View style={styles.personalOverview}>
+          <Text>Team Week Summary</Text>
+          <Text>Weekly Jobs</Text>
+          <BarComponent />
+        </View>
       </View>
     </ScrollView>
   );
@@ -106,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: "center",
   },
-  line:{
+  line: {
     width: 1,
     height: 40,
     backgroundColor: 'lightgray',
