@@ -1,9 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
-import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import { Calendar } from 'react-native-calendars';
+import UserAvatar from '../components/UserAvatar';
 import { Context as BlogContext } from '../context/BlogContext';
 import moment from 'moment';
 
@@ -105,7 +105,7 @@ const ScheduleScreen = ({ navigation }) => {
 ScheduleScreen.navigationOptions = () => {
   return {
     title: 'Schedule',
-    headerLeft: <Avatar rounded title='TS' containerStyle={styles.avatar} />,
+    headerLeft: <UserAvatar />,
     headerRight: (
       <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => { }}>
         <Ionicons style={iconStyle.searchIcon} name='ios-search' />
@@ -115,9 +115,6 @@ ScheduleScreen.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
-  avatar: {
-    marginLeft: 20
-  },
   calendar: {
     // margin: 5,
     // borderWidth: 3,

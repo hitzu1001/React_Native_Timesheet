@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import { Avatar } from 'react-native-elements';
+import UserAvatar from '../components/UserAvatar';
 import { Context as AuthContext } from '../context/AuthContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -50,7 +50,7 @@ const MoreScreen = ({ navigation }) => {
 MoreScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'More',
-    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
+    headerLeft: <UserAvatar />,
   };
 };
 
@@ -72,9 +72,6 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     fontSize: 15,
   },
-  avatar: {
-    marginLeft: 20
-  }
 });
 
 export default MoreScreen;

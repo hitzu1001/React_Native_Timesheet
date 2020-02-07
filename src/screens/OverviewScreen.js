@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { StatusBar, SafeAreaView } from 'react-native';
 import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { Avatar } from 'react-native-elements';
 import { Text as T, G } from 'react-native-svg'
 import moment from 'moment'
-// import SwitchSelector from "react-native-switch-selector";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import UserAvatar from '../components/UserAvatar';
 import ProgressChart from '../components/ProgressChart';
 import BarComponent from '../components/BarComponent';
 import ButtonSelector from '../components/ButtonSelector';
@@ -18,11 +18,6 @@ const OverviewScreen = ({ navigation }) => {
   const from_date = moment().startOf('week').format('DD-MMM');
   const to_date = moment().endOf('week').format('DD-MMM');
 
-  // const options = [
-  //   { label: "DAY TOTAL", value: "Day" },
-  //   { label: "WEEK TOTAL", value: "Week" },
-  // ];
-
   useEffect(() => {
     getBlogPosts();
     const listener = navigation.addListener('didFocus', () => {
@@ -34,43 +29,43 @@ const OverviewScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <ScrollView style={styles.headerContainer}>
-      <View style={styles.personalOverview}>
-        <View style={styles.buttonGroup}>
+    <SafeAreaView >
+      <StatusBar barStyle="dark-content" />
+      <ScrollView style={styles.screen}>
+        <View style={styles.overviewContainer}>
           <ButtonSelector setOption={option => setOption(option)} />
+          {option === 0 && <ProgressChart percentage={0.6} title={"of 8 hrs"} />}
+          {option === 1 && <ProgressChart percentage={0.4} title={"of 40 hrs"} />}
+          {option === 0 &&
+            <View style={styles.optionContainer}>
+              <View style={styles.dateContainer}>
+                <Text style={styles.label}>Today</Text>
+                <Text style={styles.date}>{moment().format('DD-MMM')}</Text>
+              </View>
+            </View>
+          }
+          {option === 1 &&
+            <View style={styles.optionContainer}>
+              <View style={styles.dateContainer}>
+                <Text style={styles.label}>Start Week</Text>
+                <Text style={styles.date}>{from_date}</Text>
+              </View>
+              <View style={styles.line}></View>
+              <View style={styles.dateContainer}>
+                <Text style={styles.label}>End Week</Text>
+                <Text style={styles.date}>{to_date}</Text>
+              </View>
+            </View>
+          }
         </View>
-        {option === 0 && <ProgressChart percentage={0.4} title={"of 8hrs"} />}
-        {option === 1 && <ProgressChart percentage={0.4} title={"of 40hrs"} />}
-        {option === 0 &&
-          <View style={styles.optionContainer}>
-            <View style={styles.dateContainer}>
-              <Text style={styles.label}>Today</Text>
-              <Text style={styles.date}>{moment().format('DD-MMM')}</Text>
-            </View>
-          </View>
-        }
-        {option === 1 &&
-          <View style={styles.optionContainer}>
-            <View style={styles.dateContainer}>
-              <Text style={styles.label}>Start Week</Text>
-              <Text style={styles.date}>{from_date}</Text>
-            </View>
-            <View style={styles.line}></View>
-            <View style={styles.dateContainer}>
-              <Text style={styles.label}>End Week</Text>
-              <Text style={styles.date}>{to_date}</Text>
-            </View>
-          </View>
-        }
-      </View>
-      <View style={styles.scheduleContainer}>
-        <View style={styles.personalOverview}>
+
+        <View style={styles.overviewContainer}>
           <Text>Team Week Summary</Text>
           <Text>Weekly Jobs</Text>
           <BarComponent />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView >
   );
 };
 
@@ -84,7 +79,7 @@ OverviewScreen.navigationOptions = ({ navigation }) => {
     // headerTitleStyle: {
     //   fontWeight: 'bold',
     // },
-    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
+    headerLeft: <UserAvatar />,
   };
 };
 
@@ -92,22 +87,15 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
   },
-  avatar: {
-    marginLeft: 20
-  },
-  headerContainer: {
+  screen: {
     backgroundColor: '#f6f6f6',
   },
-  personalOverview: {
+  overviewContainer: {
     ...modalStyle.shadowContainer3,
     marginBottom: 15,
     marginTop: 15,
     marginHorizontal: 15,
     paddingBottom: 15,
-  },
-  buttonGroup: {
-    marginTop: -6,
-    marginHorizontal: -11,
   },
   optionContainer: {
     flexDirection: "row",

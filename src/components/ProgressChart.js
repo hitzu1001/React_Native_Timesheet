@@ -5,12 +5,12 @@ import { ProgressCircle } from 'react-native-svg-charts'
 
 class PregressChart extends React.PureComponent {
   render() {
-    let textColor = '#20b2aa'
+    let fillColor = '#20b2aa'
     let time = 0
     if (this.props.percentage > 1) {
-      textColor = 'red'
+      fillColor = '#ff0000'
     }
-    if (this.props.title === 'of 8hrs') {
+    if (this.props.title === 'of 8 hrs') {
       time = this.props.percentage * 480
     } else {
       time = this.props.percentage * 2400
@@ -20,10 +20,16 @@ class PregressChart extends React.PureComponent {
 
     const TextGroup = () => (
       <G key='title'>
-        <Text alignmentBaseline='text-bottom' fontSize='32' fontWeight='bold' y={5} x={-60}>
+        <Text style={styles.titleText} y={5} x={-60} alignmentBaseline='text-bottom'>
           {hours} h {minutes} m
         </Text>
-        <Text key='subtitle' textAnchor='middle' alignmentBaseline='text-top' y={8} fontSize='18'>
+        <Text
+          key='subtitle'
+          textAnchor='middle'
+          alignmentBaseline='text-top' 
+          y={16}
+          fill="#a9a9a9"
+          style={styles.subtitleText}>
           {this.props.title}
         </Text>
       </G>
@@ -34,7 +40,7 @@ class PregressChart extends React.PureComponent {
         <ProgressCircle
           style={styles.progressCircle}
           progress={this.props.percentage}
-          progressColor={textColor}
+          progressColor={fillColor}
           strokeWidth={12} >
           <TextGroup />
         </ProgressCircle>
@@ -46,15 +52,18 @@ class PregressChart extends React.PureComponent {
 const styles = StyleSheet.create({
   progressChart: {
     marginVertical: 30,
-    // borderColor: 'green',
-    // borderWidth: 2,
   },
   progressCircle: {
     height: 180,
   },
-  progressText: {
-
+  titleText: {
+    fontSize: 32,
+    fontWeight: 'bold'
+  },
+  subtitleText: {
+    fontSize: 18,
+    fontWeight: '500'
   }
 })
 
-export default PregressChart
+export default PregressChart;

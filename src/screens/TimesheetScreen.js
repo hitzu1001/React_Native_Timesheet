@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { Avatar } from 'react-native-elements';
+import UserAvatar from '../components/UserAvatar';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as ImageContext } from '../context/ImageContext';
 import { Ionicons } from '@expo/vector-icons'
@@ -34,7 +34,7 @@ const TimesheetScreen = ({ navigation }) => {
   }
 
   return (
-    <View>
+    <View style={styles.screen}>
       <FlatList
         data={sortedTimesheets}
         keyExtractor={blogPost => blogPost._id}
@@ -47,13 +47,13 @@ const TimesheetScreen = ({ navigation }) => {
           var hours = (timeDiff - (timeDiff % 60)) / 60;
           var minutes = timeDiff % 60;
           return (
-            <View style={styles.row}>
+            <>
               {/* {console.log(sameDate)} */}
               {!sameDate &&
                 <Text style={styles.time}>
                   {moment(item.startTime).format("dddd")}, {moment(item.startTime).format("LL")}
-                </Text>}
-
+                </Text>
+              }
               <TouchableOpacity
                 style={styles.taskContainer}
                 onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}
@@ -63,7 +63,7 @@ const TimesheetScreen = ({ navigation }) => {
                   {hours} hours {minutes} minutes
                 </Text>
               </TouchableOpacity>
-            </View>
+            </>
           );
         }}
       ></FlatList>
@@ -75,7 +75,7 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
 
   return {
     title: "Timesheets",
-    headerLeft: <Avatar rounded title="TS" containerStyle={styles.avatar} />,
+    headerLeft: <UserAvatar />,
     headerRight:
       <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
         {/* , { setDateList: navigation.state.params.setDateList } */}
@@ -90,16 +90,21 @@ const styles = StyleSheet.create({
     color: '#20b2aa',
     // marginHorizontal: 20,
   },
-  row: {
+  screen: {
+    flex: 1,
+    // backgroundColor: '#f6f6f6',
+    backgroundColor: '#e9e9e9',
   },
   time: {
-    backgroundColor: '#e9e9e9',
     fontSize: 12,
     paddingVertical: 10,
     paddingHorizontal: 15,
     alignSelf: 'stretch',
+    // borderColor: 'red',
+    // borderWidth: 2,
   },
   taskContainer: {
+    backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderTopWidth: 1,
@@ -116,9 +121,6 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
     color: "#a9a9a9"
   },
-  avatar: {
-    marginLeft: 20
-  }
 });
 
 export default TimesheetScreen;
