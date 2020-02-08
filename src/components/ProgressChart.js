@@ -13,7 +13,7 @@ class PregressChart extends React.PureComponent {
     if (this.props.title === 'of 8 hrs') {
       time = this.props.percentage * 480
     } else {
-      time = this.props.percentage * 2400
+      time = Number((this.props.percentage * 2400).toFixed(0))
     }
     var hours = (time - (time % 60)) / 60;
     var minutes = time % 60;
