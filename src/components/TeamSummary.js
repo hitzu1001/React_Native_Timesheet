@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import ButtonSelector from '../components/ButtonSelector';
+import ButtonSelector from './ButtonSelector';
 
 const TeamSummary = ({ blogPosts }) => {
   const [option, setOption] = useState(0)
