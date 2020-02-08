@@ -25,8 +25,8 @@ const tryLocalSignin = dispatch => async () => {
   const email = await AsyncStorage.getItem('email');
   if (token) {
     const response = await timesheetApi.get(`/users/${email}`);
-    dispatch({ type: "get_user", payload: response.data });
     dispatch({ type: 'signin', payload: 'token' });
+    dispatch({ type: "get_user", payload: response.data });
     navigate('Overview');
   } else {
     navigate('Signin');
@@ -41,7 +41,6 @@ const signup = dispatch => async ({ email, password, firstName, lastName, role }
   // Try to signup
   try {
     const response = await timesheetApi.post('/signup', { email, password, firstName, lastName, role });
-    console.log()
     // Handle success by updating state
     await AsyncStorage.setItem('token', response.data.token);
     await AsyncStorage.setItem('email', email);
@@ -65,8 +64,8 @@ const signin = dispatch => async ({ email, password }) => {
     await AsyncStorage.setItem('token', response.data.token);
     await AsyncStorage.setItem('email', email);
     const responseUser = await timesheetApi.get(`/users/${email}`);
-    dispatch({ type: "get_user", payload: responseUser.data });
     dispatch({ type: 'signin', payload: response.data.token });
+    dispatch({ type: "get_user", payload: responseUser.data });
     //Navigate to main flow
     navigate('Overview');
     // Handle failure by showing error message
