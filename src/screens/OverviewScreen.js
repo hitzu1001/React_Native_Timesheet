@@ -10,13 +10,19 @@ import modalStyle from '../style/modalStyle';
 
 const OverviewScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
-  const { getUser} = useContext(UserContext);
+  const { getUser, state: user } = useContext(UserContext);
+  const [userId, setUserId]  = useState("")
+  let [personalSchedule, setPersonalSchedule] = useState([])
+  // let personalSchedule = []
 
   useEffect(() => {
     getBlogPosts();
     getUser();
+    Array.isArray(user) && setUserId(user[0]._id)
+
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
+      Array.isArray(user) && setUserId(user[0]._id)
     });
     return () => {
       listener.remove();
@@ -28,11 +34,11 @@ const OverviewScreen = ({ navigation }) => {
       <StatusBar barStyle="dark-content" />
       <ScrollView style={styles.screen}>
         <View style={styles.overviewContainer}>
-          <PersonalOverview blogPosts={state}/>
+          <PersonalOverview blogPosts={state} userId={userId}/>
         </View>
-        <View style={styles.overviewContainer}>
-          <TeamSummary blogPosts={state}/>
-        </View>
+        {/* <View style={styles.overviewContainer}>
+          <TeamSummary blogPosts={state} />
+        </View> */}
       </ScrollView>
     </SafeAreaView >
   );
