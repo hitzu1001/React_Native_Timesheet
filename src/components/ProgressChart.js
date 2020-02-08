@@ -11,7 +11,7 @@ class PregressChart extends React.PureComponent {
       fillColor = '#ff0000'
     }
     if (this.props.title === 'of 8 hrs') {
-      time = this.props.percentage * 480
+      time = Number((this.props.percentage * 480).toFixed(0))
     } else {
       time = Number((this.props.percentage * 2400).toFixed(0))
     }
@@ -20,7 +20,7 @@ class PregressChart extends React.PureComponent {
 
     const TextGroup = () => (
       <G key='title'>
-        <Text style={styles.titleText} y={5} x={-60} alignmentBaseline='text-bottom'>
+        <Text style={styles.titleText} y={5} x={-68} alignmentBaseline='text-bottom'>
           {hours} h {minutes} m
         </Text>
         <Text
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     height: 180,
   },
   titleText: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: 'bold'
   },
   subtitleText: {

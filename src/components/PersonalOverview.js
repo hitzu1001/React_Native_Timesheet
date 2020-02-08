@@ -29,7 +29,7 @@ const PersonalOverview = ({ blogPosts: tasks, userId }) => {
   return (
     <View>
       <ButtonSelector buttons={buttons} setOption={option => setOption(option)} />
-      {option === 0 && <ProgressChart percentage={dayRatio} title={"of 8 hrs"} />}
+      {option === 0 && <ProgressChart percentage={Number((dayRatio).toFixed(6))} title={"of 8 hrs"} />}
       {option === 1 && <ProgressChart percentage={Number((weekRatio).toFixed(6))} title={"of 40 hrs"} />}
       {option === 0 &&
         <View style={styles.optionContainer}>
