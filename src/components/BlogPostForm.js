@@ -4,6 +4,7 @@ import moment from 'moment';
 import { navigate } from '../navigationRef';
 import PhotoPicker from './PhotoPicker';
 import TimeForm from './TimeForm';
+import TaskPickModal from './TaskPickModal';
 import { Context as ImageContext } from '../context/ImageContext';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -16,10 +17,11 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const images = initialValues.images;
   const [errorMsg, setErrorMsg] = useState('');
 
-  const change = (startTime !== initialValues.startTime)
-    || (setEndTime !== initialValues.endTime)
-    || (task !== initialValues.task)
-    || (notes !== initialValues.notes)
+  const change =
+    // (startTime !== initialValues.startTime) ||
+    // (setEndTime !== initialValues.endTime) ||
+    (task !== initialValues.task) ||
+    (notes !== initialValues.notes)
 
   const timeDiff = parseInt(
     moment(endTime).diff(startTime, 'minutes'), 10
@@ -46,11 +48,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>TASK</Text>
-        <TextInput
-          style={styles.input}
-          value={task}
-          onChangeText={task => setTask(task)}
-        />
+        <TaskPickModal task={task} setTask={t => setTask(t)} />
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.lable}>NOTES</Text>
@@ -111,13 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 10
-  },
-  input: {
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    borderColor: '#d3d3d3',
-    borderWidth: 1,
-    borderRadius: 3
   },
   emptyNote: {
     flexDirection: 'row',

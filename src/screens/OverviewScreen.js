@@ -13,7 +13,7 @@ const OverviewScreen = ({ navigation }) => {
   // true for Personal, false for Team
   const [summaryView, setsummaryView] = useState(true);
   const { getUser, state: user } = useContext(UserContext);
-  const [userId, setUserId]  = useState("");
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     getBlogPosts();
@@ -49,6 +49,9 @@ const OverviewScreen = ({ navigation }) => {
               </Text>
           }
         </TouchableOpacity>
+        <View style={styles.overviewContainer}>
+          <Summary />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

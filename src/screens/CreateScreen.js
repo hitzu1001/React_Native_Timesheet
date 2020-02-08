@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import BlogPostForm from '../components/BlogPostForm';
 import moment from 'moment';
@@ -10,6 +10,11 @@ const CreateScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext);
   var startTime = moment.utc(new Date()).local().format();
   var endTime = moment.utc(new Date()).local().format();
+  const [isChange, setIsChange] = useState(false);
+
+  useEffect(() => {
+    navigation.setParams({ isChange });
+  }, [isChange]);
 
   return (
     <BlogPostForm
@@ -24,12 +29,12 @@ const CreateScreen = ({ navigation }) => {
       onSubmit={(startTime, endTime, task, notes, images) => {
         addBlogPost(startTime, endTime, task, notes, images, false, () => {
           // ensure the page is navigated to Index after the post has been added
-         
+
           // navigation.state.params.setDateList([]);
           navigation.navigate('Timesheet');
         });
       }}
-      isChange={() => { }}
+      isChange={change => setIsChange(change)}
       isCreate={true}
     />
   );
@@ -41,7 +46,17 @@ CreateScreen.navigationOptions = ({ navigation }) => {
     headerLeft: (
       <TouchableOpacity
         style={iconStyle.iconTouchLeft}
-        onPress={() => navigation.navigate('Timesheet')}
+        onPress={() => 
+          (navigation.state.params.isChange)
+          ? Alert.alert('Discard changes?', '',
+            [
+              { text: 'Keep Editing', style: 'cancel' },
+              { text: 'Discard', onPress: () => { navigation.pop(); } }
+            ],
+            { cancelable: false },
+          )
+          : navigation.pop()
+        }
       >
         <Entypo style={iconStyle.crossIcon} name='cross' />
       </TouchableOpacity>

@@ -1,6 +1,21 @@
 import { StyleSheet } from 'react-native';
 
 const modalStyle = StyleSheet.create({
+  screenHearder: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    paddingTop: 15,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderColor: '#dcdcdc',
+    // borderColor: 'red',
+    // borderWidth: 2,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    
+  },
   screenCenter: {
     flex: 1,
     flexDirection: 'column',
@@ -8,6 +23,17 @@ const modalStyle = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 50,
   },
+  screenLeft: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginTop: 30,
+    backgroundColor: '#f3f3f3',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+
   shadowContainer8: {
     borderWidth: 1,
     borderRadius: 8,

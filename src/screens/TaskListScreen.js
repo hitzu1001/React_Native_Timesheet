@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { Context as TaskContext } from '../context/TaskContext';
 import { Ionicons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
@@ -26,7 +26,7 @@ const TaskListScreen = ({ navigation }) => {
   }, [state]);
 
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <FlatList
         data={sortedTasks}
         keyExtractor={t => t._id}
@@ -37,7 +37,7 @@ const TaskListScreen = ({ navigation }) => {
             <>
               {!sameCap && <Text style={styles.cap}>{item.name[0]}</Text>}
               <TouchableOpacity
-                style={{...styles.taskContainer, borderTopWidth: sameCap ? 0 : 1}}
+                style={{ ...styles.taskContainer, borderTopWidth: sameCap ? 0 : 1 }}
                 onPress={() => navigation.navigate("EditTask", { item })}
               >
                 <Text style={styles.task}>{item.name}</Text>
@@ -46,7 +46,7 @@ const TaskListScreen = ({ navigation }) => {
           );
         }}
       />
-    </View>
+    </ScrollView>
   );
 };
 
