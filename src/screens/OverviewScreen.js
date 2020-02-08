@@ -49,6 +49,9 @@ const OverviewScreen = ({ navigation }) => {
               </Text>
           }
         </TouchableOpacity>
+        <View style={styles.overviewContainer}>
+          <Summary blogPosts={state} userId={userId} summaryView={summaryView}/>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
