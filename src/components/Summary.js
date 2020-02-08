@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import ButtonSelector from './ButtonSelector';
 
-const TeamSummary = ({ blogPosts }) => {
+const Summary = ({ blogPosts }) => {
   const [option, setOption] = useState(0)
   const buttons = ['DAILY', 'WEEKLY', 'MONTHLY', 'TOTAL'];
   const colorCode= ['#617be3', '#61d4b3', '#fdd365', '#fb8d62', '#f54291']
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TeamSummary;
+export default Summary;

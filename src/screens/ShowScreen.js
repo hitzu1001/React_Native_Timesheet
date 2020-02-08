@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
-import { Context as ImageContext } from '../context/ImageContext';
 import Card from '../components/Card';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
@@ -10,23 +9,21 @@ import uuid from 'uuid/v4';
 
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext);
-  const { setImages } = useContext(ImageContext);
   const blogPost = state.find(blogPost =>
     blogPost._id === navigation.getParam('id')
   )
   // const timeHeader = blogPost.startTime;
 
   useEffect(() => {
-    const callDeleteFromNav = () => {
+    const callDeleteBlogPost = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
         navigation.navigate('Timesheet');
       });
     };
-    navigation.setParams({ callDeleteFromNav });
+    navigation.setParams({ callDeleteBlogPost });
 
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
-      // setImages(blogPost.images);
     });
 
     return () => {
@@ -87,7 +84,7 @@ ShowScreen.navigationOptions = ({ navigation }) => {
                 { text: 'Cancel', style: 'cancel' },
                 {
                   text: 'Delete', onPress: () => {
-                    navigation.state.params.callDeleteFromNav()
+                    navigation.state.params.callDeleteBlogPost()
                   }
                 }
               ],

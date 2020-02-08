@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StatusBar, SafeAreaView } from 'react-native';
+import { StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
 import PersonalOverview from '../components/PersonalOverview';
-import TeamSummary from '../components/TeamSummary';
+import Summary from '../components/Summary';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
 
 const OverviewScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
-  const { getUser} = useContext(UserContext);
+  const { getUser } = useContext(UserContext);
+
+  // true for Personal, false for Team
+  const [summaryView, setsummaryView] = useState(true);
 
   useEffect(() => {
     getBlogPosts();
@@ -24,17 +27,33 @@ const OverviewScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <StatusBar barStyle="dark-content" />
       <ScrollView style={styles.screen}>
         <View style={styles.overviewContainer}>
-          <PersonalOverview blogPosts={state}/>
+          <PersonalOverview blogPosts={state} />
         </View>
-        <View style={styles.overviewContainer}>
-          <TeamSummary blogPosts={state}/>
-        </View>
+        <TouchableOpacity
+          style={{ ...styles.switchView, backgroundColor: summaryView ? '#fff' : '#20b2aa' }}
+          onPress={() => setsummaryView(!summaryView)}
+        >
+          {summaryView
+            ? <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
+              Personal Summary
+              </Text>
+            : <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
+              Team Summary
+              </Text>
+          }
+        </TouchableOpacity>
+        {/* <View style={styles.overviewContainer}>
+          {summaryView
+            ? <Summary blogPosts={state} />
+            : null
+          }
+        </View> */}
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 
@@ -66,6 +85,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingBottom: 15,
   },
+  switchView: {
+    ...modalStyle.shadowContainer3,
+    alignSelf: 'flex-end',
+    marginHorizontal: 15,
+    width: 140,
+    borderRadius: 16,
+  },
+  switch: {
+    paddingVertical: 2,
+    textAlign: 'center',
+    fontSize: 12,
+    fontWeight: '600',
+  }
 });
 
 export default OverviewScreen;

@@ -10,28 +10,20 @@ import moment from "moment";
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-  // const [dateList, setDateList] = useState([])
   let sortedTimesheets = state.sort(futureToPast)
   let dateList = []
 
   function futureToPast(dateA, dateB) {
     return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
   }
-
-  // futureToPast = (dateA, dateB) => {
-  //   return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
-  // }
   
   useEffect(() => {
-    navigation.setParams({ getBlogPosts })
-    // navigation.setParams({ setDateList })
     const listener = navigation.addListener("didFocus", () => {
       dateList = []
       getBlogPosts();
       setImages([]);
       sortedTimesheets = state.sort(futureToPast)
     });
-
     return () => {
       listener.remove();
     };
@@ -58,10 +50,10 @@ const TimesheetScreen = ({ navigation }) => {
                 </Text>
               }
               <TouchableOpacity
-                style={styles.taskContainer}
+                style={{...styles.itemContainer, borderTopWidth: sameDate ? 0 : 1}}
                 onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}
               >
-                <Text style={styles.task}>{item.task}</Text>
+                <Text style={styles.item}>{item.task}</Text>
                 <Text style={styles.timeDiff}>
                   {hours} hours {minutes} minutes
                 </Text>
@@ -75,7 +67,6 @@ const TimesheetScreen = ({ navigation }) => {
 };
 
 TimesheetScreen.navigationOptions = ({ navigation }) => {
-
   return {
     title: "Timesheets",
     headerLeft: <UserAvatar />,
@@ -102,7 +93,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     alignSelf: 'stretch',
   },
-  taskContainer: {
+  itemContainer: {
     backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -110,15 +101,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#dcdcdc"
   },
-  task: {
-    fontSize: 12,
-    fontWeight: "bold"
+  item: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: '#444',
   },
   timeDiff: {
     fontSize: 12,
     alignSelf: "flex-end",
-    // fontWeight: "bold",
-    color: "#a9a9a9"
+    fontWeight: "500",
+    color: "#696969"
   },
 });
 

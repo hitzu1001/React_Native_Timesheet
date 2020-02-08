@@ -27,6 +27,7 @@ const MoreScreen = ({ navigation }) => {
           <MaterialCommunityIcons style={styles.icon} name='settings' />
           <Text style={styles.Text}>Settings</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.subContainer}
           onPress={() => navigation.navigate('TimeOff')}
@@ -34,6 +35,17 @@ const MoreScreen = ({ navigation }) => {
           <MaterialCommunityIcons style={styles.icon} name='timer-off' />
           <Text style={styles.Text}>Time Off</Text>
         </TouchableOpacity>
+
+
+        <TouchableOpacity
+          style={styles.subContainer}
+          onPress={() => navigation.navigate('TaskList')}
+        >
+          <MaterialCommunityIcons style={styles.icon} name='playlist-plus' />
+          <Text style={styles.Text}>Manage Tasks</Text>
+        </TouchableOpacity>
+
+
         <TouchableOpacity style={styles.subContainer}>
           <MaterialCommunityIcons style={styles.icon} name='bell-outline' />
           <Text style={styles.Text}>Notifications</Text>

@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import createDateContext from "./createDataContext";
-import { Context as BlogContext } from "./BlogContext";
 
 const imageReducer = (state, action) => {
   switch (action.type) {

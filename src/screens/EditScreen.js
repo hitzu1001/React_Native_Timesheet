@@ -10,7 +10,7 @@ import iconStyle from '../style/iconStyle'
 const EditScreen = ({ navigation }) => {
   const { state, editBlogPost } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext)
-  
+
   const id = navigation.getParam("id");
   const blogPost = state.find(blogPost => blogPost._id === id);
   const imageState = blogPost.images;
@@ -51,7 +51,7 @@ const EditScreen = ({ navigation }) => {
       isChange={setChange}
       isCreate={false}
     />
-    
+
   );
 };
 
@@ -71,7 +71,8 @@ EditScreen.navigationOptions = ({ navigation }) => {
             { cancelable: false },
           )
           : navigation.pop();
-      }}>
+      }}
+    >
       <Entypo style={iconStyle.crossIcon} name='cross' />
     </TouchableOpacity>
   };

@@ -16,9 +16,13 @@ import MoreScreen from './src/screens/MoreScreen';
 import PhotoEditScreen from './src/screens/PhotoEditScreen';
 import PhotoShowScreen from './src/screens/PhotoShowScreen';
 import TimeOffScreen from './src/screens/TimeOffScreen';
+import TaskListScreen from './src/screens/TaskListScreen';
+import CreateTaskScreen from './src/screens/CreateTaskScreen';
+import EditTaskScreen from './src/screens/EditTaskScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
 import { Provider as ImageProvider } from './src/context/ImageContext';
+import { Provider as TaskProvider } from './src/context/TaskContext';
 import { setNavigator } from './src/navigationRef';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -71,6 +75,9 @@ scheduleFlow.navigationOptions = {
 const moreFlow = createStackNavigator({
   More: MoreScreen,
   TimeOff: TimeOffScreen,
+  TaskList: TaskListScreen,
+  CreateTask: CreateTaskScreen,
+  EditTask: EditTaskScreen,
 })
 moreFlow.navigationOptions = {
   title: 'More',
@@ -101,11 +108,13 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <BlogProvider>
-      <ImageProvider>
-        <AuthProvider>
-          <App ref={navigator => { setNavigator(navigator) }} />
-        </AuthProvider>
-      </ImageProvider>
+      <TaskProvider>
+        <ImageProvider>
+          <AuthProvider>
+            <App ref={navigator => { setNavigator(navigator) }} />
+          </AuthProvider>
+        </ImageProvider>
+      </TaskProvider>
     </BlogProvider>
   );
 }
