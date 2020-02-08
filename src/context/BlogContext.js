@@ -47,7 +47,7 @@ const deleteBlogPost = dispatch => {
 };
 
 const editBlogPost = dispatch => {
-  return async (id, startTime, endTime, task, notes, images, callback) => {
+  return async (id, startTime, endTime, task, notes, images, isTimeOff, callback) => {
     await timesheetApi.put(`/timesheets/${id}`, {
       startTime, endTime, task, notes, images,
     });
