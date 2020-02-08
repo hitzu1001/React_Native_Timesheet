@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Math } from 'react-native';
 import moment from 'moment';
 import ButtonSelector from '../components/ButtonSelector';
 import ProgressChart from '../components/ProgressChart';
@@ -30,7 +30,7 @@ const PersonalOverview = ({ blogPosts: tasks, userId }) => {
     <View>
       <ButtonSelector buttons={buttons} setOption={option => setOption(option)} />
       {option === 0 && <ProgressChart percentage={dayRatio} title={"of 8 hrs"} />}
-      {option === 1 && <ProgressChart percentage={weekRatio} title={"of 40 hrs"} />}
+      {option === 1 && <ProgressChart percentage={Number((weekRatio).toFixed(6))} title={"of 40 hrs"} />}
       {option === 0 &&
         <View style={styles.optionContainer}>
           <View style={styles.dateContainer}>

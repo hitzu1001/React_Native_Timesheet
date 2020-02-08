@@ -50,7 +50,7 @@ const OverviewScreen = ({ navigation }) => {
           }
         </TouchableOpacity>
         <View style={styles.overviewContainer}>
-          <Summary />
+          <Summary blogPosts={state} userId={userId} summaryView={summaryView}/>
         </View>
       </ScrollView>
     </SafeAreaView>
