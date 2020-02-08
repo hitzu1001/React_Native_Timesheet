@@ -3,15 +3,14 @@ import { StatusBar, SafeAreaView } from 'react-native';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
 import PersonalOverview from '../components/PersonalOverview';
-import TeamOverview from '../components/TeamOverview';
+import TeamSummary from '../components/TeamSummary';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
-// import { StackedBarChart, ProgressCircle } from 'react-native-svg-charts'
 
 const OverviewScreen = ({ navigation }) => {
-  const { getBlogPosts } = useContext(BlogContext);
-  const { getUser, state } = useContext(UserContext);
+  const { state, getBlogPosts } = useContext(BlogContext);
+  const { getUser} = useContext(UserContext);
 
   useEffect(() => {
     getBlogPosts();
@@ -29,10 +28,10 @@ const OverviewScreen = ({ navigation }) => {
       <StatusBar barStyle="dark-content" />
       <ScrollView style={styles.screen}>
         <View style={styles.overviewContainer}>
-          <PersonalOverview />
+          <PersonalOverview blogPosts={state}/>
         </View>
         <View style={styles.overviewContainer}>
-          <TeamOverview />
+          <TeamSummary blogPosts={state}/>
         </View>
       </ScrollView>
     </SafeAreaView >

@@ -42,8 +42,8 @@ const EditScreen = ({ navigation }) => {
         notes: blogPost.notes,
         images: blogPost.images
       }}
-      onSubmit={(startTime, endTime, task, notes, images) => {
-        editBlogPost(id, startTime, endTime, task, notes, images, () => {
+      onSubmit={(startTime, endTime, task, notes, images, isTimeOff) => {
+        editBlogPost(id, startTime, endTime, task, notes, images, isTimeOff, () => {
           navigation.pop();
         });
         setImages(images)

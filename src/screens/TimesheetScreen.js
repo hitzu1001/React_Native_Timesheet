@@ -14,6 +14,14 @@ const TimesheetScreen = ({ navigation }) => {
   let sortedTimesheets = state.sort(futureToPast)
   let dateList = []
 
+  function futureToPast(dateA, dateB) {
+    return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
+  }
+
+  // futureToPast = (dateA, dateB) => {
+  //   return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
+  // }
+  
   useEffect(() => {
     navigation.setParams({ getBlogPosts })
     // navigation.setParams({ setDateList })
@@ -28,10 +36,6 @@ const TimesheetScreen = ({ navigation }) => {
       listener.remove();
     };
   }, [state]);
-
-  function futureToPast(dateA, dateB) {
-    return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
-  }
 
   return (
     <View style={styles.screen}>
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    backgroundColor: '#e9e9e9',
+    backgroundColor: '#f3f3f3',
   },
   time: {
     fontSize: 12,

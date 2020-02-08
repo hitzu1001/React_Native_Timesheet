@@ -15,7 +15,7 @@ const ButtonSelector = ({ buttons, setOption }) => {
           setSelectedIndex(i);
           setOption(i);
         }}
-        containerStyle={styles.containerStyle}
+        containerStyle={{...styles.containerStyle, height: 40,}}
         textStyle={styles.textStyle}
         // buttonStyle={styles.buttonStyle}
         innerBorderStyle={styles.innerBorderStyle}
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     flex: 1,
-    height: 50,
     borderWidth: 0,
   },
   textStyle: {

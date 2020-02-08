@@ -83,7 +83,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
               { cancelable: false },
             )
           } else {
-            onSubmit(startTime, endTime, task, notes, state);
+            onSubmit(startTime, endTime, task, notes, state, false);
           }
         }}
       >

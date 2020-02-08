@@ -37,10 +37,11 @@ const clearErrorMessage = dispatch => () => {
   dispatch({ type: 'clear_error_message' });
 }
 
-const signup = dispatch => async ({ email, password }) => {
+const signup = dispatch => async ({ email, password, firstName, lastName, role }) => {
   // Try to signup
   try {
-    const response = await timesheetApi.post('/signup', { email, password });
+    const response = await timesheetApi.post('/signup', { email, password, firstName, lastName, role });
+    console.log()
     // Handle success by updating state
     await AsyncStorage.setItem('token', response.data.token);
     await AsyncStorage.setItem('email', email);
