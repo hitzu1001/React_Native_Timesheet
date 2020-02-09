@@ -1,12 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { Calendar } from 'react-native-calendars';
+import moment from 'moment';
+import Modal from 'react-native-modal';
+import UserAvatar from '../components/UserAvatar';
+import ScheduleModal from '../components/ScheduleModal';
+import { Context as BlogContext } from '../context/BlogContext';
 import { Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
-import { Calendar } from 'react-native-calendars';
-import UserAvatar from '../components/UserAvatar';
-import { Context as BlogContext } from '../context/BlogContext';
 import modalStyle from '../style/modalStyle';
-import moment from 'moment';
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
@@ -15,6 +17,7 @@ const ScheduleScreen = ({ navigation }) => {
   const [selectedTask, setSelectedTask] = useState([]);
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
+  const [modalVisible, setmodalVisible] = useState(false);
 
   useEffect(() => {
     getBlogPosts();
@@ -46,21 +49,21 @@ const ScheduleScreen = ({ navigation }) => {
     setMarkedDate(labeledDate)
   }, [markedTask, selectedDate])
 
+  const toggleModal = () => {
+    setmodalVisible(!modalVisible);
+  };
+
   return (
-    <View>
-      <ScrollView>
-        <View style={styles.calendar}>
-          <Calendar
-            onDayPress={(day) => {
-              setSelectedDate(day.dateString);
-            }}
-            markedDates={markedDate}
-            theme={themeStyle}
-          />
-        </View>
-      </ScrollView>
+    <>
+      <View style={styles.calendar}>
+        <Calendar
+          onDayPress={day => setSelectedDate(day.dateString)}
+          markedDates={markedDate}
+          theme={themeStyle}
+        />
+      </View>
       <View>
-        <Text style={styles.selectedDate}>{moment(selectedDate).format('DD-MM-YYYY')}</Text>
+        <Text style={styles.selectedDate}>{moment(selectedDate).format('dddd, DD MMMM YYYY')}</Text>
         <FlatList
           data={selectedTask}
           keyExtractor={(blogPost) => blogPost._id}
@@ -72,20 +75,31 @@ const ScheduleScreen = ({ navigation }) => {
               <View style={styles.row}>
                 <TouchableOpacity
                   style={styles.taskContainer}
-                  onPress={() => navigation.navigate('Show', { id: item._id })}
+                  // onPress={() => navigation.navigate('Show', { id: item._id })}
+                  onPress={() => toggleModal()}
                 >
+                  <Modal style={{ margin: 0 }} isVisible={modalVisible} backdropOpacity={0.7}>
+                    <ScheduleModal
+                      timesheet={item}
+                      toggleModal={toggleModal}
+                      hours={hours}
+                      minutes={minutes}
+                    />
+                  </Modal>
                   <Text style={styles.task}>{item.task}</Text>
-                  <Text style={styles.time}>
-                    {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
-                  </Text>
-                  {/* <Text style={styles.timeDiff}>{hours} hours {minutes} minutes</Text> */}
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                    <Text style={styles.time}>
+                      {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
+                    </Text>
+                    <Text style={styles.time}>{hours} hrs {minutes} mins</Text>
+                  </View>
                 </TouchableOpacity>
               </View>
             );
           }}
         />
       </View>
-    </View>
+    </>
   );
 };
 

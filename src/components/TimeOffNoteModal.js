@@ -38,11 +38,16 @@ const TimeOffNoteModal = ({ notes, setNotes }) => {
         coverScreen={true}
       >
         <View style={modalStyle.screenCenter} >
-          <View style={{ ...modalStyle.shadowContainer8, width: 300 }}>
+          <View style={{ ...modalStyle.shadowContainer8, width: 320 }}>
             <View style={styles.modalHeader}>
+              <TouchableOpacity
+                style={iconStyle.iconTouchRight}
+                disabled={true}
+              >
+              </TouchableOpacity>
               <Text style={styles.modalText}>Time Off Notes</Text>
               <TouchableOpacity
-                style={iconStyle.iconTouchLeft}
+                style={iconStyle.iconTouchRight}
                 onPress={() => {
                   toggleModal();
                   setNotes(content);
@@ -84,21 +89,22 @@ const styles = StyleSheet.create({
     borderRadius: 3
   },
   modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    ...modalStyle.screenHearder,
     alignItems: 'center',
+    borderBottomWidth: 0,
+    // borderColor: '#fff',
+    paddingTop: 10,
+    paddingBottom: 7,
   },
   modalText: {
     flex: 1,
-    marginLeft: 35,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   modalNotes: {
-    marginHorizontal: 10,
-    marginBottom: 5,
+    marginHorizontal: 15,
+    marginBottom: 15,
     padding: 10,
-    width: 280,
     height: 130,
     borderColor: '#d3d3d3',
     borderWidth: 1,
