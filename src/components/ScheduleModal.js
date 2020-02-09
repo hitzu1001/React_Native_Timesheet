@@ -3,20 +3,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import UserAvatar from '../components/UserAvatar';
 import { Context as UserContext } from '../context/AuthContext';
+import { Context as UserList } from '../context/UserContext';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
-const ScheduleModal = ({ timesheet, toggleModal, hours, minutes }) => {
+const ScheduleModal = ({ timesheet, toggleModal, hours, minutes, user }) => {
   const { state } = useContext(UserContext);
-  const user = state[0];
+  const { state: userList } = useContext(UserList);
 
-  useEffect(() => {
-    console.log();
-  }, []);
 
   return (
     <>
+      {/* {console.log(user.firstName)} */}
       <TouchableOpacity style={modalStyle.screenCenter} onPress={() => toggleModal()}>
         <View style={styles.modalContent}>
           <View style={styles.container}>
@@ -39,7 +38,7 @@ const ScheduleModal = ({ timesheet, toggleModal, hours, minutes }) => {
             <Text style={styles.content}>Employee</Text>
           </View>
           <View style={styles.userContainer}>
-            <UserAvatar />
+            <UserAvatar firstName={user.firstName} lastName={user.lastName} />
             <Text style={styles.user}>{user.firstName} {user.lastName}</Text>
           </View>
         </View>

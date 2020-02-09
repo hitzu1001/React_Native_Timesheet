@@ -15,7 +15,7 @@ import modalStyle from '../style/modalStyle';
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
-  const { state: user, getUser } = useContext(UserContext);
+  const { state: user } = useContext(UserContext);
   const { state: userList } = useContext(UserList);
   const today = moment(new Date()).format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today);
@@ -35,8 +35,16 @@ const ScheduleScreen = ({ navigation }) => {
   filteredTasks = selectTasks(view)
 
   useEffect(() => {
+    const listener = navigation.addListener("didFocus", () => {
+      getBlogPosts();
+    });
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
+  useEffect(() => {
     dateList = []
-    getBlogPosts();
     // {console.log(userList)}
     Array.isArray(user) && setUserRole(user[0].role)
     personalTasks = state.filter(task => task.userId === user[0]._id)
@@ -55,7 +63,6 @@ const ScheduleScreen = ({ navigation }) => {
   }, [state])
 
   useEffect(() => {
-    getBlogPosts();
     // getUser()
     Array.isArray(user) && setUserRole(user[0].role)
     let dayTasks = []
@@ -114,6 +121,7 @@ const ScheduleScreen = ({ navigation }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
             var hours = (timeDiff - timeDiff % 60) / 60;
             var minutes = timeDiff % 60;
+            var userData = userList.filter(user=>user._id === item.userId)
             return (
               <View style={styles.row}>
                 <TouchableOpacity
@@ -127,6 +135,7 @@ const ScheduleScreen = ({ navigation }) => {
                       toggleModal={toggleModal}
                       hours={hours}
                       minutes={minutes}
+                      user={userData[0]}
                     />
                   </Modal>
                   <Text style={styles.task}>{item.task}</Text>
