@@ -5,35 +5,51 @@ import iconStyle from '../style/iconStyle';
 import { Calendar } from 'react-native-calendars';
 import UserAvatar from '../components/UserAvatar';
 import { Context as BlogContext } from '../context/BlogContext';
+import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
 import moment from 'moment';
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
+  const { state: user } = useContext(UserContext);
   const today = moment(new Date()).format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedTask, setSelectedTask] = useState([]);
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
+  const [summaryView, setsummaryView] = useState(true);
+  const userRole = user[0].role
+  let personalTasks = []
+  let filteredTasks = []
+  
 
   useEffect(() => {
     getBlogPosts();
+    personalTasks = state.filter(task => task.userId === user[0]._id)
+    filteredTasks = selectTasks(summaryView)
     let initialDates = {};
-    for (let i = 0; i < state.length; i++) {
-      let date = moment(state[i].startTime).format('YYYY-MM-DD')
+
+    for (let i = 0; i < filteredTasks.length; i++) {
+      let date = moment(filteredTasks[i].startTime).format('YYYY-MM-DD')
       initialDates = { ...initialDates, [date]: { marked: true, selectedColor: '#FF7F50', } }
     }
+
     setMarkedTask(initialDates);
-  }, []);
+  }, [summaryView]);
 
   useEffect(() => {
-    let filteredTask = []
-    for (let i = 0; i < state.length; i++) {
-      if (moment(state[i].startTime).isSame(selectedDate, 'day')) {
-        filteredTask.push(state[i])
+    getBlogPosts();
+    let dayTasks = []
+    personalTasks = state.filter(task => task.userId === user[0]._id)
+    filteredTasks = selectTasks(summaryView)
+
+    for (let i = 0; i < filteredTasks.length; i++) {
+      if (moment(filteredTasks[i].startTime).isSame(selectedDate, 'day')) {
+        dayTasks.push(state[i])
       }
     }
-    setSelectedTask(filteredTask)
+    
+    setSelectedTask(dayTasks)
     let selectedColor = (selectedDate === today) ? '#FF7F50' : '#20b2aa';
     let labeledDate = {
       ...markedTask, [selectedDate]: {
@@ -46,8 +62,29 @@ const ScheduleScreen = ({ navigation }) => {
     setMarkedDate(labeledDate)
   }, [markedTask, selectedDate])
 
+  
+  function selectTasks(summaryView) {
+    if (summaryView) {
+      return personalTasks
+    } else {
+      return state
+    }
+  }
+
   return (
     <View>
+      {userRole === "Manager" && <TouchableOpacity
+        style={{
+          ...styles.switchView,
+          backgroundColor: summaryView ? '#fff' : '#20b2aa',
+          borderColor: summaryView ? '#fff' : '#20b2aa'
+        }}
+        onPress={() => setsummaryView(!summaryView)}
+      >
+        <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
+          {summaryView ? 'Personal Summary' : 'Team Summary'}
+        </Text>
+      </TouchableOpacity>}
       <ScrollView>
         <View style={styles.calendar}>
           <Calendar
@@ -149,6 +186,13 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 12,
     color: '#ffffff',
+  },
+  switchView: {
+    ...modalStyle.shadowContainer3,
+    alignSelf: 'flex-end',
+    marginHorizontal: 15,
+    width: 140,
+    borderRadius: 16,
   },
   // timeDiff: {
   //   fontSize: 12,

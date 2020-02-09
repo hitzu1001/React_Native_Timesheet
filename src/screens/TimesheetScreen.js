@@ -3,36 +3,69 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import UserAvatar from '../components/UserAvatar';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as ImageContext } from '../context/ImageContext';
+import { Context as UserContext } from '../context/AuthContext';
 import { Ionicons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
+import modalStyle from '../style/modalStyle';
 import moment from "moment";
 
 
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
+  const { state: user } = useContext(UserContext);
+  const [summaryView, setsummaryView] = useState(true);
+  let personalTasks = []
+  let filteredTasks = []
+  const userRole = user[0].role
   let dateList = []
 
-  function futureToPast(dateA, dateB) {
-    return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
-  }
-  
+  personalTasks = state.filter(task => task.userId === user[0]._id)
+  filteredTasks = selectTasks(summaryView)
+
   useEffect(() => {
     dateList = []
+    personalTasks = state.filter(task => task.userId === user[0]._id)
+    filteredTasks = selectTasks(summaryView)
     const listener = navigation.addListener("didFocus", () => {
       dateList = []
       getBlogPosts();
       setImages([]);
+      filteredTasks = selectTasks(summaryView)
     });
     return () => {
       listener.remove();
     };
-  }, [state]);
+  }, [state, summaryView]);
+
+  function selectTasks(summaryView) {
+    if (summaryView) {
+      return personalTasks
+    } else {
+      return state
+    }
+  }
+
+  function futureToPast(dateA, dateB) {
+    return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
+  }
 
   return (
     <View style={styles.screen}>
+      {userRole === "Manager" && <TouchableOpacity
+        style={{
+          ...styles.switchView,
+          backgroundColor: summaryView ? '#fff' : '#20b2aa',
+          borderColor: summaryView ? '#fff' : '#20b2aa'
+        }}
+        onPress={() => setsummaryView(!summaryView)}
+      >
+        <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
+          {summaryView ? 'Personal Summary' : 'Team Summary'}
+        </Text>
+      </TouchableOpacity>}
       <FlatList
-        data={state.sort(futureToPast)}
+        data={filteredTasks.sort(futureToPast)}
         keyExtractor={blogPost => blogPost._id}
         renderItem={({ item }) => {
           var sameDate = false
@@ -50,7 +83,7 @@ const TimesheetScreen = ({ navigation }) => {
                 </Text>
               }
               <TouchableOpacity
-                style={{...styles.itemContainer, borderTopWidth: sameDate ? 0 : 1}}
+                style={{ ...styles.itemContainer, borderTopWidth: sameDate ? 0 : 1 }}
                 onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}
               >
                 <Text style={styles.item}>{item.task}</Text>
@@ -112,6 +145,13 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#696969"
   },
+  switchView: {
+    ...modalStyle.shadowContainer3,
+    alignSelf: 'flex-end',
+    marginHorizontal: 15,
+    width: 140,
+    borderRadius: 16,
+  }
 });
 
 export default TimesheetScreen;

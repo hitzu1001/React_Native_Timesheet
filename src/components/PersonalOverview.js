@@ -13,16 +13,16 @@ const PersonalOverview = ({ blogPosts: tasks, userId }) => {
   let dayRatio = 0
   let weekRatio = 0
 
-  for (let i = 0; i < tasks.length; i++) {
-    if (moment(tasks[i].startTime).isSame(moment(), 'day')) {
-      dayRatio = dayRatio + parseInt(moment(tasks[i].endTime).diff(tasks[i].startTime, 'minutes'), 10) / 480;
-      filteredTasks.push(tasks[i])
+  for (let i = 0; i < filteredTasks.length; i++) {
+    if (moment(filteredTasks[i].startTime).isSame(moment(), 'day')) {
+      dayRatio = dayRatio + parseInt(moment(filteredTasks[i].endTime).diff(filteredTasks[i].startTime, 'minutes'), 10) / 480;
+      // filteredTasks.push(tasks[i])
     }
   }
 
-  for (let i = 0; i < tasks.length; i++) {
-    if ((moment(tasks[i].startTime).isAfter(moment().startOf('week'))) && (moment(tasks[i].startTime).isBefore(moment().endOf('week')))) {
-      weekRatio = weekRatio + parseInt(moment(tasks[i].endTime).diff(tasks[i].startTime, 'minutes'), 10) / 2400;
+  for (let i = 0; i < filteredTasks.length; i++) {
+    if ((moment(filteredTasks[i].startTime).isAfter(moment().startOf('week'))) && (moment(filteredTasks[i].startTime).isBefore(moment().endOf('week')))) {
+      weekRatio = weekRatio + parseInt(moment(filteredTasks[i].endTime).diff(filteredTasks[i].startTime, 'minutes'), 10) / 2400;
     }
   }
 
