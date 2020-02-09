@@ -13,7 +13,7 @@ import moment from "moment";
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-  const { state: user, getAllUser, getUser } = useContext(UserContext);
+  const { state: user, getUser } = useContext(UserContext);
   const [view, setView] = useState(true);
   const [userRole, setUserRole] = useState('Employee')
   const [userList, setUserList] = useState([])
@@ -27,7 +27,6 @@ const TimesheetScreen = ({ navigation }) => {
   useEffect(() => {
     getUser()
     Array.isArray(user) && setUserRole(user[0].role)
-
     dateList = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(view)
