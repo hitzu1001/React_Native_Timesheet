@@ -14,15 +14,18 @@ const OverviewScreen = ({ navigation }) => {
   const [summaryView, setsummaryView] = useState(true);
   const { getUser, state: user } = useContext(UserContext);
   const [userId, setUserId] = useState("");
+  const [userRole, setUserRole] = useState("")
 
   useEffect(() => {
     getBlogPosts();
     getUser();
     Array.isArray(user) && setUserId(user[0]._id)
+    Array.isArray(user) && setUserRole(user[0].role)
 
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
       Array.isArray(user) && setUserId(user[0]._id)
+      Array.isArray(user) && setUserRole(user[0].role)
     });
     return () => {
       listener.remove();
@@ -41,7 +44,7 @@ const OverviewScreen = ({ navigation }) => {
         <View style={styles.overviewContainer}>
           <PersonalOverview blogPosts={state} userId={userId} />
         </View>
-        <TouchableOpacity
+        { userRole === "Manager" && <TouchableOpacity
           style={{
             ...styles.switchView,
             backgroundColor: summaryView ? '#fff' : '#20b2aa',
@@ -52,10 +55,10 @@ const OverviewScreen = ({ navigation }) => {
           <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
             {summaryView ? 'Team Summary' : 'Personal Summary'}
           </Text>
-        </TouchableOpacity>
-        <View style={styles.overviewContainer}>
-          <Summary blogPosts={state} userId={userId} summaryView={summaryView} />
-        </View>
+        </TouchableOpacity>}
+          <View style={styles.overviewContainer}>
+            <Summary blogPosts={state} userId={userId} summaryView={summaryView} />
+          </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -16,7 +16,9 @@ const TaskListScreen = ({ navigation }) => {
   }
 
   useEffect(() => {
+    prefixList = []
     const listener = navigation.addListener("didFocus", () => {
+      prefixList = []
       getTaskList();
       sortedTasks = state.sort(sortTask);
     });
