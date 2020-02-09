@@ -7,10 +7,10 @@ import { Ionicons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
 import moment from "moment";
 
+
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-  let sortedTimesheets = state.sort(futureToPast)
   let dateList = []
 
   function futureToPast(dateA, dateB) {
@@ -18,11 +18,11 @@ const TimesheetScreen = ({ navigation }) => {
   }
   
   useEffect(() => {
+    dateList = []
     const listener = navigation.addListener("didFocus", () => {
       dateList = []
       getBlogPosts();
       setImages([]);
-      sortedTimesheets = state.sort(futureToPast)
     });
     return () => {
       listener.remove();
@@ -32,7 +32,7 @@ const TimesheetScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <FlatList
-        data={sortedTimesheets}
+        data={state.sort(futureToPast)}
         keyExtractor={blogPost => blogPost._id}
         renderItem={({ item }) => {
           var sameDate = false
