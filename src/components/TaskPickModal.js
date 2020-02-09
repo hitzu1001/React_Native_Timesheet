@@ -31,9 +31,12 @@ const TaskPickModal = ({ task, setTask }) => {
     <>
       <TouchableOpacity onPress={() => toggleModal()}>
         <View style={styles.input}>
-          {task === 'Select a task'
-            && <MaterialIcons style={iconStyle.crossIcon} name='time-to-leave' />}
-          <Text style={styles.taskInput}>{task}</Text>
+          <Text style={{
+            ...styles.taskInput,
+            color: task === 'Select a task' ? '#8e8e8e' : '#000',
+          }}>
+            {task}
+          </Text>
         </View>
       </TouchableOpacity>
       <Modal

@@ -19,7 +19,7 @@ const TimeOffNoteModal = ({ notes, setNotes }) => {
         {notes === '' ? (
           <View style={styles.emptyNote}>
             <Ionicons style={styles.addIcon} name='ios-add' />
-            <Text style={styles.emptyNoteText}>Add timesheet note</Text>
+            <Text style={styles.emptyNoteText}>Add time off note</Text>
           </View>
         ) : (
             <Text

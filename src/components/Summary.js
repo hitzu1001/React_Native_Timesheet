@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   bar: {
     flex: 1,
     height: 16,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#eaeaea',
     borderRadius: 8,
   },
   colorBar: {

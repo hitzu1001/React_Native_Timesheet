@@ -37,20 +37,17 @@ const OverviewScreen = ({ navigation }) => {
           <PersonalOverview blogPosts={state} userId={userId} />
         </View>
         <TouchableOpacity
-          style={{ ...styles.switchView, backgroundColor: summaryView ? '#fff' : '#20b2aa' }}
+          style={{ ...styles.switchView, 
+            backgroundColor: summaryView ? '#fff' : '#20b2aa',
+            borderColor: summaryView ? '#fff' : '#20b2aa' }}
           onPress={() => setsummaryView(!summaryView)}
         >
-          {summaryView
-            ? <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
-              Personal Summary
-              </Text>
-            : <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
-              Team Summary
-              </Text>
-          }
+          <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
+            {summaryView ? 'Personal Summary' : 'Team Summary'}
+          </Text>
         </TouchableOpacity>
         <View style={styles.overviewContainer}>
-          <Summary blogPosts={state} userId={userId} summaryView={summaryView}/>
+          <Summary blogPosts={state} userId={userId} summaryView={summaryView} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -96,7 +93,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     textAlign: 'center',
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: 'bold',
   }
 });
 

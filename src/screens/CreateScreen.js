@@ -22,7 +22,7 @@ const CreateScreen = ({ navigation }) => {
       initialValues={{
         startTime: startTime,
         endTime: endTime,
-        task: '',
+        task: 'Select a task',
         notes: '',
         images: []
       }}

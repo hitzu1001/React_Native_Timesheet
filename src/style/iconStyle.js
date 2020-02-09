@@ -62,6 +62,11 @@ const iconStyle = StyleSheet.create({
     color: '#696969',
     marginRight: 15,
   },
+  carIcon: {
+    fontSize: 22,
+    color: '#20b2aa',
+    marginRight: 5,
+  }
 });
 
 module.exports = iconStyle;

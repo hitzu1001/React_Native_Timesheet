@@ -17,9 +17,12 @@ const TimeOffTaskModal = ({ task, setTask }) => {
       <TouchableOpacity onPress={() => toggleModal()}>
         <View style={styles.input}>
           {task === 'Select leave reason'
-            && <MaterialIcons style={iconStyle.crossIcon} name='time-to-leave' />}
-          <Text style={styles.taskInput}>{task}</Text>
-          {/* <TextInput style={styles.input} value={task} placeholder='Select leave reason' editable={false} /> */}
+            && <MaterialIcons style={iconStyle.carIcon} name='time-to-leave' />}
+          <Text style={{
+            ...styles.taskInput, color: task === 'Select leave reason' ? '#8e8e8e' : '#000',
+          }}>
+            {task}
+          </Text>
         </View>
       </TouchableOpacity>
       <Modal

@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native';
-import { Text, G } from 'react-native-svg'
+import { View, Text, StyleSheet } from 'react-native';
 import { ProgressCircle } from 'react-native-svg-charts'
 
 class PregressChart extends React.PureComponent {
@@ -18,23 +17,6 @@ class PregressChart extends React.PureComponent {
     var hours = (time - (time % 60)) / 60;
     var minutes = time % 60;
 
-    const TextGroup = () => (
-      <G key='title'>
-        <Text style={styles.titleText} y={5} x={-68} alignmentBaseline='text-bottom'>
-          {hours} h {minutes} m
-        </Text>
-        <Text
-          key='subtitle'
-          textAnchor='middle'
-          alignmentBaseline='text-top' 
-          y={16}
-          fill="#a9a9a9"
-          style={styles.subtitleText}>
-          {this.props.title}
-        </Text>
-      </G>
-    )
-
     return (
       <View style={styles.progressChart}>
         <ProgressCircle
@@ -42,8 +24,11 @@ class PregressChart extends React.PureComponent {
           progress={this.props.percentage}
           progressColor={fillColor}
           strokeWidth={12} >
-          <TextGroup />
         </ProgressCircle>
+        <View style={{ marginTop: -115, marginBottom: 80, }}>
+          <Text style={styles.titleText}>{hours} h {minutes} m</Text>
+          <Text style={styles.subtitleText}>{this.props.title}</Text>
+        </View>
       </View>
     )
   }
@@ -51,18 +36,21 @@ class PregressChart extends React.PureComponent {
 
 const styles = StyleSheet.create({
   progressChart: {
-    marginVertical: 30,
+    marginTop: 30,
   },
   progressCircle: {
     height: 180,
   },
   titleText: {
-    fontSize: 30,
-    fontWeight: 'bold'
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   subtitleText: {
-    fontSize: 18,
-    fontWeight: '500'
+    marginTop: 10,
+    fontWeight: '500',
+    color: '#a9a9a9',
+    textAlign: 'center',
   }
 })
 

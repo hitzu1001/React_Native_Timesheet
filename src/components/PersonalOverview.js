@@ -15,44 +15,48 @@ const PersonalOverview = ({ blogPosts: tasks, userId }) => {
 
   for (let i = 0; i < tasks.length; i++) {
     if (moment(tasks[i].startTime).isSame(moment(), 'day')) {
-      dayRatio = dayRatio + parseInt(moment(tasks[i].endTime).diff(tasks[i].startTime, 'minutes'), 10)/480;
+      dayRatio = dayRatio + parseInt(moment(tasks[i].endTime).diff(tasks[i].startTime, 'minutes'), 10) / 480;
       filteredTasks.push(tasks[i])
     }
   }
 
   for (let i = 0; i < tasks.length; i++) {
     if ((moment(tasks[i].startTime).isAfter(moment().startOf('week'))) && (moment(tasks[i].startTime).isBefore(moment().endOf('week')))) {
-      weekRatio = weekRatio + parseInt(moment(tasks[i].endTime).diff(tasks[i].startTime, 'minutes'), 10)/2400;
+      weekRatio = weekRatio + parseInt(moment(tasks[i].endTime).diff(tasks[i].startTime, 'minutes'), 10) / 2400;
     }
   }
 
   return (
     <View>
       <ButtonSelector buttons={buttons} setOption={option => setOption(option)} />
-      {option === 0 && <ProgressChart percentage={Number((dayRatio).toFixed(6))} title={"of 8 hrs"} />}
-      {option === 1 && <ProgressChart percentage={Number((weekRatio).toFixed(6))} title={"of 40 hrs"} />}
       {option === 0 &&
-        <View style={styles.optionContainer}>
-          <View style={styles.dateContainer}>
-            <Text style={styles.label}>Today</Text>
-            <Text style={styles.date}>{moment().format('DD-MMM')}</Text>
+        <>
+          <ProgressChart percentage={Number((dayRatio).toFixed(6))} title={"of 8 hrs"} />
+          <View style={styles.optionContainer}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.label}>Today</Text>
+              <Text style={styles.date}>{moment().format('DD-MMM')}</Text>
+            </View>
           </View>
-        </View>
+        </>
       }
       {option === 1 &&
-        <View style={styles.optionContainer}>
-          <View style={styles.dateContainer}>
-            <Text style={styles.label}>Start Week</Text>
-            <Text style={styles.date}>{from_date}</Text>
+        <>
+          <ProgressChart percentage={Number((weekRatio).toFixed(6))} title={"of 40 hrs"} />
+          <View style={styles.optionContainer}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.label}>Week Start</Text>
+              <Text style={styles.date}>{from_date}</Text>
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.dateContainer}>
+              <Text style={styles.label}>Week End</Text>
+              <Text style={styles.date}>{to_date}</Text>
+            </View>
           </View>
-          <View style={styles.line}></View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.label}>End Week</Text>
-            <Text style={styles.date}>{to_date}</Text>
-          </View>
-        </View>
+        </>
       }
-    </View>
+    </View >
   )
 }
 
