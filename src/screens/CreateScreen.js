@@ -7,7 +7,7 @@ import { Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle'
 
 const CreateScreen = ({ navigation }) => {
-  const { addBlogPost } = useContext(BlogContext);
+  const { addBlogPost, getBlogPosts } = useContext(BlogContext);
   var startTime = moment.utc(new Date()).local().format();
   var endTime = moment.utc(new Date()).local().format();
   const [isChange, setIsChange] = useState(false);

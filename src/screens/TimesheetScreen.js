@@ -14,7 +14,7 @@ import moment from "moment";
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-  const { state: user, getUser } = useContext(UserContext);
+  const { state: user } = useContext(UserContext);
   const [view, setView] = useState(true);
   const [userRole, setUserRole] = useState('Employee')
   let personalTasks = []
@@ -25,21 +25,26 @@ const TimesheetScreen = ({ navigation }) => {
   filteredTasks = selectTasks(view)
 
   useEffect(() => {
-    getUser()
+    getBlogPosts();
     Array.isArray(user) && setUserRole(user[0].role)
     dateList = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(view)
+
     const listener = navigation.addListener("didFocus", () => {
-      dateList = []
       getBlogPosts();
+      dateList = []
       setImages([]);
       filteredTasks = selectTasks(view)
     });
     return () => {
       listener.remove();
     };
-  }, [state, view]);
+  }, [view]);
+
+  useEffect(() => {
+    dateList = []
+  }, [state])
 
   function selectTasks(view) {
     if (view) {

@@ -28,12 +28,15 @@ const ScheduleScreen = ({ navigation }) => {
   
   let personalTasks = []
   let filteredTasks = []
+  let dateList = []
 
   personalTasks = state.filter(task => task.userId === user[0]._id)
   filteredTasks = selectTasks(view)
 
   useEffect(() => {
+    dateList = []
     getBlogPosts();
+    // {console.log(userList)}
     Array.isArray(user) && setUserRole(user[0].role)
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(view)
@@ -45,6 +48,10 @@ const ScheduleScreen = ({ navigation }) => {
     }
     setMarkedTask(initialDates);
   }, [view]);
+
+  useEffect(() => {
+    dateList = []
+  }, [state])
 
   useEffect(() => {
     getBlogPosts();

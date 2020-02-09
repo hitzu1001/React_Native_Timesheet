@@ -13,7 +13,7 @@ const OverviewScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   // true for Personal, false for Team
   const [summaryView, setsummaryView] = useState(true);
-  const { getUser, state: user } = useContext(UserContext);
+  const { state: user } = useContext(UserContext);
   const { getAllUser } = useContext(UserList);
   const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("")
