@@ -62,10 +62,11 @@ const iconStyle = StyleSheet.create({
     color: '#696969',
     marginRight: 15,
   },
-  carIcon: {
-    fontSize: 22,
+  coffeeIcon: {
+    fontSize: 20,
     color: '#20b2aa',
-    marginRight: 5,
+    marginLeft: 2,
+    marginRight: 2,
   }
 });
 

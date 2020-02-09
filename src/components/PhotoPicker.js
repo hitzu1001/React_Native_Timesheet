@@ -26,7 +26,7 @@ const PhotoPicker = ({ id, images }) => {
       }
     }
   }
-  
+
   const requestCameraRollPermission = async () => {
     if (Constants.platform.ios) {
       const { status, granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -90,7 +90,6 @@ const PhotoPicker = ({ id, images }) => {
             isNew: false
           });
         }}
-        style={{ borderStyle: 'dotted', borderColor: '#d3d3d3', borderWidth: 1 }}
       >
         <Image key={i} source={{ uri: i.uri }} style={styles.image} />
       </TouchableOpacity>
@@ -150,7 +149,6 @@ const styles = StyleSheet.create({
     borderColor: '#20b2aa',
     borderWidth: 2,
     borderStyle: 'dotted',
-    // flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 8,
@@ -165,6 +163,8 @@ const styles = StyleSheet.create({
     height: 65,
     marginRight: 8,
     marginTop: 5,
+    borderWidth: 0.5,
+    borderColor: '#d3d3d3'
   },
   none: {
     color: 'dimgray'
