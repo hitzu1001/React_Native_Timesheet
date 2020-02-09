@@ -23,6 +23,7 @@ import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as BlogProvider } from './src/context/BlogContext';
 import { Provider as ImageProvider } from './src/context/ImageContext';
 import { Provider as TaskProvider } from './src/context/TaskContext';
+import { Provider as UserProvider } from './src/context/UserContext';
 import { setNavigator } from './src/navigationRef';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -107,14 +108,16 @@ const App = createAppContainer(switchNavigator);
 
 export default () => {
   return (
-    <BlogProvider>
-      <TaskProvider>
-        <ImageProvider>
-          <AuthProvider>
-            <App ref={navigator => { setNavigator(navigator) }} />
-          </AuthProvider>
-        </ImageProvider>
-      </TaskProvider>
-    </BlogProvider>
+    <UserProvider>
+      <BlogProvider>
+        <TaskProvider>
+          <ImageProvider>
+            <AuthProvider>
+              <App ref={navigator => { setNavigator(navigator) }} />
+            </AuthProvider>
+          </ImageProvider>
+        </TaskProvider>
+      </BlogProvider>
+    </UserProvider>
   );
 }

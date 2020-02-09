@@ -15,8 +15,6 @@ const authReducer = (state, action) => {
       return { errorMessage: '', token: null };
     case 'get_user':
       return action.payload
-    case 'get_alluser':
-      return action.payload
     default:
       return state;
   }
@@ -95,16 +93,9 @@ const getUser = dispatch => {
   };
 };
 
-const getAllUser = dispatch => {
-  return async () => {
-    const response = await timesheetApi.get(`/users`);
-    dispatch({ type: "get_alluser", payload: response.data });
-  };
-};
-
 
 export const { Context, Provider } = createDataContext(
   authReducer,
-  { signup, signin, signout, getUser, getAllUser, clearErrorMessage, tryLocalSignin },
+  { signup, signin, signout, getUser, clearErrorMessage, tryLocalSignin },
   { token: null, errorMessage: '', firstName: '', lastName: '', role: '' }
 );
