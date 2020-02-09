@@ -4,13 +4,14 @@ import { Avatar } from 'react-native-elements';
 import { Context as UserContext } from '../context/AuthContext'
 
 
-const UserAvatar = () => {
+const UserAvatar = ({firstName, lastName}) => {
   const { state, getUser } = useContext(UserContext);
   const [username, setUserName] = useState("AA")
-  // console.log("in avatar " + state[0] + state[1])
+
   useEffect(() => {
-    state[0] && setUserName(state[0].firstName[0] + state[0].lastName[0])
-  }, [state])
+    setUserName(state[0].firstName[0] + state[0].lastName[0])
+    firstName && setUserName(firstName[0] + lastName[0])
+  }, [])
 
   return (
     <Avatar

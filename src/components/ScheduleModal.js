@@ -18,7 +18,6 @@ const ScheduleModal = ({ timesheet, toggleModal }) => {
 
   return (
     <>
-      {console.log(userList)}
       <TouchableOpacity style={modalStyle.screenCenter} onPress={() => toggleModal()}>
         <View style={styles.modalContent}>
           <View style={styles.container}>
