@@ -7,13 +7,7 @@ const Summary = ({ blogPosts: allTasks, userId, summaryView }) => {
   const [option, setOption] = useState(0)
   const buttons = ['DAILY', 'WEEKLY', 'MONTHLY', 'TOTAL'];
   const colorCode = ['#617be3', '#61d4b3', '#fdd365', '#fb8d62', '#f54291']
-  const teamTasks = [
-    { task: 'Task1', ratio: 0.13, color: '#617be3' },
-    { task: 'Task2', ratio: 0.26, color: '#61d4b3' },
-    { task: 'Task3', ratio: 0.07, color: '#fdd365' },
-    { task: 'Task4', ratio: 0.32, color: '#fb8d62' },
-    { task: 'Task5', ratio: 0.22, color: '#f54291' },
-  ];
+
   const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7);
   let persionalTasks = allTasks.filter(task => task.userId === userId)
   let totalTime = 0
@@ -51,7 +45,7 @@ const Summary = ({ blogPosts: allTasks, userId, summaryView }) => {
       }
       let hours = (taskSummary - (taskSummary % 60)) / 60;
       let minutes = taskSummary % 60;
-      result = [...result, { task: taskList[i], ratio: taskSummary / totalTime, color: teamTasks[i].color, time: `${hours} h ${minutes} m` }]
+      result = [...result, { task: taskList[i], ratio: taskSummary / totalTime, color: colorCode[i], time: `${hours} h ${minutes} m` }]
     }
     return result
   }

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StatusBar, SafeAreaView, TouchableOpacity, YellowBox } from 'react-native';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
 import PersonalOverview from '../components/PersonalOverview';
@@ -7,6 +7,8 @@ import Summary from '../components/Summary';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
+import LocalNotification from '../components/LocalNotification'
+
 
 const OverviewScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
@@ -29,6 +31,10 @@ const OverviewScreen = ({ navigation }) => {
     };
   }, []);
 
+  YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested', //Remove when expo fixed
+  ])
+
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" />
@@ -37,9 +43,11 @@ const OverviewScreen = ({ navigation }) => {
           <PersonalOverview blogPosts={state} userId={userId} />
         </View>
         <TouchableOpacity
-          style={{ ...styles.switchView, 
+          style={{
+            ...styles.switchView,
             backgroundColor: summaryView ? '#fff' : '#20b2aa',
-            borderColor: summaryView ? '#fff' : '#20b2aa' }}
+            borderColor: summaryView ? '#fff' : '#20b2aa'
+          }}
           onPress={() => setsummaryView(!summaryView)}
         >
           <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
