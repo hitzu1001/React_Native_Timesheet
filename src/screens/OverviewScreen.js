@@ -12,7 +12,7 @@ import modalStyle from '../style/modalStyle';
 
 const OverviewScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
-  const { getUser, state: user } = useContext(UserContext);
+  const { state: user } = useContext(UserContext);
   // true for Personal, false for Team
   const [view, setView] = useState(true);
   const buttons = ['My Summary', 'Team Summary'];

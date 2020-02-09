@@ -25,7 +25,11 @@ const TaskListScreen = ({ navigation }) => {
     return () => {
       listener.remove();
     };
-  }, [state]);
+  }, []);
+
+  useEffect(() => {
+    prefixList = []
+  }, [state])
 
   return (
     <ScrollView style={styles.screen}>
