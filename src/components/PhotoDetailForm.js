@@ -30,7 +30,7 @@ const PhotoDetailForm = ({ uri, initialComment, isChange, readOnly }) => {
         <TextInput
           style={styles.comment}
           value={comment}
-          placeholder="Enter comments"
+          placeholder={readOnly ? null : "Enter comments"}
           onChangeText={comment => setComment(comment)}
           autoCapitalize='none'
           autoCorrect={false}

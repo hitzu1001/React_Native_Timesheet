@@ -15,14 +15,14 @@ const TimeOffScreen = ({ navigation }) => {
   const [allDay, setAllDay] = useState(true);
   const [startTime, setStartTime] = useState(nineAM);
   const [endTime, setEndTime] = useState(fivePM);
-  const [task, setTask] = useState('Select leave reason');
+  const [task, setTask] = useState('Select time off reason');
   const [notes, setNotes] = useState('');
   const [isChange, setIsChange] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const change = (allDay !== true)
     || (startTime !== nineAM) || (setEndTime !== fivePM)
-    || (task !== 'Select leave reason') || (notes !== '');
+    || (task !== 'Select time off reason') || (notes !== '');
 
   const timeDiff = parseInt(
     moment(endTime).diff(startTime, "minutes"), 10
@@ -31,7 +31,7 @@ const TimeOffScreen = ({ navigation }) => {
   let message = '';
   if (timeDiff < 0) { message += '\nStart time needs to be before end time.'; }
   if (timeDiff > 480) { message += `\nCan't input more than 8 hours.`; }
-  if (task === 'Select leave reason') { message += '\nPlease select a leave reason.'; }
+  if (task === 'Select time off reason') { message += '\nPlease select a leave reason.'; }
 
   useEffect(() => {
     navigation.setParams({ isChange });

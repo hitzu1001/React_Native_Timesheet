@@ -42,12 +42,15 @@ const ShowScreen = ({ navigation }) => {
         <View style={styles.photoContainer}>
           {blogPost.images
             ? blogPost.images.map(i =>
-              <TouchableOpacity key={uuid()} onPress={() => {
-                navigation.navigate('PhotoShow', {
-                  uri: i.uri,
-                  initialComment: i.comment,
-                });
-              }} style={{ borderStyle: 'dotted', borderColor: '#d3d3d3', borderWidth: 1 }}>
+              <TouchableOpacity
+                key={uuid()}
+                onPress={() => {
+                  navigation.navigate('PhotoShow', {
+                    uri: i.uri,
+                    initialComment: i.comment,
+                  });
+                }}
+              >
                 <Image key={i} source={{ uri: i.uri }} style={styles.image} />
               </TouchableOpacity>) :
             <Text style={styles.none}>None</Text>}
@@ -121,6 +124,8 @@ const styles = StyleSheet.create({
     height: 65,
     marginRight: 8,
     marginTop: 5,
+    borderWidth: 0.5,
+    borderColor: '#d3d3d3'
   },
   none: {
     color: 'dimgray'

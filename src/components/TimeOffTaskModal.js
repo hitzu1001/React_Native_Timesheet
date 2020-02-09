@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
@@ -16,10 +16,10 @@ const TimeOffTaskModal = ({ task, setTask }) => {
     <>
       <TouchableOpacity onPress={() => toggleModal()}>
         <View style={styles.input}>
-          {task === 'Select leave reason'
-            && <MaterialIcons style={iconStyle.carIcon} name='time-to-leave' />}
+          {task === 'Select time off reason'
+            && <MaterialCommunityIcons style={iconStyle.coffeeIcon} name='coffee' />}
           <Text style={{
-            ...styles.taskInput, color: task === 'Select leave reason' ? '#8e8e8e' : '#000',
+            ...styles.taskInput, color: task === 'Select time off reason' ? '#8e8e8e' : '#000',
           }}>
             {task}
           </Text>
