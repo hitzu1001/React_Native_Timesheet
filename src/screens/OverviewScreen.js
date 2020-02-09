@@ -6,6 +6,7 @@ import PersonalOverview from '../components/PersonalOverview';
 import Summary from '../components/Summary';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
+import { Context as UserList } from '../context/UserContext';
 import modalStyle from '../style/modalStyle';
 
 const OverviewScreen = ({ navigation }) => {
@@ -13,14 +14,16 @@ const OverviewScreen = ({ navigation }) => {
   // true for Personal, false for Team
   const [summaryView, setsummaryView] = useState(true);
   const { getUser, state: user } = useContext(UserContext);
+  const { getAllUser } = useContext(UserList);
   const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("")
 
   useEffect(() => {
     getBlogPosts();
-    getUser();
+    // getUser();
     Array.isArray(user) && setUserId(user[0]._id)
     Array.isArray(user) && setUserRole(user[0].role)
+    getAllUser()
     
     if (userRole === 'Manager') {
 

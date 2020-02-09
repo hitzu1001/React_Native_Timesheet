@@ -5,6 +5,7 @@ import ViewSelector from '../components/ViewSelector';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as ImageContext } from '../context/ImageContext';
 import { Context as UserContext } from '../context/AuthContext';
+import { Context as UserList } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
 import moment from "moment";
@@ -16,7 +17,6 @@ const TimesheetScreen = ({ navigation }) => {
   const { state: user, getUser } = useContext(UserContext);
   const [view, setView] = useState(true);
   const [userRole, setUserRole] = useState('Employee')
-  const [userList, setUserList] = useState([])
   let personalTasks = []
   let filteredTasks = []
   let dateList = []

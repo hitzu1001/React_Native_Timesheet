@@ -8,6 +8,7 @@ import ScheduleModal from '../components/ScheduleModal';
 import ViewSelector from '../components/ViewSelector';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
+import { Context as UserList } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
@@ -15,6 +16,7 @@ import modalStyle from '../style/modalStyle';
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { state: user, getUser } = useContext(UserContext);
+  const { state: userList } = useContext(UserList);
   const today = moment(new Date()).format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedTask, setSelectedTask] = useState([]);
@@ -23,6 +25,7 @@ const ScheduleScreen = ({ navigation }) => {
   const [view, setView] = useState(true);
   const [userRole, setUserRole] = useState('Employee')
   const [modalVisible, setModalVisible] = useState(false)
+  
   let personalTasks = []
   let filteredTasks = []
 
@@ -31,7 +34,6 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     getBlogPosts();
-    getUser()
     Array.isArray(user) && setUserRole(user[0].role)
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(view)
@@ -46,7 +48,7 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     getBlogPosts();
-    getUser()
+    // getUser()
     Array.isArray(user) && setUserRole(user[0].role)
     let dayTasks = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
