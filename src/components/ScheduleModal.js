@@ -11,8 +11,6 @@ const ScheduleModal = ({ timesheet, toggleModal, hours, minutes }) => {
   const { state } = useContext(UserContext);
   const user = state[0];
 
-  // const [modalVisible, setmodalVisible] = useState(false);
-
   useEffect(() => {
     console.log();
   }, []);

@@ -8,7 +8,7 @@ import modalStyle from '../style/modalStyle';
 
 const TaskPickModal = ({ task, setTask }) => {
   const { state, getTaskList } = useContext(TaskContext);
-  const [modalVisible, setmodalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   let sortedTasks = state.sort(sortTask);
   let prefixList = [];
 
@@ -19,7 +19,7 @@ const TaskPickModal = ({ task, setTask }) => {
   }
 
   const toggleModal = () => {
-    setmodalVisible(!modalVisible);
+    setModalVisible(!modalVisible);
   };
 
   useEffect(() => {

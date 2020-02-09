@@ -6,10 +6,10 @@ import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
 const TimeOffTaskModal = ({ task, setTask }) => {
-  const [modalVisible, setmodalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
-    setmodalVisible(!modalVisible);
+    setModalVisible(!modalVisible);
   };
 
   return (

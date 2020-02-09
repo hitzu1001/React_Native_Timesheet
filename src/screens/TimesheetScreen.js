@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
+import ViewSelector from '../components/ViewSelector';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as ImageContext } from '../context/ImageContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Ionicons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
-import modalStyle from '../style/modalStyle';
 import moment from "moment";
 
 
@@ -14,7 +14,7 @@ const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
   const { state: user, getAllUser, getUser } = useContext(UserContext);
-  const [summaryView, setsummaryView] = useState(true);
+  const [view, setView] = useState(true);
   const [userRole, setUserRole] = useState('Employee')
   const [userList, setUserList] = useState([])
   let personalTasks = []
@@ -22,28 +22,28 @@ const TimesheetScreen = ({ navigation }) => {
   let dateList = []
 
   personalTasks = state.filter(task => task.userId === user[0]._id)
-  filteredTasks = selectTasks(summaryView)
+  filteredTasks = selectTasks(view)
 
   useEffect(() => {
     getUser()
     Array.isArray(user) && setUserRole(user[0].role)
- 
+
     dateList = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
-    filteredTasks = selectTasks(summaryView)
+    filteredTasks = selectTasks(view)
     const listener = navigation.addListener("didFocus", () => {
       dateList = []
       getBlogPosts();
       setImages([]);
-      filteredTasks = selectTasks(summaryView)
+      filteredTasks = selectTasks(view)
     });
     return () => {
       listener.remove();
     };
-  }, [state, summaryView]);
+  }, [state, view]);
 
-  function selectTasks(summaryView) {
-    if (summaryView) {
+  function selectTasks(view) {
+    if (view) {
       return personalTasks
     } else {
       return state
@@ -56,19 +56,11 @@ const TimesheetScreen = ({ navigation }) => {
 
   return (
     <View style={styles.screen}>
-      {console.log(userList)}
-      {userRole === "Manager" && <TouchableOpacity
-        style={{
-          ...styles.switchView,
-          backgroundColor: summaryView ? '#fff' : '#20b2aa',
-          borderColor: summaryView ? '#fff' : '#20b2aa'
-        }}
-        onPress={() => setsummaryView(!summaryView)}
-      >
-        <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
-          {summaryView ? 'Personal Summary' : 'Team Summary'}
-        </Text>
-      </TouchableOpacity>}
+      {userRole === "Manager" &&
+        <View style={styles.viewToggle}>
+          <ViewSelector setView={v => setView(v)} />
+        </View>
+      }
       <FlatList
         data={filteredTasks.sort(futureToPast)}
         keyExtractor={blogPost => blogPost._id}
@@ -125,6 +117,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f3f3f3',
   },
+  viewToggle: {
+    borderColor: '#fff',
+    borderBottomColor: '#dcdcdc',
+    borderWidth: 1,
+  },
   time: {
     fontSize: 12,
     paddingVertical: 10,
@@ -150,13 +147,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#696969"
   },
-  switchView: {
-    ...modalStyle.shadowContainer3,
-    alignSelf: 'flex-end',
-    marginHorizontal: 15,
-    width: 140,
-    borderRadius: 16,
-  }
 });
 
 export default TimesheetScreen;

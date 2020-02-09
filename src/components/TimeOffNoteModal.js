@@ -6,11 +6,11 @@ import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
 const TimeOffNoteModal = ({ notes, setNotes }) => {
-  const [modalVisible, setmodalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [content, setContent] = useState(notes);
 
   const toggleModal = () => {
-    setmodalVisible(!modalVisible);
+    setModalVisible(!modalVisible);
   };
 
   return (

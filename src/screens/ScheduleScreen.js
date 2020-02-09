@@ -5,6 +5,7 @@ import moment from 'moment';
 import Modal from 'react-native-modal';
 import UserAvatar from '../components/UserAvatar';
 import ScheduleModal from '../components/ScheduleModal';
+import ViewSelector from '../components/ViewSelector';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
@@ -19,29 +20,29 @@ const ScheduleScreen = ({ navigation }) => {
   const [selectedTask, setSelectedTask] = useState([]);
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
-  const [summaryView, setsummaryView] = useState(true);
+  const [view, setView] = useState(true);
   const [userRole, setUserRole] = useState('Employee')
   const [modalVisible, setModalVisible] = useState(false)
   let personalTasks = []
   let filteredTasks = []
-  
+
   personalTasks = state.filter(task => task.userId === user[0]._id)
-  filteredTasks = selectTasks(summaryView)
+  filteredTasks = selectTasks(view)
 
   useEffect(() => {
     getBlogPosts();
     getUser()
     Array.isArray(user) && setUserRole(user[0].role)
     personalTasks = state.filter(task => task.userId === user[0]._id)
-    filteredTasks = selectTasks(summaryView)
-    
+    filteredTasks = selectTasks(view)
+
     let initialDates = {};
     for (let i = 0; i < filteredTasks.length; i++) {
       let date = moment(filteredTasks[i].startTime).format('YYYY-MM-DD')
       initialDates = { ...initialDates, [date]: { marked: true, selectedColor: '#FF7F50', } }
     }
     setMarkedTask(initialDates);
-  }, [summaryView]);
+  }, [view]);
 
   useEffect(() => {
     getBlogPosts();
@@ -49,7 +50,7 @@ const ScheduleScreen = ({ navigation }) => {
     Array.isArray(user) && setUserRole(user[0].role)
     let dayTasks = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
-    filteredTasks = selectTasks(summaryView)
+    filteredTasks = selectTasks(view)
 
     for (let i = 0; i < filteredTasks.length; i++) {
       if (moment(filteredTasks[i].startTime).isSame(selectedDate, 'day')) {
@@ -74,8 +75,8 @@ const ScheduleScreen = ({ navigation }) => {
     setModalVisible(!modalVisible);
   };
 
-  function selectTasks(summaryView) {
-    if (summaryView) {
+  function selectTasks(view) {
+    if (view) {
       return personalTasks
     } else {
       return state
@@ -84,6 +85,9 @@ const ScheduleScreen = ({ navigation }) => {
 
   return (
     <>
+      {userRole === "Manager"
+        && <ViewSelector setView={v => setView(v)} />
+      }
       <View style={styles.calendar}>
         <Calendar
           onDayPress={day => setSelectedDate(day.dateString)}
@@ -92,18 +96,6 @@ const ScheduleScreen = ({ navigation }) => {
         />
       </View>
       <View>
-      {userRole === "Manager" && <TouchableOpacity
-        style={{
-          ...styles.switchView,
-          backgroundColor: summaryView ? '#fff' : '#20b2aa',
-          borderColor: summaryView ? '#fff' : '#20b2aa'
-        }}
-        onPress={() => setsummaryView(!summaryView)}
-      >
-        <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
-          {summaryView ? 'Personal Summary' : 'Team Summary'}
-        </Text>
-      </TouchableOpacity>}
         <Text style={styles.selectedDate}>{moment(selectedDate).format('dddd, DD MMMM YYYY')}</Text>
         <FlatList
           data={selectedTask}
@@ -172,7 +164,8 @@ const themeStyle = {
 const styles = StyleSheet.create({
   calendar: {
     ...modalStyle.shadowContainer3,
-    margin: 15,
+    marginHorizontal: 15,
+    marginBottom: 15,
     paddingBottom: 5,
   },
   selectedDate: {
