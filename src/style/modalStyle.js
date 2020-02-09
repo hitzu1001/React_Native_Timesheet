@@ -36,7 +36,7 @@ const modalStyle = StyleSheet.create({
 
   shadowContainer8: {
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 12,
     borderColor: 'white',
     shadowColor: "#000",
     shadowOffset: {
@@ -47,9 +47,6 @@ const modalStyle = StyleSheet.create({
     shadowRadius: 11.14,
     elevation: 17,
     backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 5,
     // borderColor: 'pink',
     // borderWidth: 2,
   },

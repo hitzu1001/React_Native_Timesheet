@@ -57,7 +57,7 @@ const OverviewScreen = ({ navigation }) => {
           onPress={() => setsummaryView(!summaryView)}
         >
           <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
-            {summaryView ? 'Personal Summary' : 'Team Summary'}
+            {summaryView ? 'Team Summary' : 'Personal Summary'}
           </Text>
         </TouchableOpacity>}
           <View style={styles.overviewContainer}>

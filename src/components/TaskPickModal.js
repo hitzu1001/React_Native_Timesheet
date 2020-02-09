@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import Modal from 'react-native-modal'
 import { Context as TaskContext } from '../context/TaskContext';
-import { Entypo, MaterialIcons } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 

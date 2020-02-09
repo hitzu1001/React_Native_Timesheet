@@ -67,6 +67,11 @@ const iconStyle = StyleSheet.create({
     color: '#20b2aa',
     marginLeft: 2,
     marginRight: 2,
+  },
+  scheduleIcon:{
+    fontSize: 20,
+    color: '#999',
+    marginRight: 15,
   }
 });
 

@@ -1,13 +1,15 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import iconStyle from '../style/iconStyle';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import moment from 'moment';
+import Modal from 'react-native-modal';
 import UserAvatar from '../components/UserAvatar';
+import ScheduleModal from '../components/ScheduleModal';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
+import { Ionicons } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
-import moment from 'moment';
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
@@ -19,9 +21,12 @@ const ScheduleScreen = ({ navigation }) => {
   const [markedDate, setMarkedDate] = useState({})
   const [summaryView, setsummaryView] = useState(true);
   const [userRole, setUserRole] = useState('Employee')
+  const [modalVisible, setModalVisible] = useState(false)
   let personalTasks = []
   let filteredTasks = []
   
+  personalTasks = state.filter(task => task.userId === user[0]._id)
+  filteredTasks = selectTasks(summaryView)
 
   useEffect(() => {
     getBlogPosts();
@@ -29,13 +34,12 @@ const ScheduleScreen = ({ navigation }) => {
     Array.isArray(user) && setUserRole(user[0].role)
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(summaryView)
+    
     let initialDates = {};
-
     for (let i = 0; i < filteredTasks.length; i++) {
       let date = moment(filteredTasks[i].startTime).format('YYYY-MM-DD')
       initialDates = { ...initialDates, [date]: { marked: true, selectedColor: '#FF7F50', } }
     }
-
     setMarkedTask(initialDates);
   }, [summaryView]);
 
@@ -49,10 +53,10 @@ const ScheduleScreen = ({ navigation }) => {
 
     for (let i = 0; i < filteredTasks.length; i++) {
       if (moment(filteredTasks[i].startTime).isSame(selectedDate, 'day')) {
-        dayTasks.push(state[i])
+        dayTasks.push(filteredTasks[i])
       }
     }
-    
+
     setSelectedTask(dayTasks)
     let selectedColor = (selectedDate === today) ? '#FF7F50' : '#20b2aa';
     let labeledDate = {
@@ -66,7 +70,10 @@ const ScheduleScreen = ({ navigation }) => {
     setMarkedDate(labeledDate)
   }, [markedTask, selectedDate])
 
-  
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
   function selectTasks(summaryView) {
     if (summaryView) {
       return personalTasks
@@ -76,7 +83,15 @@ const ScheduleScreen = ({ navigation }) => {
   }
 
   return (
-    <View>
+    <>
+      <View style={styles.calendar}>
+        <Calendar
+          onDayPress={day => setSelectedDate(day.dateString)}
+          markedDates={markedDate}
+          theme={themeStyle}
+        />
+      </View>
+      <View>
       {userRole === "Manager" && <TouchableOpacity
         style={{
           ...styles.switchView,
@@ -89,19 +104,7 @@ const ScheduleScreen = ({ navigation }) => {
           {summaryView ? 'Personal Summary' : 'Team Summary'}
         </Text>
       </TouchableOpacity>}
-      <ScrollView>
-        <View style={styles.calendar}>
-          <Calendar
-            onDayPress={(day) => {
-              setSelectedDate(day.dateString);
-            }}
-            markedDates={markedDate}
-            theme={themeStyle}
-          />
-        </View>
-      </ScrollView>
-      <View>
-        <Text style={styles.selectedDate}>{moment(selectedDate).format('DD-MM-YYYY')}</Text>
+        <Text style={styles.selectedDate}>{moment(selectedDate).format('dddd, DD MMMM YYYY')}</Text>
         <FlatList
           data={selectedTask}
           keyExtractor={(blogPost) => blogPost._id}
@@ -113,20 +116,31 @@ const ScheduleScreen = ({ navigation }) => {
               <View style={styles.row}>
                 <TouchableOpacity
                   style={styles.taskContainer}
-                  onPress={() => navigation.navigate('Show', { id: item._id })}
+                  // onPress={() => navigation.navigate('Show', { id: item._id })}
+                  onPress={() => toggleModal()}
                 >
+                  <Modal style={{ margin: 0 }} isVisible={modalVisible} backdropOpacity={0.7}>
+                    <ScheduleModal
+                      timesheet={item}
+                      toggleModal={toggleModal}
+                      hours={hours}
+                      minutes={minutes}
+                    />
+                  </Modal>
                   <Text style={styles.task}>{item.task}</Text>
-                  <Text style={styles.time}>
-                    {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
-                  </Text>
-                  {/* <Text style={styles.timeDiff}>{hours} hours {minutes} minutes</Text> */}
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                    <Text style={styles.time}>
+                      {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
+                    </Text>
+                    <Text style={styles.time}>{hours} hrs {minutes} mins</Text>
+                  </View>
                 </TouchableOpacity>
               </View>
             );
           }}
         />
       </View>
-    </View>
+    </>
   );
 };
 
@@ -190,13 +204,6 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 12,
     color: '#ffffff',
-  },
-  switchView: {
-    ...modalStyle.shadowContainer3,
-    alignSelf: 'flex-end',
-    marginHorizontal: 15,
-    width: 140,
-    borderRadius: 16,
   },
   // timeDiff: {
   //   fontSize: 12,
