@@ -86,9 +86,14 @@ const TimesheetScreen = ({ navigation }) => {
                 style={{ ...styles.itemContainer, borderTopWidth: sameDate ? 0 : 1 }}
                 onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}
               >
-                <Text style={styles.item}>{item.task}</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={styles.item}>{item.task}</Text>
+                  <Text style={styles.itemtime}>
+                    {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
+                  </Text>
+                </View>
                 <Text style={styles.timeDiff}>
-                  {hours} hours {minutes} minutes
+                  {hours} hrs {minutes} mins
                 </Text>
               </TouchableOpacity>
             </>
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 12,
-    paddingVertical: 10,
+    paddingVertical: 6,
     paddingHorizontal: 15,
     alignSelf: 'stretch',
   },
@@ -139,11 +144,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: '#444',
   },
+  itemtime: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#444',
+  },
   timeDiff: {
     fontSize: 12,
     alignSelf: "flex-end",
     fontWeight: "500",
-    color: "#696969"
+    color: "#999"
   },
 });
 

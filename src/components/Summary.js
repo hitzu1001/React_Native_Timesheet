@@ -90,8 +90,9 @@ const Summary = ({ blogPosts: allTasks, userId, view }) => {
       {
         // option === 1 &&
         <View style={styles.container}>
-          {view && <Text style={styles.title}>Personal Summary</Text>}
-          {!view && <Text style={styles.title}>Team Summary</Text>}
+          <Text style={styles.title}>
+            {view ? 'Personal Summary' : 'Team Summary'}
+          </Text>
           <Text style={styles.subtitle}>{buttons[`${option}`]} Jobs</Text>
           <FlatList
             data={data}
@@ -102,7 +103,7 @@ const Summary = ({ blogPosts: allTasks, userId, view }) => {
                   <View style={styles.bar}></View>
                   <View style={{ flexDirection: 'row', marginTop: -16 }}>
                     <View style={{ ...styles.colorBar, flex: item.ratio, backgroundColor: item.color, }}></View>
-                    <View style={styles.stuff}></View>
+                    {/* <View style={styles.stuff}></View> */}
                   </View>
                   <View style={styles.taskContent}>
                     <Text style={styles.label}>{item.task}</Text>
@@ -120,7 +121,7 @@ const Summary = ({ blogPosts: allTasks, userId, view }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 15,
-    marginHorizontal: 15,
+    marginHorizontal: 20,
   },
   title: {
     fontSize: 16,
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   subtitle: {
-    marginBottom: 15,
+    marginBottom: 5,
     fontSize: 13,
     color: '#696969',
     fontWeight: 'bold',
@@ -136,6 +137,8 @@ const styles = StyleSheet.create({
   },
   taskContainer: {
     marginTop: 30,
+    // borderColor: 'red',
+    // borderWidth: 2,
   },
   bar: {
     flex: 1,
@@ -147,17 +150,17 @@ const styles = StyleSheet.create({
     height: 16,
     borderRadius: 8,
   },
-  stuff: {
-
-  },
   taskContent: {
-    marginTop: 10,
+    marginTop: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    // borderColor: 'red',
+    // borderWidth: 2,
   },
   label: {
-    fontSize: 15,
+    // paddingHorizontal: 2,
     fontWeight: '500',
+    color: '#444',
   }
 });
 

@@ -22,7 +22,9 @@ const ScheduleModal = ({ timesheet, toggleModal, hours, minutes }) => {
           <View style={styles.container}>
             <MaterialCommunityIcons style={iconStyle.scheduleIcon} name='clock-outline' />
             <View >
-              <Text>{moment(timesheet.startTime).format('dddd, DD MMMM YYYY')}</Text>
+              <Text style={styles.content}>
+                {moment(timesheet.startTime).format('dddd, DD MMMM YYYY')}
+              </Text>
               <Text style={styles.content}>
                 {moment(timesheet.startTime).format('LT')} - {moment(timesheet.endTime).format('LT')} ({hours} hrs {minutes} mins)
               </Text>
@@ -34,7 +36,7 @@ const ScheduleModal = ({ timesheet, toggleModal, hours, minutes }) => {
           </View>
           <View style={styles.container}>
             <MaterialIcons style={iconStyle.scheduleIcon} name='people' />
-            <Text>Employee</Text>
+            <Text style={styles.content}>Employee</Text>
           </View>
           <View style={styles.userContainer}>
             <UserAvatar />
@@ -58,6 +60,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 15,
   },
+  content: {
+    fontSize: 13,
+    color: '#333',
+  },
   userContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -68,6 +74,8 @@ const styles = StyleSheet.create({
   },
   user: {
     marginLeft: 10,
+    fontSize: 13,
+    color: '#333',
   },
 });
 export default ScheduleModal;

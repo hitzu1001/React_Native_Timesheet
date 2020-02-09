@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e3e3e3',
   },
   textStyle: {
-    color: '#000',
+    color: '#444',
     fontSize: 12,
     // fontWeight: '400',
   },
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     width: 0,
   },
   selectedTextStyle: {
-    color: '#000',
+    color: '#444',
     fontWeight: '600',
   },
   selectedButtonStyle: {
