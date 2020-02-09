@@ -140,7 +140,6 @@ const ScheduleScreen = ({ navigation }) => {
                     <Text style={styles.time}>{hours} hrs {minutes} mins</Text>
                   </View>
                 </TouchableOpacity>
-                {console.log(item.task)}
               </View>
             );
           }}

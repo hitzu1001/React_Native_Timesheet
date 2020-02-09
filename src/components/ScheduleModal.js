@@ -14,11 +14,11 @@ const ScheduleModal = ({ timesheet, toggleModal }) => {
   const timeDiff = parseInt(moment(timesheet.endTime).diff(moment(timesheet.startTime), 'minutes'));
   const hours = (timeDiff - timeDiff % 60) / 60;
   const minutes = timeDiff % 60;
-  const userData = userList.filter(user => user._id === timesheet.userId)
+  const userData = userList.find(user => user._id === timesheet.userId)
 
   return (
     <>
-      {/* {console.log(user.firstName)} */}
+      {console.log(userList)}
       <TouchableOpacity style={modalStyle.screenCenter} onPress={() => toggleModal()}>
         <View style={styles.modalContent}>
           <View style={styles.container}>
@@ -38,7 +38,7 @@ const ScheduleModal = ({ timesheet, toggleModal }) => {
           </View>
           <View style={styles.container}>
             <MaterialIcons style={iconStyle.scheduleIcon} name='people' />
-            <Text style={styles.content}>Employee</Text>
+            <Text style={styles.content}>{userData.role}</Text>
           </View>
           <View style={styles.userContainer}>
             <UserAvatar firstName={userData.firstName} lastName={userData.lastName} />
@@ -71,8 +71,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 15,
     marginBottom: 10,
-    borderColor: 'red',
-    borderWidth: 2,
   },
   user: {
     marginLeft: 10,
