@@ -7,7 +7,6 @@ import Summary from '../components/Summary';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
-import LocalNotification from '../components/LocalNotification'
 
 
 const OverviewScreen = ({ navigation }) => {
@@ -33,6 +32,7 @@ const OverviewScreen = ({ navigation }) => {
 
   YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', //Remove when expo fixed
+    'Possible Unhandled Promise Rejection'
   ])
 
   return (
