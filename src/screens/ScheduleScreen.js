@@ -11,20 +11,22 @@ import moment from 'moment';
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
-  const { state: user } = useContext(UserContext);
+  const { state: user, getUser } = useContext(UserContext);
   const today = moment(new Date()).format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedTask, setSelectedTask] = useState([]);
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
   const [summaryView, setsummaryView] = useState(true);
-  const userRole = user[0].role
+  const [userRole, setUserRole] = useState('Employee')
   let personalTasks = []
   let filteredTasks = []
   
 
   useEffect(() => {
     getBlogPosts();
+    getUser()
+    Array.isArray(user) && setUserRole(user[0].role)
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(summaryView)
     let initialDates = {};
@@ -39,6 +41,8 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     getBlogPosts();
+    getUser()
+    Array.isArray(user) && setUserRole(user[0].role)
     let dayTasks = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(summaryView)

@@ -21,6 +21,10 @@ const OverviewScreen = ({ navigation }) => {
     getUser();
     Array.isArray(user) && setUserId(user[0]._id)
     Array.isArray(user) && setUserRole(user[0].role)
+    
+    if (userRole === 'Manager') {
+
+    }
 
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();

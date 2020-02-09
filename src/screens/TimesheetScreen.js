@@ -13,17 +13,21 @@ import moment from "moment";
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
-  const { state: user } = useContext(UserContext);
+  const { state: user, getAllUser, getUser } = useContext(UserContext);
   const [summaryView, setsummaryView] = useState(true);
+  const [userRole, setUserRole] = useState('Employee')
+  const [userList, setUserList] = useState([])
   let personalTasks = []
   let filteredTasks = []
-  const userRole = user[0].role
   let dateList = []
 
   personalTasks = state.filter(task => task.userId === user[0]._id)
   filteredTasks = selectTasks(summaryView)
 
   useEffect(() => {
+    getUser()
+    Array.isArray(user) && setUserRole(user[0].role)
+ 
     dateList = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(summaryView)
@@ -52,6 +56,7 @@ const TimesheetScreen = ({ navigation }) => {
 
   return (
     <View style={styles.screen}>
+      {console.log(userList)}
       {userRole === "Manager" && <TouchableOpacity
         style={{
           ...styles.switchView,
