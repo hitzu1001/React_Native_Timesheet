@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ButtonGroup } from 'react-native-elements';
 
-const ViewSelector = ({ setView }) => {
+const ViewSelector = ({ buttons, setView, src }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const buttons = ['My Timesheet', 'Full Timesheet'];
 
   return (
-    <View style={styles.buttonGroup}>
+    <View style={{
+      ...styles.buttonGroup,
+      borderBottomColor: src === 'timesheets' ? '#dcdcdc' : '#fff',
+      borderWidth: src === 'timesheets' ? 1 : 0,
+      marginBottom: src === 'timesheets' ? 0 : -15,
+      backgroundColor: src === 'overview' ? null : '#fff',
+    }}>
       <ButtonGroup
-        // title="Clear button"
         buttons={buttons}
         selectedIndex={selectedIndex}
         onPress={i => {
@@ -31,18 +35,19 @@ const styles = StyleSheet.create({
   buttonGroup: {
     paddingVertical: 5,
     alignSelf: 'stretch',
-    backgroundColor: '#fff',
+    borderColor: '#fff',
   },
   containerStyle: {
     alignSelf: 'center',
     width: 220,
     height: 30,
-    borderRadius: 8,
+    borderRadius: 6,
     backgroundColor: '#e3e3e3',
   },
   textStyle: {
     color: '#000',
     fontSize: 12,
+    // fontWeight: '400',
   },
   innerBorderStyle: {
     width: 0,
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
   selectedButtonStyle: {
     margin: 1.5,
     backgroundColor: '#fff',
-    borderRadius: 6, 
+    borderRadius: 4,
   }
 });
 

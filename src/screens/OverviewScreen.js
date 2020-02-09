@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar, SafeAreaView, TouchableOpacity, YellowBox } from 'react-native';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
+import ViewSelector from '../components/ViewSelector';
 import PersonalOverview from '../components/PersonalOverview';
 import Summary from '../components/Summary';
 import { Context as BlogContext } from '../context/BlogContext';
@@ -11,9 +12,10 @@ import modalStyle from '../style/modalStyle';
 
 const OverviewScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
-  // true for Personal, false for Team
-  const [summaryView, setsummaryView] = useState(true);
   const { getUser, state: user } = useContext(UserContext);
+  // true for Personal, false for Team
+  const [view, setView] = useState(true);
+  const buttons = ['My Summary', 'Team Summary'];
   const { getAllUser } = useContext(UserList);
   const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("")
@@ -24,7 +26,7 @@ const OverviewScreen = ({ navigation }) => {
     Array.isArray(user) && setUserId(user[0]._id)
     Array.isArray(user) && setUserRole(user[0].role)
     getAllUser()
-    
+
     if (userRole === 'Manager') {
 
     }
@@ -51,21 +53,12 @@ const OverviewScreen = ({ navigation }) => {
         <View style={styles.overviewContainer}>
           <PersonalOverview blogPosts={state} userId={userId} />
         </View>
-        { userRole === "Manager" && <TouchableOpacity
-          style={{
-            ...styles.switchView,
-            backgroundColor: summaryView ? '#fff' : '#20b2aa',
-            borderColor: summaryView ? '#fff' : '#20b2aa'
-          }}
-          onPress={() => setsummaryView(!summaryView)}
-        >
-          <Text style={{ ...styles.switch, color: summaryView ? '#20b2aa' : '#fff' }}>
-            {summaryView ? 'Team Summary' : 'Personal Summary'}
-          </Text>
-        </TouchableOpacity>}
-          <View style={styles.overviewContainer}>
-            <Summary blogPosts={state} userId={userId} summaryView={summaryView} />
-          </View>
+        {userRole === "Manager" &&
+          <ViewSelector buttons={buttons} setView={v => setView(v)} src='overview' />
+        }
+        <View style={styles.overviewContainer}>
+          <Summary blogPosts={state} userId={userId} view={view} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import ButtonSelector from './ButtonSelector';
 import moment from 'moment'
 
-const Summary = ({ blogPosts: allTasks, userId, summaryView }) => {
+const Summary = ({ blogPosts: allTasks, userId, view }) => {
   const [option, setOption] = useState(0)
   const buttons = ['DAILY', 'WEEKLY', 'MONTHLY', 'TOTAL'];
   const colorCode = ['#617be3', '#61d4b3', '#fdd365', '#fb8d62', '#f54291']
@@ -16,7 +16,7 @@ const Summary = ({ blogPosts: allTasks, userId, summaryView }) => {
 
   function summaryJobs(tasks, taskList, startTime, endTime) {
     let result = []
-    if (summaryView) {
+    if (view) {
       for (let i = 0; i < persionalTasks.length; i++) {
         if (!persionalTasks[i].isTimeOff && (moment(tasks[i].startTime).diff(startTime) > 0) && (moment(endTime).diff(tasks[i].endTime) > 0)) {
           totalTime = totalTime + parseInt(moment(persionalTasks[i].endTime).diff(persionalTasks[i].startTime, 'minutes'), 10)
@@ -50,7 +50,7 @@ const Summary = ({ blogPosts: allTasks, userId, summaryView }) => {
     return result
   }
 
-  if (summaryView) {
+  if (view) {
     //Persional Summary
     switch (option) {
       case 0: //Daily schedule
@@ -90,8 +90,8 @@ const Summary = ({ blogPosts: allTasks, userId, summaryView }) => {
       {
         // option === 1 &&
         <View style={styles.container}>
-          {summaryView && <Text style={styles.title}>Personal Summary</Text>}
-          {!summaryView && <Text style={styles.title}>Team Summary</Text>}
+          {view && <Text style={styles.title}>Personal Summary</Text>}
+          {!view && <Text style={styles.title}>Team Summary</Text>}
           <Text style={styles.subtitle}>{buttons[`${option}`]} Jobs</Text>
           <FlatList
             data={data}

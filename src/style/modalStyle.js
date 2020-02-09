@@ -69,5 +69,4 @@ const modalStyle = StyleSheet.create({
 
 });
 
-//https://ethercreative.github.io/react-native-shadow-generator/
 module.exports = modalStyle;

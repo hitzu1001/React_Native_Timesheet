@@ -23,8 +23,9 @@ const ScheduleScreen = ({ navigation }) => {
   const [markedTask, setMarkedTask] = useState({});
   const [markedDate, setMarkedDate] = useState({})
   const [view, setView] = useState(true);
-  const [userRole, setUserRole] = useState('Employee')
-  const [modalVisible, setModalVisible] = useState(false)
+  const buttons = ['My Schedule', 'Full Schedule'];
+  const [userRole, setUserRole] = useState('Employee');
+  const [modalVisible, setModalVisible] = useState(false);
   
   let personalTasks = []
   let filteredTasks = []
@@ -88,7 +89,7 @@ const ScheduleScreen = ({ navigation }) => {
   return (
     <>
       {userRole === "Manager"
-        && <ViewSelector setView={v => setView(v)} />
+        && <ViewSelector buttons={buttons} setView={v => setView(v)} src='Schedule' />
       }
       <View style={styles.calendar}>
         <Calendar
@@ -166,8 +167,7 @@ const themeStyle = {
 const styles = StyleSheet.create({
   calendar: {
     ...modalStyle.shadowContainer3,
-    marginHorizontal: 15,
-    marginBottom: 15,
+    margin: 15,
     paddingBottom: 5,
   },
   selectedDate: {

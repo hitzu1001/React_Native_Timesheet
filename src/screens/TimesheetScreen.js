@@ -16,6 +16,7 @@ const TimesheetScreen = ({ navigation }) => {
   const { setImages } = useContext(ImageContext);
   const { state: user, getUser } = useContext(UserContext);
   const [view, setView] = useState(true);
+  const buttons = ['My Timesheet', 'Full Timesheet'];
   const [userRole, setUserRole] = useState('Employee')
   let personalTasks = []
   let filteredTasks = []
@@ -56,9 +57,7 @@ const TimesheetScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       {userRole === "Manager" &&
-        <View style={styles.viewToggle}>
-          <ViewSelector setView={v => setView(v)} />
-        </View>
+        <ViewSelector buttons={buttons} setView={v => setView(v)} src='timesheets' />
       }
       <FlatList
         data={filteredTasks.sort(futureToPast)}
@@ -115,11 +114,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: '#f3f3f3',
-  },
-  viewToggle: {
-    borderColor: '#fff',
-    borderBottomColor: '#dcdcdc',
-    borderWidth: 1,
   },
   time: {
     fontSize: 12,
