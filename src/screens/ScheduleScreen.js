@@ -118,8 +118,7 @@ const styles = StyleSheet.create({
   calendar: {
     ...modalStyle.shadowContainer3,
     margin: 15,
-    // borderWidth: 3,
-    // borderColor: 'pink'
+    paddingBottom: 5,
   },
   selectedDate: {
     marginBottom: 5,

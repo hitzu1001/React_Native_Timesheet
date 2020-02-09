@@ -8,7 +8,6 @@ import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import modalStyle from '../style/modalStyle';
 
-
 const OverviewScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   // true for Personal, false for Team
