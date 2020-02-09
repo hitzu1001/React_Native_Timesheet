@@ -26,7 +26,7 @@ const ScheduleModal = ({ timesheet, toggleModal }) => {
               <Text style={styles.content}>
                 {moment(timesheet.startTime).format('dddd, DD MMMM YYYY')}
               </Text>
-              <Text style={styles.content}>
+              <Text style={{ ...styles.content, marginTop: 5 }}>
                 {moment(timesheet.startTime).format('LT')} - {moment(timesheet.endTime).format('LT')} ({hours} hrs {minutes} mins)
               </Text>
             </View>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    marginBottom: 15,
+    marginBottom: 20,
   },
   content: {
     fontSize: 13,
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 15,
+    marginTop: -5,
     marginBottom: 10,
   },
   user: {
