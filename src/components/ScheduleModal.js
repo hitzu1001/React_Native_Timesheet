@@ -8,10 +8,13 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
-const ScheduleModal = ({ timesheet, toggleModal, hours, minutes, user }) => {
+const ScheduleModal = ({ timesheet, toggleModal }) => {
   const { state } = useContext(UserContext);
   const { state: userList } = useContext(UserList);
-
+  const timeDiff = parseInt(moment(timesheet.endTime).diff(moment(timesheet.startTime), 'minutes'));
+  const hours = (timeDiff - timeDiff % 60) / 60;
+  const minutes = timeDiff % 60;
+  const userData = userList.filter(user => user._id === timesheet.userId)
 
   return (
     <>
@@ -38,8 +41,8 @@ const ScheduleModal = ({ timesheet, toggleModal, hours, minutes, user }) => {
             <Text style={styles.content}>Employee</Text>
           </View>
           <View style={styles.userContainer}>
-            <UserAvatar firstName={user.firstName} lastName={user.lastName} />
-            <Text style={styles.user}>{user.firstName} {user.lastName}</Text>
+            <UserAvatar firstName={userData.firstName} lastName={userData.lastName} />
+            <Text style={styles.user}>{userData.firstName} {userData.lastName}</Text>
           </View>
         </View>
       </TouchableOpacity>

@@ -26,7 +26,8 @@ const ScheduleScreen = ({ navigation }) => {
   const buttons = ['My Schedule', 'Full Schedule'];
   const [userRole, setUserRole] = useState('Employee');
   const [modalVisible, setModalVisible] = useState(false);
-  
+  const [item, setItem] = useState('');
+
   let personalTasks = []
   let filteredTasks = []
   let dateList = []
@@ -121,23 +122,16 @@ const ScheduleScreen = ({ navigation }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
             var hours = (timeDiff - timeDiff % 60) / 60;
             var minutes = timeDiff % 60;
-            var userData = userList.filter(user=>user._id === item.userId)
             return (
               <View style={styles.row}>
                 <TouchableOpacity
                   style={styles.taskContainer}
                   // onPress={() => navigation.navigate('Show', { id: item._id })}
-                  onPress={() => toggleModal()}
+                  onPress={() => {
+                    setItem(item);
+                    toggleModal();
+                  }}
                 >
-                  <Modal style={{ margin: 0 }} isVisible={modalVisible} backdropOpacity={0.7}>
-                    <ScheduleModal
-                      timesheet={item}
-                      toggleModal={toggleModal}
-                      hours={hours}
-                      minutes={minutes}
-                      user={userData[0]}
-                    />
-                  </Modal>
                   <Text style={styles.task}>{item.task}</Text>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
                     <Text style={styles.time}>
@@ -146,11 +140,15 @@ const ScheduleScreen = ({ navigation }) => {
                     <Text style={styles.time}>{hours} hrs {minutes} mins</Text>
                   </View>
                 </TouchableOpacity>
+                {console.log(item.task)}
               </View>
             );
           }}
         />
       </View>
+      <Modal style={{ margin: 0 }} isVisible={modalVisible} backdropOpacity={0.7}>
+        <ScheduleModal timesheet={item} toggleModal={toggleModal} />
+      </Modal>
     </>
   );
 };
