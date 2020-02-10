@@ -12,7 +12,7 @@ import moment from "moment";
 
 
 const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(BlogContext);
+  const { state, getBlogPosts, editBlogPost } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
   const { state: user } = useContext(UserContext);
   const [view, setView] = useState(true);
@@ -84,10 +84,13 @@ const TimesheetScreen = ({ navigation }) => {
               }
               <TouchableOpacity
                 style={{ ...styles.itemContainer, borderTopWidth: sameDate ? 0 : 1 }}
-                onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}
+                onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime, status: item.status })}
               >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <Text style={styles.item}>{item.task}</Text>
+                  {item.status === "APPROVED" && <Text style={{color:"green"}}>{item.status}</Text>}
+                  {item.status === "DECLINED" && <Text style={{color:"red"}}>{item.status}</Text>}
+                  {item.status === "PENDING" && <Text>{item.status}</Text>}
                   <Text style={styles.itemtime}>
                     {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
                   </Text>
