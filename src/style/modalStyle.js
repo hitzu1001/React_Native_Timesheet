@@ -14,7 +14,7 @@ const modalStyle = StyleSheet.create({
     // borderWidth: 2,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    
+
   },
   screenCenter: {
     flex: 1,
@@ -52,11 +52,10 @@ const modalStyle = StyleSheet.create({
   },
   shadowContainer3: {
     borderWidth: 1,
-    borderRadius: 8,
     borderColor: '#fff',
-    borderRadius: 5,
+    borderRadius: 8,
     backgroundColor: 'white',
-    
+
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -65,6 +64,23 @@ const modalStyle = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
+  },
+  shadowContainer1:
+  {
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#fff',
+    borderRadius: 5,
+    backgroundColor: 'white',
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
   }
 
 });

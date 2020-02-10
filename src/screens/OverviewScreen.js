@@ -87,19 +87,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingBottom: 15,
   },
-  switchView: {
-    ...modalStyle.shadowContainer3,
-    alignSelf: 'flex-end',
-    marginHorizontal: 15,
-    width: 140,
-    borderRadius: 16,
-  },
-  switch: {
-    paddingVertical: 2,
-    textAlign: 'center',
-    fontSize: 12,
-    fontWeight: 'bold',
-  }
 });
 
 export default OverviewScreen;
