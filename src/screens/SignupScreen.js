@@ -13,7 +13,7 @@ const SignupScreen = ({ navigation }) => {
     <View style={styles.container}>
       <NavigationEvents onWillBlur={clearErrorMessage} />
       <AuthForm
-        headerText='Sign Up for Timesheet'
+        headerText='Timesheet'
         errorMessage={state.errorMessage}
         buttonText='Sign Up'
         // onSubmit={({ email, password }) => signup({ email, password })}

@@ -6,15 +6,15 @@ import { withNavigation } from 'react-navigation';
 const NavLink = ({ navigation, routeName, text }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate(routeName)}>
-      <Spacer>
-        <Text style={styles.link}>{text}</Text>
-      </Spacer>
+      <Text style={styles.link}>{text}</Text>
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   link: {
-    color: '#1a8188'
+    marginHorizontal: 30,
+    marginTop: 20,
+    color: '#20b2aa'
   }
 });
 export default withNavigation(NavLink);

@@ -32,7 +32,7 @@ const ScheduleModal = ({ timesheet, toggleModal }) => {
             </View>
           </View>
           <View style={styles.container}>
-            <MaterialCommunityIcons style={iconStyle.scheduleIcon} name='hammer' />
+            <MaterialCommunityIcons style={iconStyle.scheduleIcon} name='clipboard-check-outline' />
             <Text style={styles.content}>{timesheet.task}</Text>
           </View>
           <View style={styles.container}>

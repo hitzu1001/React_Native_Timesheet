@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, Input, Button } from 'react-native-elements';
-import Spacer from '../components/Spacer';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import iconStyle from '../style/iconStyle';
 
 const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit, isSingup }) => {
   const [email, setEmail] = useState('snoopy.peanuts@test.com');
@@ -13,104 +12,149 @@ const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit, isSingup }) 
   const [role, setRole] = useState('Employee');
 
   return (
-    <>
-      <Spacer>
-        <Text h4 h4Style={styles.headerText}>{headerText}</Text>
-      </Spacer >
-      <Input
-        label='Email'
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize='none'
-        autoCorrect={false}
-      />
-      <Spacer />
-      <Input
-        secureTextEntry
-        label='Password'
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize='none'
-        autoCorrect={false}
-      />
+    <View style={styles.screen}>
+
+      <View style={styles.headerContainer}>
+        <MaterialCommunityIcons style={iconStyle.signIcon} name='calendar-clock' />
+        <Text style={styles.header}>{headerText}</Text>
+      </View>
+
+      <View style={styles.container}>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize='none'
+          autoCorrect={false}
+        />
+      </View>
+
+      <View style={styles.container}>
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize='none'
+          autoCorrect={false}
+        />
+      </View>
+
       {isSingup
         ?
         <>
-          <Spacer />
-          <Input
-            label='First Name'
-            value={firstName}
-            onChangeText={setFirstName}
-            autoCapitalize='none'
-            autoCorrect={false}
-          />
-          <Spacer />
-          <Input
-            label='Last Name'
-            value={lastName}
-            onChangeText={setLastName}
-            autoCapitalize='none'
-            autoCorrect={false}
-          />
-          <Spacer />
-          <Text style={styles.title}>Role</Text>
-          <RNPickerSelect
-            items={[
-              { label: 'Manager/Accounting', value: 'Manager' },
-              { label: 'Foreman', value: 'Foreman' },
-              { label: 'Employee', value: 'Employee' },
-            ]}
-            onValueChange={(value) => setRole(value)}
-            style={{ pickerSelectStyles }}
-            value={role}
-            useNativeAndroidPickerStyle={false}
-            textInputProps={{ underlineColor: 'yellow' }}
-            Icon={() => {
-              return <Feather name='arrow-down' size={22} color='#808080' />;
-            }}
-          />
+          <View style={styles.container}>
+            <Text style={styles.label}>First Name</Text>
+            <TextInput
+              style={styles.input}
+              value={firstName}
+              onChangeText={setFirstName}
+              autoCapitalize='none'
+              autoCorrect={false}
+            />
+          </View>
+          <View style={styles.container}>
+            <Text style={styles.label}>Last Name</Text>
+            <TextInput
+              style={styles.input}
+              value={lastName}
+              onChangeText={setLastName}
+              autoCapitalize='none'
+              autoCorrect={false}
+            />
+          </View>
+
+          <View style={styles.container}>
+            <Text style={styles.label}>Role</Text>
+            <RNPickerSelect
+              items={[
+                { label: 'Manager/Accounting', value: 'Manager' },
+                { label: 'Foreman', value: 'Foreman' },
+                { label: 'Employee', value: 'Employee' },
+              ]}
+              onValueChange={(value) => setRole(value)}
+              style={{ pickerSelectstyles }}
+              value={role}
+              useNativeAndroidPickerstyle={false}
+              textInputProps={{ underlineColor: 'yellow' }}
+              Icon={() => {
+                return <Feather name='arrow-down' size={22} color='#808080' />;
+              }}
+            />
+          </View>
         </>
         : null
       }
-
       {errorMessage
-        ? <Text style={styles.errorMessage}>{errorMessage}</Text>
+        // ? <Text style={styles.errorMessage}>{errorMessage}</Text>
+        ? alert(errorMessage)
         : null
       }
-      <Spacer>
-        <Button
-          title={buttonText}
-          onPress={() => onSubmit({ email, password, firstName, lastName, role })}
-          buttonStyle={styles.button}
-        />
-      </Spacer>
-    </>
+      <View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            onSubmit({ email, password, firstName, lastName, role })
+          }
+        >
+          <Text style={styles.buttonText}>{buttonText}</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  headerText: {
+  screen: {
+    marginHorizontal: 30,
     marginTop: 220,
   },
+  headerContainer: {
+    marginBottom: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: {
+    fontSize: 28,
+    color: '#20b2aa',
+  },
+  container: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#444',
+  },
+  input: {
+    marginTop: 5,
+    paddingVertical: 5,
+    fontSize: 15,
+    color: '#444',
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+  },
   errorMessage: {
-    fontSize: 16,
     color: 'red',
-    marginLeft: 15,
-    marginTop: 15
   },
   button: {
-    backgroundColor: '#20b2aa'
+    marginTop: 10,
+    alignSelf: 'center',
+    borderRadius: 6,
+    backgroundColor: '#20b2aa',
   },
-  title: {
-    marginLeft: 10,
-    fontSize: 16,
-    color: "grey",
-    fontWeight: "bold",
-    marginBottom: 5
-  }
+  buttonText: {
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    fontSize: 18,
+    color: '#fff',
+  },
 });
 
-const pickerSelectStyles = StyleSheet.create({
+const pickerSelectstyles = StyleSheet.create({
   inputIOS: {
     marginRight: 10,
     marginLeft: 10,
