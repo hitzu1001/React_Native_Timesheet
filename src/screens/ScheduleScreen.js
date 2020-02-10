@@ -32,7 +32,7 @@ const ScheduleScreen = ({ navigation }) => {
   let filteredTasks = []
   let dateList = []
 
-  personalTasks = state.filter(task => task.userId === user[0]._id)
+  user[0] && (personalTasks = state.filter(task => task.userId === user[0]._id))
   filteredTasks = selectTasks(view)
 
   useEffect(() => {
