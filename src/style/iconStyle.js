@@ -71,13 +71,18 @@ const iconStyle = StyleSheet.create({
   coffeeIcon: {
     fontSize: 20,
     color: '#20b2aa',
-    marginLeft: 2,
-    marginRight: 2,
+    marginHorizontal: 2,
   },
   scheduleIcon:{
     fontSize: 20,
     color: '#999',
     marginRight: 15,
+  },
+  signIcon: {
+    fontSize: 30,
+    color: '#20b2aa',
+    marginRight: 10,
+    marginTop: 5,
   }
 });
 
