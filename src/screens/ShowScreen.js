@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, FlatList } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
+import { Context as UserContext } from '../context/AuthContext';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import moment from 'moment';
@@ -8,7 +9,9 @@ import modalStyle from '../style/modalStyle';
 import uuid from 'uuid/v4';
 
 const ShowScreen = ({ navigation }) => {
-  const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext);
+  const { state, deleteBlogPost, getBlogPosts, editBlogPost } = useContext(BlogContext);
+  const { state: user } = useContext(UserContext);
+  const [userRole, setUserRole] = useState('Employee')
   const blogPost = state.find(blogPost =>
     blogPost._id === navigation.getParam('id')
   )
@@ -19,12 +22,14 @@ const ShowScreen = ({ navigation }) => {
   const minutes = timeDiff % 60;
 
   useEffect(() => {
+    Array.isArray(user) && setUserRole(user[0].role)
     const callDeleteBlogPost = () => {
       deleteBlogPost(navigation.getParam('id'), () => {
         navigation.navigate('Timesheet');
       });
     };
-    navigation.setParams({ callDeleteBlogPost });
+    navigation.setParams({ callDeleteBlogPost, status: blogPost.status });
+
 
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
@@ -50,6 +55,22 @@ const ShowScreen = ({ navigation }) => {
         <Text style={styles.timeDiff}> {hours} hrs {minutes} mins</Text>
       </View>
       <View style={styles.container}>
+        {userRole === "Manager" && (blogPost.status === "PENDING") &&
+          <TouchableOpacity onPress={() => {
+            editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime, blogPost.task, blogPost.notes, blogPost.images, "APPROVED", () => {
+              navigation.pop();
+            })
+          }}>
+            <Text style={{ color: "green" }}>Approve</Text>
+          </TouchableOpacity>}
+        {userRole === "Manager" && (blogPost.status === "PENDING") &&
+          <TouchableOpacity onPress={() => {
+            editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime, blogPost.task, blogPost.notes, blogPost.images, "DECLINED", () => {
+              navigation.pop();
+            })
+          }}>
+            <Text style={{ color: "red" }}>Decline</Text>
+          </TouchableOpacity>}
         <Text style={styles.label}>TASK</Text>
         <Text style={styles.content}>
           {blogPost.task}
@@ -97,13 +118,13 @@ ShowScreen.navigationOptions = ({ navigation }) => {
     </TouchableOpacity>,
     headerRight:
       <>
-        <TouchableOpacity style={iconStyle.iconTouchRight}
+        {navigation.state.params.status === "PENDING" && <TouchableOpacity style={iconStyle.iconTouchRight}
           onPress={() =>
             navigation.navigate('Edit', { id: navigation.getParam('id') })
           }
         >
           <FontAwesome style={iconStyle.editIcon} name='pencil' />
-        </TouchableOpacity>
+        </TouchableOpacity>}
         <TouchableOpacity style={iconStyle.iconTouchRight}
           onPress={() => {
             Alert.alert('Delete timesheet?', '',

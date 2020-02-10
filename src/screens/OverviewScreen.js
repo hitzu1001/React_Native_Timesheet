@@ -22,14 +22,9 @@ const OverviewScreen = ({ navigation }) => {
 
   useEffect(() => {
     getBlogPosts();
-    // getUser();
+    getAllUser()
     Array.isArray(user) && setUserId(user[0]._id)
     Array.isArray(user) && setUserRole(user[0].role)
-    getAllUser()
-
-    if (userRole === 'Manager') {
-
-    }
 
     const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();

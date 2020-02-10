@@ -12,7 +12,7 @@ import moment from "moment";
 
 
 const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(BlogContext);
+  const { state, getBlogPosts, editBlogPost } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
   const { state: user } = useContext(UserContext);
   const [view, setView] = useState(true);
@@ -22,14 +22,14 @@ const TimesheetScreen = ({ navigation }) => {
   let filteredTasks = []
   let dateList = []
 
-  personalTasks = state.filter(task => task.userId === user[0]._id)
+  state[0] && (personalTasks = state.filter(task => task.userId === user[0]._id))
   filteredTasks = selectTasks(view)
 
   useEffect(() => {
     getBlogPosts();
-    Array.isArray(user) && setUserRole(user[0].role)
+    user[0] && setUserRole(user[0].role)
     dateList = []
-    personalTasks = state.filter(task => task.userId === user[0]._id)
+    state[0] && (personalTasks = state.filter(task => task.userId === user[0]._id))
     filteredTasks = selectTasks(view)
 
     const listener = navigation.addListener("didFocus", () => {
@@ -84,7 +84,7 @@ const TimesheetScreen = ({ navigation }) => {
               }
               <TouchableOpacity
                 style={{ ...styles.itemContainer, borderTopWidth: sameDate ? 0 : 1 }}
-                onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime })}
+                onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime, status: item.status })}
               >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <Text style={styles.item}>{item.task}</Text>
@@ -92,9 +92,14 @@ const TimesheetScreen = ({ navigation }) => {
                     {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
                   </Text>
                 </View>
-                <Text style={styles.timeDiff}>
-                  {hours} hrs {minutes} mins
+                <View style={{flexDirection:"row",flexWrap:"nowrap", justifyContent:"space-between"}}>
+                  {item.status === "APPROVED" && <Text style={{ color: "green", fontSize: 10, flexWrap: "nowrap" }}>{item.status}</Text>}
+                  {item.status === "DECLINED" && <Text style={{ color: "red", fontSize: 10 }}>{item.status}</Text>}
+                  {item.status === "PENDING" && <Text style={{ color: "black", fontSize: 10 }}>{item.status}</Text>}
+                  <Text style={styles.timeDiff}>
+                    {hours} hrs {minutes} mins
                 </Text>
+                </View>
               </TouchableOpacity>
             </>
           );

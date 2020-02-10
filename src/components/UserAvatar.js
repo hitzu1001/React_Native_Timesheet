@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Context as UserContext } from '../context/AuthContext'
 
-
 const UserAvatar = ({ firstName, lastName }) => {
   const { state } = useContext(UserContext);
   let title = 'AA';
