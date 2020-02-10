@@ -32,6 +32,12 @@ const iconStyle = StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 2,
   },
+  forwardIcon: {
+    fontSize: 32,
+    color: '#20b2aa',
+    marginHorizontal: 25,
+    marginTop: 5,
+  },
   saveIcon: {
     fontSize: 22,
     color: '#20b2aa',
@@ -47,7 +53,7 @@ const iconStyle = StyleSheet.create({
   editIcon: {
     fontSize: 20,
     color: '#20b2aa',
-    marginBottom: 3,
+    marginBottom: 4,
     // borderColor: 'red',
     // borderWidth: 2,
   },

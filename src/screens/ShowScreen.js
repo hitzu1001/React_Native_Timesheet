@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, FlatList } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
-import Card from '../components/Card';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import moment from 'moment';
+import modalStyle from '../style/modalStyle';
 import uuid from 'uuid/v4';
 
 const ShowScreen = ({ navigation }) => {
@@ -12,7 +12,11 @@ const ShowScreen = ({ navigation }) => {
   const blogPost = state.find(blogPost =>
     blogPost._id === navigation.getParam('id')
   )
-  // const timeHeader = blogPost.startTime;
+  const timeDiff = parseInt(
+    moment(blogPost.endTime).diff(moment(blogPost.startTime), "minutes")
+  );
+  const hours = (timeDiff - (timeDiff % 60)) / 60;
+  const minutes = timeDiff % 60;
 
   useEffect(() => {
     const callDeleteBlogPost = () => {
@@ -33,14 +37,34 @@ const ShowScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <Card title='START TIME' item={moment(blogPost.startTime).format('LLLL')} />
-      <Card title='END TIME' item={moment(blogPost.endTime).format('LLLL')} />
-      <Card title='TASK' item={blogPost.task} />
-      <Card title='NOTES' item={blogPost.notes} />
-      <View style={styles.subContainer}>
-        <Text style={styles.containerTitle}>ATTACHMENTS</Text>
+      <View style={styles.timeContainer}>
+        <View style={styles.timeSpan}>
+          <Text style={styles.time}>
+            {moment(blogPost.startTime).format('LT')}
+          </Text>
+          <Ionicons style={iconStyle.forwardIcon} name='ios-arrow-forward' />
+          <Text style={styles.time}>
+            {moment(blogPost.endTime).format('LT')}
+          </Text>
+        </View>
+        <Text style={styles.timeDiff}> {hours} hrs {minutes} mins</Text>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.label}>TASK</Text>
+        <Text style={styles.content}>
+          {blogPost.task}
+        </Text>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.label}>NOTES</Text>
+        <Text style={styles.content} numberOfLines={3} ellipsizeMode='tail'>
+          {blogPost.notes}
+        </Text>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.label}>ATTACHMENTS</Text>
         <View style={styles.photoContainer}>
-          {blogPost.images
+          {blogPost.images.length > 0
             ? blogPost.images.map(i =>
               <TouchableOpacity
                 key={uuid()}
@@ -51,9 +75,9 @@ const ShowScreen = ({ navigation }) => {
                   });
                 }}
               >
-                <Image key={i} source={{ uri: i.uri }} style={styles.image} />
-              </TouchableOpacity>) :
-            <Text style={styles.none}>None</Text>}
+                <Image source={{ uri: i.uri }} style={styles.image} />
+              </TouchableOpacity>)
+            : <Text style={styles.none}>None</Text>}
         </View>
       </View>
     </ScrollView >
@@ -101,19 +125,46 @@ ShowScreen.navigationOptions = ({ navigation }) => {
   };
 };
 
-
 const styles = StyleSheet.create({
-  subContainer: {
+  timeContainer: {
+    ...modalStyle.shadowContainer3,
+    marginHorizontal: 20,
+    marginTop: 30,
+    marginBottom: 20,
+    paddingVertical: 15,
+    alignItems: 'center',
+  },
+  timeSpan: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  time: {
+    fontSize: 22,
+    fontWeight: '500',
+    color: '#333'
+  },
+  timeDiff: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#999'
+  },
+  container: {
     marginHorizontal: 20,
     marginVertical: 20,
   },
-  containerTitle: {
+  label: {
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  containerItem: {
-    color: 'dimgray'
+  content: {
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderColor: '#d3d3d3',
+    borderWidth: 1,
+    borderRadius: 3,
   },
   photoContainer: {
     flexDirection: 'row',
