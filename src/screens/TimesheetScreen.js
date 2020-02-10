@@ -88,16 +88,18 @@ const TimesheetScreen = ({ navigation }) => {
               >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <Text style={styles.item}>{item.task}</Text>
-                  {item.status === "APPROVED" && <Text style={{color:"green"}}>{item.status}</Text>}
-                  {item.status === "DECLINED" && <Text style={{color:"red"}}>{item.status}</Text>}
-                  {item.status === "PENDING" && <Text>{item.status}</Text>}
                   <Text style={styles.itemtime}>
                     {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
                   </Text>
                 </View>
-                <Text style={styles.timeDiff}>
-                  {hours} hrs {minutes} mins
+                <View style={{flexDirection:"row",flexWrap:"nowrap", justifyContent:"space-between"}}>
+                  {item.status === "APPROVED" && <Text style={{ color: "green", fontSize: 10, flexWrap: "nowrap" }}>{item.status}</Text>}
+                  {item.status === "DECLINED" && <Text style={{ color: "red", fontSize: 10 }}>{item.status}</Text>}
+                  {item.status === "PENDING" && <Text style={{ color: "black", fontSize: 10 }}>{item.status}</Text>}
+                  <Text style={styles.timeDiff}>
+                    {hours} hrs {minutes} mins
                 </Text>
+                </View>
               </TouchableOpacity>
             </>
           );
