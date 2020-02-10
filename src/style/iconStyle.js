@@ -79,10 +79,16 @@ const iconStyle = StyleSheet.create({
     marginRight: 15,
   },
   signIcon: {
-    fontSize: 30,
-    color: '#20b2aa',
-    marginRight: 10,
+    fontSize: 56,
+    color: '#617be3',
+    transform: [{ rotate: '-10 deg' }],
+    marginRight: 15,
     marginTop: 5,
+  },
+  arrowDownIcon: {
+    fontSize: 22,
+    color: '#20b2aa',
+    bottom: 2,
   }
 });
 

@@ -13,8 +13,8 @@ const NavLink = ({ navigation, routeName, text }) => {
 const styles = StyleSheet.create({
   link: {
     marginHorizontal: 30,
-    marginTop: 20,
-    color: '#20b2aa'
+    paddingVertical: 20,
+    color: '#20b2aa',
   }
 });
 export default withNavigation(NavLink);

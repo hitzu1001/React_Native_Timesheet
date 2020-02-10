@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import { Context as AuthContext } from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
@@ -13,7 +13,6 @@ const SigninScreen = ({ navigation }) => {
     <View style={styles.container}>
       <NavigationEvents onWillBlur={clearErrorMessage} />
       <AuthForm
-        headerText='Sign In to Your Account'
         errorMessage={state.errorMessage}
         buttonText='Sign In'
         onSubmit={signin}
@@ -23,6 +22,11 @@ const SigninScreen = ({ navigation }) => {
         routeName='Signup'
         text="Don't have an account? Sign up instead."
       />
+      {state.errorMessage
+        ? <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+        // ? alert(state.errorMessage)
+        : null
+      }
     </View>
   );
 };
@@ -36,8 +40,11 @@ SigninScreen.navigationOptions = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    marginBottom: 250
-  }
+  },
+  errorMessage: {
+    marginHorizontal: 30,
+    marginTop: 5,
+    color: 'red',
+  },
 });
 export default SigninScreen;

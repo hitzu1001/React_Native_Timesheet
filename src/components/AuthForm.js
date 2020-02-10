@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import * as Font from 'expo-font';
 import RNPickerSelect from 'react-native-picker-select';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 
-const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit, isSingup }) => {
+const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
   const [email, setEmail] = useState('snoopy.peanuts@test.com');
   const [password, setPassword] = useState('password');
   const [firstName, setFirstName] = useState('Charlie');
   const [lastName, setLastName] = useState('Brown');
   const [role, setRole] = useState('Employee');
+  const [fontLoaded, setfontLoaded] = useState(false);
+  const colorCode = ['#617be3', '#61d4b3', '#fdd365', '#fb8d62', '#f54291']
+
+  const app = 'Timesheet'
+  const list = [];
+  for (i = 0; i < app.length; i++) {
+    list.push(app[i]);
+  }
+
+  useEffect(() => {
+    Font.loadAsync({
+      'courgette-regular': require('../../assets/fonts/Courgette-Regular.ttf'),
+    }).then(() => {
+      setfontLoaded(true);
+    })
+  }, [])
 
   return (
     <View style={styles.screen}>
 
       <View style={styles.headerContainer}>
         <MaterialCommunityIcons style={iconStyle.signIcon} name='calendar-clock' />
-        <Text style={styles.header}>{headerText}</Text>
+        {fontLoaded && list.map((char, i) => {
+          var fontColor = colorCode[(i + 1) % 5];
+          return <Text key={i} style={{ ...styles.header, color: `${fontColor}` }}>{char}</Text>
+        })}
       </View>
 
       <View style={styles.container}>
@@ -67,7 +87,7 @@ const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit, isSingup }) 
           </View>
 
           <View style={styles.container}>
-            <Text style={styles.label}>Role</Text>
+            <Text style={{ ...styles.label, marginBottom: 5 }}>Role</Text>
             <RNPickerSelect
               items={[
                 { label: 'Manager/Accounting', value: 'Manager' },
@@ -80,16 +100,12 @@ const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit, isSingup }) 
               useNativeAndroidPickerstyle={false}
               textInputProps={{ underlineColor: 'yellow' }}
               Icon={() => {
-                return <Feather name='arrow-down' size={22} color='#808080' />;
+                return <FontAwesome style={iconStyle.arrowDownIcon} name='hand-o-left' />;
               }}
             />
+            <View style={styles.line}></View>
           </View>
         </>
-        : null
-      }
-      {errorMessage
-        // ? <Text style={styles.errorMessage}>{errorMessage}</Text>
-        ? alert(errorMessage)
         : null
       }
       <View>
@@ -109,7 +125,7 @@ const AuthForm = ({ headerText, errorMessage, buttonText, onSubmit, isSingup }) 
 const styles = StyleSheet.create({
   screen: {
     marginHorizontal: 30,
-    marginTop: 220,
+    marginTop: 70,
   },
   headerContainer: {
     marginBottom: 30,
@@ -118,27 +134,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    fontSize: 28,
-    color: '#20b2aa',
+    fontFamily: 'courgette-regular',
+    fontSize: 36,
   },
   container: {
-    marginBottom: 20,
+    marginBottom: 25,
   },
   label: {
     fontSize: 15,
     fontWeight: '600',
     color: '#444',
+    // marginBottom: 5,
   },
   input: {
-    marginTop: 5,
     paddingVertical: 5,
     fontSize: 15,
-    color: '#444',
+    color: '#000',
     borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
   },
-  errorMessage: {
-    color: 'red',
+  line: {
+    marginTop: 5,
+    height: 1,
+    alignSelf: 'stretch',
+    backgroundColor: 'lightgray',
   },
   button: {
     marginTop: 10,
@@ -159,12 +178,12 @@ const pickerSelectstyles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
     fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
+    // paddingVertical: 12,
+    // paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: 'red',
     borderRadius: 4,
-    color: 'black',
+    color: '#000',
     paddingRight: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
@@ -174,7 +193,7 @@ const pickerSelectstyles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: 'purple',
     borderRadius: 8,
-    color: 'black',
+    color: '#000',
     paddingRight: 30, // to ensure the text is never behind the icon
   },
 });

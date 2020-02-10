@@ -51,7 +51,7 @@ const signup = dispatch => async ({ email, password, firstName, lastName, role }
   } catch (err) {
     dispatch({
       type: 'add_error',
-      payload: 'Something went wrong with sign up'
+      payload: 'Something went wrong with sign up...'
     });
   }
 };
@@ -72,7 +72,7 @@ const signin = dispatch => async ({ email, password }) => {
   } catch (err) {
     dispatch({
       type: 'add_error',
-      payload: 'Something went wrong with sign in'
+      payload: 'Something went wrong with sign in...'
     });
   }
 };
