@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, FlatList, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import Modal from 'react-native-modal';
@@ -16,7 +16,7 @@ import modalStyle from '../style/modalStyle';
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { state: user } = useContext(UserContext);
-  const { state: userList } = useContext(UserList);
+  // const { state: userList } = useContext(UserList);
   const today = moment(new Date()).format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedTask, setSelectedTask] = useState([]);
@@ -46,7 +46,6 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     dateList = []
-    // {console.log(userList)}
     Array.isArray(user) && setUserRole(user[0].role)
     personalTasks = state.filter(task => task.userId === user[0]._id)
     filteredTasks = selectTasks(view)
@@ -54,7 +53,7 @@ const ScheduleScreen = ({ navigation }) => {
     let initialDates = {};
     for (let i = 0; i < filteredTasks.length; i++) {
       let date = moment(filteredTasks[i].startTime).format('YYYY-MM-DD')
-      initialDates = { ...initialDates, [date]: { marked: true, selectedColor: '#FF7F50', } }
+      initialDates = { ...initialDates, [date]: { marked: true, selectedColor: '#fb8d62', } }
     }
     setMarkedTask(initialDates);
   }, [view]);
@@ -64,7 +63,6 @@ const ScheduleScreen = ({ navigation }) => {
   }, [state])
 
   useEffect(() => {
-    // getUser()
     Array.isArray(user) && setUserRole(user[0].role)
     let dayTasks = []
     personalTasks = state.filter(task => task.userId === user[0]._id)
@@ -77,7 +75,7 @@ const ScheduleScreen = ({ navigation }) => {
     }
 
     setSelectedTask(dayTasks)
-    let selectedColor = (selectedDate === today) ? '#FF7F50' : '#20b2aa';
+    let selectedColor = (selectedDate === today) ? '#fb8d62' : '#20b2aa';
     let labeledDate = {
       ...markedTask, [selectedDate]: {
         selected: true,
@@ -113,8 +111,8 @@ const ScheduleScreen = ({ navigation }) => {
           theme={themeStyle}
         />
       </View>
-      <View>
-        <Text style={styles.selectedDate}>{moment(selectedDate).format('dddd, DD MMMM YYYY')}</Text>
+      <ScrollView>
+        {/* <Text style={styles.selectedDate}>{moment(selectedDate).format('dddd, DD MMMM YYYY')}</Text> */}
         <FlatList
           data={selectedTask}
           keyExtractor={(blogPost) => blogPost._id}
@@ -144,7 +142,7 @@ const ScheduleScreen = ({ navigation }) => {
             );
           }}
         />
-      </View>
+      </ScrollView>
       <Modal style={{ margin: 0 }} isVisible={modalVisible} backdropOpacity={0.7}>
         <ScheduleModal timesheet={item} toggleModal={toggleModal} />
       </Modal>

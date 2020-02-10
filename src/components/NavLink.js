@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text, StyleSheet, TouchableOpacity } from 'react-native'
-import Spacer from '../components/Spacer';
 import { withNavigation } from 'react-navigation';
 
 const NavLink = ({ navigation, routeName, text }) => {
