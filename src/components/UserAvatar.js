@@ -9,7 +9,7 @@ const UserAvatar = ({firstName, lastName}) => {
   const [username, setUserName] = useState("AA")
 
   useEffect(() => {
-    setUserName(state[0].firstName[0] + state[0].lastName[0])
+    state[0] && setUserName(state[0].firstName[0] + state[0].lastName[0])
     firstName && setUserName(firstName[0] + lastName[0])
   }, [])
 

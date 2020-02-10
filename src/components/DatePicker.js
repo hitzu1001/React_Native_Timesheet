@@ -41,7 +41,7 @@ export default class App extends Component {
   }
 
   changeMode = mode => {
-    if ((mode === 'date') || (mode === 'time1')) {
+    if ((mode === 'date') || (mode === 'time')) {
       if (mode === this.state.mode) {
         this.setState({ show1: !this.state.show1, show2: false });
       } else {
@@ -77,7 +77,7 @@ export default class App extends Component {
                   <Text style={styles.btn}>Date</Text>
                 </TouchableOpacity>
                 {!this.props.disabled &&
-                  <TouchableOpacity onPress={() => this.changeMode('time1')} disabled={this.props.disabled}>
+                  <TouchableOpacity onPress={() => this.changeMode('time')} disabled={this.props.disabled}>
                     <Text style={styles.btn}>Time</Text>
                   </TouchableOpacity>}
                 <TouchableOpacity style={styles.dateTimeBtn} onPress={() => this.changeMode('picker1')}>
@@ -123,7 +123,7 @@ export default class App extends Component {
               </View>
               {!this.props.disabled && show2 &&
                 <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date2)}
-                  mode={mode} is24Hour={false} display='default' onChange={this.setDate2}
+                  mode={'time'} is24Hour={false} display='default' onChange={this.setDate2}
                 />
               }
             </View>
