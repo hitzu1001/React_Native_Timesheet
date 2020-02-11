@@ -9,7 +9,7 @@ import { Context as ImageContext } from '../context/ImageContext';
 import { Ionicons } from '@expo/vector-icons';
 
 const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
-  const { state } = useContext(ImageContext);
+  const { state: imgState } = useContext(ImageContext);
   const [startTime, setStartTime] = useState(initialValues.startTime);
   const [endTime, setEndTime] = useState(initialValues.endTime);
   const [task, setTask] = useState(initialValues.task);
@@ -81,7 +81,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
               { cancelable: false },
             )
           } else {
-            onSubmit(startTime, endTime, task, notes, state, false);
+            onSubmit(startTime, endTime, task, notes, imgState, 'PENDING');
           }
         }}
       >

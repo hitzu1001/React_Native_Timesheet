@@ -7,7 +7,7 @@ class PregressChart extends React.PureComponent {
     let fillColor = '#20b2aa'
     let time = 0
     if (this.props.percentage > 1) {
-      fillColor = '#ff0000'
+      fillColor = '#d9534f'
     }
     if (this.props.title === 'of 8 hrs') {
       time = Number((this.props.percentage * 480).toFixed(0))

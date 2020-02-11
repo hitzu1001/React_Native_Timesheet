@@ -75,10 +75,9 @@ const iconStyle = StyleSheet.create({
     bottom: 2,
   },
   auditIcon:{
-    fontSize: 22,
-    color: '#008000',
-    marginLeft: 10,
-    marginRight: -10,
+    fontSize: 20,
+    color: '#fff',
+    marginRight: 10,
   },
 });
 

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, FlatList } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
-import { FontAwesome, Ionicons, Entypo } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import moment from 'moment';
 import modalStyle from '../style/modalStyle';
@@ -89,7 +89,7 @@ const ShowScreen = ({ navigation }) => {
         <>
           <View style={styles.auditContainer}>
             <TouchableOpacity
-              style={styles.auditBtn}
+              style={{...styles.auditBtn, backgroundColor: '#5cb85c'}}
               onPress={() => {
                 editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
                   blogPost.task, blogPost.notes, blogPost.images, "APPROVED", () => {
@@ -97,12 +97,12 @@ const ShowScreen = ({ navigation }) => {
                   })
               }}>
               <View style={styles.timeSpan}>
-                <Entypo style={{...iconStyle.auditIcon, color: '#008000'}} name='check' />
-                <Text style={{ ...styles.buttonText, color: '#008000' }}>Approve</Text>
+                <FontAwesome style={iconStyle.auditIcon} name='check' />
+                <Text style={styles.buttonText}>Approve</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.auditBtn}
+              style={{...styles.auditBtn, backgroundColor: '#d9534f'}}
               onPress={() => {
                 editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
                   blogPost.task, blogPost.notes, blogPost.images, "DECLINED", () => {
@@ -110,8 +110,8 @@ const ShowScreen = ({ navigation }) => {
                   })
               }}>
               <View style={styles.timeSpan}>
-                <Entypo style={{...iconStyle.auditIcon, color: '#ff0000'}} name='cross' />
-                <Text style={{ ...styles.buttonText, color: '#ff0000' }}>Decline</Text>
+                <FontAwesome style={iconStyle.auditIcon} name='times' />
+                <Text style={styles.buttonText}>Decline</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -226,15 +226,16 @@ const styles = StyleSheet.create({
   auditBtn: {
     ...modalStyle.shadowContainer1,
     marginTop: 20,
+    marginBottom: 20,
+    width: 120,
     borderRadius: 8,
-    backgroundColor: '#fdfdfd',
-    borderColor: '#ddd',
-    borderWidth: 0.5,
+    borderWidth: 0.1,
   },
   buttonText: {
     paddingVertical: 8,
-    paddingHorizontal: 20,
     fontSize: 16,
+    fontWeight: '500',
+    color: '#fff'
   },
 });
 export default ShowScreen;

@@ -77,7 +77,7 @@ const TimeOffScreen = ({ navigation }) => {
               { cancelable: false },
             )
           } else {
-            addBlogPost(startTime, endTime, task, notes, [], true);
+            addBlogPost(startTime, endTime, task, notes, [], 'PENDING', true);
             navigation.pop();
           }
         }}

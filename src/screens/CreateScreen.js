@@ -27,7 +27,7 @@ const CreateScreen = ({ navigation }) => {
         images: []
       }}
       onSubmit={(startTime, endTime, task, notes, images) => {
-        addBlogPost(startTime, endTime, task, notes, images, "pending", false, () => {
+        addBlogPost(startTime, endTime, task, notes, images, "PENDING", false, () => {
           // ensure the page is navigated to Index after the post has been added
 
           navigation.navigate('Timesheet');
