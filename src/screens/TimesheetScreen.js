@@ -12,7 +12,7 @@ import moment from "moment";
 
 
 const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts, editBlogPost } = useContext(BlogContext);
+  const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
   const { state: user } = useContext(UserContext);
   const [view, setView] = useState(true);

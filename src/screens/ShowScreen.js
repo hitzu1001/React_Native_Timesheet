@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, FlatList } from 'react-native';
-import AuditTimesheet from '../components/AuditTimesheet';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons, Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import moment from 'moment';
 import modalStyle from '../style/modalStyle';
@@ -97,7 +96,10 @@ const ShowScreen = ({ navigation }) => {
                     navigation.pop();
                   })
               }}>
-              <Text style={{ ...styles.buttonText, color: '#008000' }}>Approve</Text>
+              <View style={styles.timeSpan}>
+                <Entypo style={{...iconStyle.auditIcon, color: '#008000'}} name='check' />
+                <Text style={{ ...styles.buttonText, color: '#008000' }}>Approve</Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.auditBtn}
@@ -107,7 +109,10 @@ const ShowScreen = ({ navigation }) => {
                     navigation.pop();
                   })
               }}>
-              <Text style={{ ...styles.buttonText, color: '#ff0000' }}>Decline</Text>
+              <View style={styles.timeSpan}>
+                <Entypo style={{...iconStyle.auditIcon, color: '#ff0000'}} name='cross' />
+                <Text style={{ ...styles.buttonText, color: '#ff0000' }}>Decline</Text>
+              </View>
             </TouchableOpacity>
           </View>
         </>
@@ -221,8 +226,8 @@ const styles = StyleSheet.create({
   auditBtn: {
     ...modalStyle.shadowContainer1,
     marginTop: 20,
-    borderRadius: 5,
-    backgroundColor: '#fff',
+    borderRadius: 8,
+    backgroundColor: '#fdfdfd',
     borderColor: '#ddd',
     borderWidth: 0.5,
   },
