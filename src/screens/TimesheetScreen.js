@@ -22,14 +22,14 @@ const TimesheetScreen = ({ navigation }) => {
   let filteredTasks = []
   let dateList = []
 
-  state[0] && (personalTasks = state.filter(task => task.userId === user[0]._id))
+  Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id))
   filteredTasks = selectTasks(view)
 
   useEffect(() => {
     getBlogPosts();
-    user[0] && setUserRole(user[0].role)
+    Array.isArray(user) && setUserRole(user[0].role)
     dateList = []
-    state[0] && (personalTasks = state.filter(task => task.userId === user[0]._id))
+    Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id))
     filteredTasks = selectTasks(view)
 
     const listener = navigation.addListener("didFocus", () => {

@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    fontFamily: 'courgette',
-    // fontFamily: 'leckerliOne',
+    // fontFamily: 'courgette',
+    fontFamily: 'leckerliOne',
     fontSize: 36,
   },
   container: {
