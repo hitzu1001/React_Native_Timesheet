@@ -10,11 +10,11 @@ const UserAvatar = ({ firstName, lastName }) => {
   let type = 'photo';
 
   if (firstName) {
-    title = (firstName[0] + lastName[0]);
-    username = (`${firstName} ${lastName}`);
+    firstName && (title = (firstName[0] + lastName[0]));
+    firstName && (username = (`${firstName} ${lastName}`));
   } else {
-    title = (state[0].firstName[0] + state[0].lastName[0]);
-    username = (`${state[0].firstName} ${state[0].lastName}`)
+    Array.isArray(state) && (title = state[0].firstName[0] + state[0].lastName[0])
+    Array.isArray(state) && (username = `${state[0].firstName} ${state[0].lastName}`)
   }
 
   (getUri(username) !== null) ? (type = 'photo') : (type = 'title');
