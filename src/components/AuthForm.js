@@ -30,7 +30,6 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
 
   return (
     <View style={styles.screen}>
-
       <View style={styles.headerContainer}>
         <MaterialCommunityIcons style={iconStyle.signIcon} name='calendar-clock' />
         {fontLoaded && list.map((char, i) => {
@@ -56,7 +55,10 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
           style={styles.input}
           secureTextEntry
           value={password}
-          onChangeText={setPassword}
+          onChangeText={text=>{
+            setPassword(text)
+
+          }}
           autoCapitalize='none'
           autoCorrect={false}
         />
