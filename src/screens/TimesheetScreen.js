@@ -12,7 +12,7 @@ import moment from "moment";
 
 
 const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts, editBlogPost } = useContext(BlogContext);
+  const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
   const { state: user } = useContext(UserContext);
   const [view, setView] = useState(true);
@@ -92,10 +92,18 @@ const TimesheetScreen = ({ navigation }) => {
                     {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
                   </Text>
                 </View>
-                <View style={{flexDirection:"row",flexWrap:"nowrap", justifyContent:"space-between"}}>
-                  {item.status === "APPROVED" && <Text style={{ color: "green", fontSize: 10, flexWrap: "nowrap" }}>{item.status}</Text>}
-                  {item.status === "DECLINED" && <Text style={{ color: "red", fontSize: 10 }}>{item.status}</Text>}
-                  {item.status === "PENDING" && <Text style={{ color: "black", fontSize: 10 }}>{item.status}</Text>}
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                  {item.status === "APPROVED" &&
+                    <Text style={{ ...styles.status, color: "#008000" }}>
+                      {item.status}
+                    </Text>
+                  }
+                  {item.status === "DECLINED" &&
+                    <Text style={{ ...styles.status, color: "#ff0000" }}>{item.status}</Text>
+                  }
+                  {item.status === "PENDING" &&
+                    <Text style={{ ...styles.status, color: "#808080" }}>{item.status}</Text>
+                  }
                   <Text style={styles.timeDiff}>
                     {hours} hrs {minutes} mins
                 </Text>
@@ -160,6 +168,13 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#999"
   },
+  status: {
+    marginTop: 10,
+    color: "green",
+    fontSize: 9,
+    fontWeight: '600',
+    flexWrap: "nowrap"
+  }
 });
 
 export default TimesheetScreen;

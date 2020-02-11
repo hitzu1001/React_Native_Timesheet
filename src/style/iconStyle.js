@@ -7,8 +7,6 @@ const iconStyle = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderColor: 'blue',
-    // borderWidth: 2,
   },
   iconTouchRight: {
     marginLeft: -10,
@@ -17,20 +15,14 @@ const iconStyle = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderColor: 'blue',
-    // borderWidth: 2,
   },
   crossIcon: {
     fontSize: 22,
     color: "#20b2aa",
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   backIcon: {
     fontSize: 22,
     color: '#20b2aa',
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   forwardIcon: {
     fontSize: 32,
@@ -41,27 +33,19 @@ const iconStyle = StyleSheet.create({
   saveIcon: {
     fontSize: 22,
     color: '#20b2aa',
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   trashIcon: {
     fontSize: 22,
     color: '#20b2aa',
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   editIcon: {
     fontSize: 20,
     color: '#20b2aa',
     marginBottom: 4,
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   searchIcon: {
     fontSize: 22,
     color: '#20b2aa',
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   lockIcon: {
     fontSize: 20,
@@ -89,7 +73,13 @@ const iconStyle = StyleSheet.create({
     fontSize: 22,
     color: '#20b2aa',
     bottom: 2,
-  }
+  },
+  auditIcon:{
+    fontSize: 22,
+    color: '#008000',
+    marginLeft: 10,
+    marginRight: -10,
+  },
 });
 
 module.exports = iconStyle;

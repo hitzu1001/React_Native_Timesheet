@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, FlatList } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons, Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle';
 import moment from 'moment';
 import modalStyle from '../style/modalStyle';
@@ -55,22 +55,6 @@ const ShowScreen = ({ navigation }) => {
         <Text style={styles.timeDiff}> {hours} hrs {minutes} mins</Text>
       </View>
       <View style={styles.container}>
-        {userRole === "Manager" && (blogPost.status === "PENDING") &&
-          <TouchableOpacity onPress={() => {
-            editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime, blogPost.task, blogPost.notes, blogPost.images, "APPROVED", () => {
-              navigation.pop();
-            })
-          }}>
-            <Text style={{ color: "green" }}>Approve</Text>
-          </TouchableOpacity>}
-        {userRole === "Manager" && (blogPost.status === "PENDING") &&
-          <TouchableOpacity onPress={() => {
-            editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime, blogPost.task, blogPost.notes, blogPost.images, "DECLINED", () => {
-              navigation.pop();
-            })
-          }}>
-            <Text style={{ color: "red" }}>Decline</Text>
-          </TouchableOpacity>}
         <Text style={styles.label}>TASK</Text>
         <Text style={styles.content}>
           {blogPost.task}
@@ -101,6 +85,38 @@ const ShowScreen = ({ navigation }) => {
             : <Text style={styles.none}>None</Text>}
         </View>
       </View>
+      {userRole === "Manager" && (blogPost.status === "PENDING") &&
+        <>
+          <View style={styles.auditContainer}>
+            <TouchableOpacity
+              style={styles.auditBtn}
+              onPress={() => {
+                editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
+                  blogPost.task, blogPost.notes, blogPost.images, "APPROVED", () => {
+                    navigation.pop();
+                  })
+              }}>
+              <View style={styles.timeSpan}>
+                <Entypo style={{...iconStyle.auditIcon, color: '#008000'}} name='check' />
+                <Text style={{ ...styles.buttonText, color: '#008000' }}>Approve</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.auditBtn}
+              onPress={() => {
+                editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
+                  blogPost.task, blogPost.notes, blogPost.images, "DECLINED", () => {
+                    navigation.pop();
+                  })
+              }}>
+              <View style={styles.timeSpan}>
+                <Entypo style={{...iconStyle.auditIcon, color: '#ff0000'}} name='cross' />
+                <Text style={{ ...styles.buttonText, color: '#ff0000' }}>Decline</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </>
+      }
     </ScrollView >
   );
 };
@@ -201,6 +217,24 @@ const styles = StyleSheet.create({
   },
   none: {
     color: 'dimgray'
+  },
+  auditContainer: {
+    marginHorizontal: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  auditBtn: {
+    ...modalStyle.shadowContainer1,
+    marginTop: 20,
+    borderRadius: 8,
+    backgroundColor: '#fdfdfd',
+    borderColor: '#ddd',
+    borderWidth: 0.5,
+  },
+  buttonText: {
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    fontSize: 16,
   },
 });
 export default ShowScreen;

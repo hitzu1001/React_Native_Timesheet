@@ -22,7 +22,8 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
 
   useEffect(() => {
     Font.loadAsync({
-      'courgette-regular': require('../../assets/fonts/Courgette-Regular.ttf'),
+      'courgette': require('../../assets/fonts/Courgette-Regular.ttf'),
+      'leckerliOne': require('../../assets/fonts/LeckerliOne-Regular.ttf'),
     }).then(() => {
       setfontLoaded(true);
     })
@@ -136,7 +137,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    fontFamily: 'courgette-regular',
+    fontFamily: 'courgette',
+    // fontFamily: 'leckerliOne',
     fontSize: 36,
   },
   container: {
