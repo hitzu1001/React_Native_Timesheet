@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ButtonGroup } from 'react-native-elements';
 
-const ViewSelector = ({ buttons, setView, src }) => {
+const ViewSelector = ({ buttons, setView, src, search }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
@@ -10,7 +10,7 @@ const ViewSelector = ({ buttons, setView, src }) => {
       ...styles.buttonGroup,
       backgroundColor: src === 'overview' ? null : '#fff',
       borderBottomColor: src === 'timesheets' ? '#dcdcdc' : '#fff',
-      borderWidth: src === 'timesheets' ? 1 : 0,
+      borderWidth: (src === 'timesheets' && !search) ? 1 : 0,
       marginBottom: src === 'timesheets' ? 0 : -15,
     }}>
       <ButtonGroup

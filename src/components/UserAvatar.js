@@ -21,14 +21,16 @@ const UserAvatar = ({ firstName, lastName }) => {
 
   function getUri(username) {
     switch (username) {
-      case 'Charlie Brown':
-        return require('../../assets/images/CharlieBrown.png');
-      case 'Lucy Pelt':
-        return require('../../assets/images/LucyPelt.png');
-      case 'Sally Brown':
-        return require('../../assets/images/SallyBrown.png');
       case 'Snoopy ':
         return require('../../assets/images/Snoopy.png');
+      case 'Charlie Brown':
+        return require('../../assets/images/CharlieBrown.png');
+      case 'Sally Brown':
+        return require('../../assets/images/SallyBrown.png');
+      case 'Lucy van Pelt':
+        return require('../../assets/images/LucyvanPelt.png');
+      case 'Linus van Pelt':
+        return require('../../assets/images/LinusvanPelt.png');
       default:
         return null;
     }

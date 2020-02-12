@@ -2,12 +2,12 @@ import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
 import ViewSelector from '../components/ViewSelector';
+import SearchTimesheet from '../components/SearchTimesheet';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as ImageContext } from '../context/ImageContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons'
-import { SearchBar } from 'react-native-elements';
 import iconStyle from '../style/iconStyle';
 import containerStyle from '../style/containerStyle';
 import moment from 'moment';
@@ -21,8 +21,8 @@ const TimesheetScreen = ({ navigation }) => {
   // true for My, false for Full
   const [view, setView] = useState(true);
   const buttons = ['My Timesheet', 'Full Timesheet'];
-  const [userRole, setUserRole] = useState('Employee')
-  const [search, setSearch] = useState('')
+  const [userRole, setUserRole] = useState('Employee');
+  const [search, setSearch] = useState('');
   const [searchButton, setSearchButton] = useState(false)
   let personalTasks = []
   let filteredTasks = []
@@ -54,7 +54,7 @@ const TimesheetScreen = ({ navigation }) => {
   useEffect(() => {
     // setSearchButton(false)
     dateList = []
-  }, [state,search])
+  }, [state, search])
 
   useEffect(() => {
     navigation.setParams({ toggleButton });
@@ -74,7 +74,7 @@ const TimesheetScreen = ({ navigation }) => {
     return searchTasks
   }
 
-  function futureToPast(dateA, dateB) {
+  function descOrder(dateA, dateB) {
     return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
   }
 
@@ -84,19 +84,14 @@ const TimesheetScreen = ({ navigation }) => {
 
   return (
     <View style={styles.screen}>
-      {searchButton && <SearchBar
-        placeholder="Type Here..."
-        onChangeText={setSearch}
-        value={search}
-        lightTheme={true}
-        autoCapitalize='none'
-      />}
-
       {userRole === 'Manager' &&
-        <ViewSelector buttons={buttons} setView={v => setView(v)} src='timesheets' />
+        <ViewSelector buttons={buttons} setView={v => setView(v)} src='timesheets' search={searchButton} />
+      }
+      {searchButton &&
+        <SearchTimesheet search={search} setSearch={t => setSearch(t)} />
       }
       <FlatList
-        data={searchTask(filteredTasks.sort(futureToPast))}
+        data={searchTask(filteredTasks.sort(descOrder))}
         keyExtractor={blogPost => blogPost._id}
         renderItem={({ item }) => {
           var sameDate = false
@@ -107,12 +102,12 @@ const TimesheetScreen = ({ navigation }) => {
           var hours = (timeDiff - (timeDiff % 60)) / 60;
           var minutes = timeDiff % 60;
           var userData = userList.find(user => user._id === item.userId);
-          var owner = `${userData.firstName.toUpperCase()} ${userData.lastName.toUpperCase()}`;
+          var owner = `${userData.firstName} ${userData.lastName}`;
           return (
             <>
               {!sameDate &&
                 <Text style={styles.time}>
-                  {moment(item.startTime).format('ddd')}, {moment(item.startTime).format('DD MMMM YYYY')}
+                  {moment(item.startTime).format('dddd')}, {moment(item.startTime).format('DD MMMM YYYY')}
                 </Text>
               }
               <TouchableOpacity
@@ -155,11 +150,16 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
     headerLeft: <UserAvatar />,
     headerRight:
       <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.state.params.toggleButton()}>
+        <TouchableOpacity
+          style={iconStyle.iconTouchRight}
+          onPress={() => navigation.state.params.toggleButton()}
+        >
           <Ionicons style={iconStyle.searchIcon} name='ios-search' />
         </TouchableOpacity>
-        <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
-          {/* , { setDateList: navigation.state.params.setDateList } */}
+        <TouchableOpacity
+          style={iconStyle.iconTouchRight}
+          onPress={() => navigation.navigate('Create')}
+        >
           <Ionicons style={styles.addIcon} name='ios-add' />
         </TouchableOpacity>
       </View>

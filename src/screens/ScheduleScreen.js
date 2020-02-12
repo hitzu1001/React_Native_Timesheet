@@ -9,12 +9,10 @@ import ViewSelector from '../components/ViewSelector';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
-import { Ionicons } from '@expo/vector-icons';
-import { SearchBar } from 'react-native-elements';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
-
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
@@ -30,15 +28,14 @@ const ScheduleScreen = ({ navigation }) => {
   const [userRole, setUserRole] = useState('Employee');
   const [modalVisible, setModalVisible] = useState(false);
   const [item, setItem] = useState({});
-  const [search, setSearch] = useState('')
-  const [searchButton, setSearchButton] = useState(false)
+  const [hideCalendar, setHideCalendar] = useState(false);
 
   let personalTasks = []
   let filteredTasks = []
   let dateList = []
 
-  Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id))
-  filteredTasks = selectTasks(view)
+  Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id));
+  filteredTasks = selectTasks(view);
 
   useEffect(() => {
     navigation.setParams({ toggleButton });
@@ -48,7 +45,7 @@ const ScheduleScreen = ({ navigation }) => {
     return () => {
       listener.remove();
     };
-  }, [searchButton]);
+  }, [hideCalendar]);
 
   useEffect(() => {
     dateList = []
@@ -66,7 +63,7 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     dateList = []
-  }, [state, search])
+  }, [state, hideCalendar])
 
   useEffect(() => {
     Array.isArray(user) && setUserRole(user[0].role)
@@ -98,48 +95,35 @@ const ScheduleScreen = ({ navigation }) => {
   };
 
   function selectTasks(view) {
-    if (view) {
-      return personalTasks
-    } else {
-      return state
-    }
+    return (view) ? personalTasks : state;
   }
 
-  function toggleButton() {
-    setSearchButton(!searchButton);
+  function ascOrder(dateA, dateB) {
+    return (moment(dateA.startTime).valueOf() - moment(dateB.startTime).valueOf());
   }
 
-  function searchTask(inputTimesheets) {
-    let searchTasks = []
-    searchTasks = inputTimesheets.filter(item => item.task.toLowerCase().includes(search.toLowerCase()))
-    return searchTasks
+  const toggleButton = () => {
+    setHideCalendar(!hideCalendar);
   }
 
   return (
     <>
-      {searchButton && <SearchBar
-        placeholder="Type Here..."
-        onChangeText={setSearch}
-        value={search}
-        lightTheme={true}
-        autoCapitalize='none'
-      />}
-      {userRole === "Manager" && !searchButton &&
+      {userRole === "Manager" &&
         <ViewSelector buttons={buttons} setView={v => setView(v)} src='Schedule' />
       }
-
-      <View style={styles.calendarContainer}>
-        <Calendar
-          onDayPress={day => setSelectedDate(day.dateString)}
-          markedDates={markedDate}
-          style={styles.calendar}
-          theme={themeStyle}
-        />
-      </View>
-
-      <ScrollView>
+      {!hideCalendar &&
+        <View style={styles.calendarContainer}>
+          <Calendar
+            onDayPress={day => setSelectedDate(day.dateString)}
+            markedDates={markedDate}
+            style={styles.calendar}
+            theme={themeStyle}
+          />
+        </View>
+      }
+      <ScrollView style={{ marginTop: hideCalendar ? 20 : 0 }}>
         <FlatList
-          data={searchTask(selectedTask)}
+          data={selectedTask.sort(ascOrder)}
           keyExtractor={(blogPost) => blogPost._id}
           renderItem={({ item }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
@@ -183,8 +167,10 @@ ScheduleScreen.navigationOptions = ({ navigation }) => {
     title: 'Schedule',
     headerLeft: <UserAvatar />,
     headerRight: (
-      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.state.params.toggleButton()}>
-        <Ionicons style={iconStyle.searchIcon} name='ios-search' />
+      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => {
+        navigation.state.params.toggleButton();
+      }}>
+        <MaterialCommunityIcons style={iconStyle.calendarIcon} name='calendar-text' />
       </TouchableOpacity>
     )
   };
