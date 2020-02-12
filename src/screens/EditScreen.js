@@ -9,28 +9,19 @@ import iconStyle from '../style/iconStyle'
 
 const EditScreen = ({ navigation }) => {
   const { state, editBlogPost } = useContext(BlogContext);
-  const { setImages } = useContext(ImageContext)
-
+  const { state: imgState, setImages } = useContext(ImageContext)
   const id = navigation.getParam("id");
   const blogPost = state.find(blogPost => blogPost._id === id);
-  const imageState = blogPost.images;
-  const imgChange = (blogPost.images !== imageState);
-  const [change, setChange] = useState(imgChange);
+  const [change, setChange] = useState(false);
 
   useEffect(() => {
-    navigation.setParams({ change, imgChange });
-    // setImages(state.images)
-  }, [change, imgChange, blogPost]);
+    setImages(blogPost.images);
+  }, []);
 
-  // var startTime = moment
-  //   .utc(new Date())
-  //   .local()
-  //   .format();
-
-  // var endTime = moment
-  //   .utc(new Date())
-  //   .local()
-  //   .format();
+  useEffect(() => {
+    navigation.setParams({ change });
+    console.log('EditScreen change: ' + change);
+  }, [change, blogPost]);
 
   return (
     <BlogPostForm
@@ -47,9 +38,8 @@ const EditScreen = ({ navigation }) => {
         editBlogPost(id, startTime, endTime, task, notes, images, status, () => {
           navigation.pop();
         });
-        setImages(images)
       }}
-      isChange={setChange}
+      isChange={change => setChange(change)}
       isCreate={false}
     />
 
@@ -57,13 +47,13 @@ const EditScreen = ({ navigation }) => {
 };
 
 EditScreen.navigationOptions = ({ navigation }) => {
-  const { change, imgChange } = navigation.state.params;
+  const { change } = navigation.state.params;
   return {
     title: 'Edit Timesheet',
     headerLeft: <TouchableOpacity
       style={iconStyle.iconTouchLeft}
       onPress={() => {
-        (change || imgChange)
+        (change)
           ? Alert.alert('Discard changes?', '',
             [
               { text: 'Keep Editing', style: 'cancel' },

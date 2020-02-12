@@ -9,7 +9,8 @@ import { Entypo } from '@expo/vector-icons';
 import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 
-const TimeOffScreen = ({ navigation }) => {
+const TimeOffScreen = ({ navigation, screenProps }) => {
+  const { setTOIsChange } = screenProps;
   const { addBlogPost } = useContext(BlogContext);
   const nineAM = moment.utc(new Date()).local().set('hour', 9).set('minute', 0);
   const fivePM = moment.utc(new Date()).local().set('hour', 17).set('minute', 0);
@@ -18,9 +19,11 @@ const TimeOffScreen = ({ navigation }) => {
   const [endTime, setEndTime] = useState(fivePM);
   const [task, setTask] = useState('Select time off reason');
   const [notes, setNotes] = useState('');
-  const [isChange, setIsChange] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  let change;
+
+  const change = ((allDay !== true)
+    // || (startTime !== nineAM) || (endTime !== fivePM)
+    || (task !== 'Select time off reason') || (notes !== ''));
 
   const timeDiff = parseInt(
     moment(endTime).diff(startTime, "minutes"), 10
@@ -32,28 +35,8 @@ const TimeOffScreen = ({ navigation }) => {
   if (task === 'Select time off reason') { message += '\nPlease select a leave reason.'; }
 
   useEffect(() => {
-
-    change = ((allDay !== true)
-      // || (startTime !== nineAM) || (endTime !== fivePM)
-      || (task !== 'Select time off reason') || (notes !== ''));
-      
-  }, [allDay]);
-
-  useEffect(() => {
-    
-    change = ((allDay !== true)
-      // || (startTime !== nineAM) || (endTime !== fivePM)
-      || (task !== 'Select time off reason') || (notes !== ''));
-    // console.log('allDay is ' + (allDay === false));
-    // console.log('startTime is ' + (startTime !== nineAM));
-    // console.log('endTime is ' + (endTime !== fivePM));
-    // console.log('notes is ' + (notes !== ''));
-    // console.log('change is ' + change);
- 
-    setIsChange(change);
+    setTOIsChange(change);
     setErrorMsg(message);
-    navigation.setParams({ isChange });
-    // console.log(isChange);
   }, [allDay, startTime, endTime, task, notes]);
 
   return (
@@ -102,21 +85,28 @@ const TimeOffScreen = ({ navigation }) => {
   );
 };
 
-TimeOffScreen.navigationOptions = ({ navigation }) => {
+TimeOffScreen.navigationOptions = ({ navigation, screenProps }) => {
+  const { TOisChange, setTOIsChange } = screenProps;
   return {
     title: 'Request Time Off',
     headerLeft: <TouchableOpacity
       style={iconStyle.iconTouchLeft}
       onPress={() => {
-        (navigation.state.params.isChange)
-          ? Alert.alert('Discard?', '',
+        if (TOisChange){
+          Alert.alert('Discard?', '',
             [
               { text: 'Keep Editing', style: 'cancel' },
-              { text: 'Discard', onPress: () => { navigation.pop(); } }
+              { text: 'Discard', onPress: () => { 
+                setTOIsChange(false)
+                navigation.pop(); 
+              } }
             ],
             { cancelable: false },
           )
-          : navigation.pop();
+        } else {
+          setTOIsChange(false);
+          navigation.pop();
+        }
       }}>
       <Entypo style={iconStyle.crossIcon} name='cross' />
     </TouchableOpacity>

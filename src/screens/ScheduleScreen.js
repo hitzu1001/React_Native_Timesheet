@@ -14,7 +14,8 @@ import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
-const ScheduleScreen = ({ navigation }) => {
+const ScheduleScreen = ({ navigation, screenProps }) => {
+  const { showCalendar } = screenProps;
   const { state, getBlogPosts } = useContext(BlogContext);
   const { state: user } = useContext(UserContext);
   const { state: userList } = useContext(UserList);
@@ -28,7 +29,6 @@ const ScheduleScreen = ({ navigation }) => {
   const [userRole, setUserRole] = useState('Employee');
   const [modalVisible, setModalVisible] = useState(false);
   const [item, setItem] = useState({});
-  const [hideCalendar, setHideCalendar] = useState(false);
 
   let personalTasks = []
   let filteredTasks = []
@@ -38,14 +38,13 @@ const ScheduleScreen = ({ navigation }) => {
   filteredTasks = selectTasks(view);
 
   useEffect(() => {
-    navigation.setParams({ toggleButton });
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
     });
     return () => {
       listener.remove();
     };
-  }, [hideCalendar]);
+  }, []);
 
   useEffect(() => {
     dateList = []
@@ -63,7 +62,7 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     dateList = []
-  }, [state, hideCalendar])
+  }, [state])
 
   useEffect(() => {
     Array.isArray(user) && setUserRole(user[0].role)
@@ -102,16 +101,12 @@ const ScheduleScreen = ({ navigation }) => {
     return (moment(dateA.startTime).valueOf() - moment(dateB.startTime).valueOf());
   }
 
-  const toggleButton = () => {
-    setHideCalendar(!hideCalendar);
-  }
-
   return (
     <>
       {userRole === "Manager" &&
         <ViewSelector buttons={buttons} setView={v => setView(v)} src='Schedule' />
       }
-      {!hideCalendar &&
+      {showCalendar &&
         <View style={styles.calendarContainer}>
           <Calendar
             onDayPress={day => setSelectedDate(day.dateString)}
@@ -121,7 +116,7 @@ const ScheduleScreen = ({ navigation }) => {
           />
         </View>
       }
-      <ScrollView style={{ marginTop: hideCalendar ? 20 : 0 }}>
+      <ScrollView style={{ marginTop: showCalendar ? 0 : 20 }}>
         <FlatList
           data={selectedTask.sort(ascOrder)}
           keyExtractor={(blogPost) => blogPost._id}
@@ -162,16 +157,16 @@ const ScheduleScreen = ({ navigation }) => {
   );
 };
 
-ScheduleScreen.navigationOptions = ({ navigation, screenProps }) => {
+ScheduleScreen.navigationOptions = ({ screenProps }) => {
+  const { showCalendar, setShowCalendar } = screenProps;
   return {
     title: 'Schedule',
     headerLeft: <UserAvatar />,
     headerRight: (
       <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => {
-        navigation.state.params.toggleButton();
-        screenProps.setScreenState(!screenProps.screenState);
+        setShowCalendar(!showCalendar);
       }}>
-        {screenProps.screenState
+        {showCalendar
           ? <MaterialCommunityIcons style={iconStyle.calendarIcon} name='calendar-import' />
           : <MaterialCommunityIcons style={iconStyle.calendarIcon} name='calendar-export' />
         }
