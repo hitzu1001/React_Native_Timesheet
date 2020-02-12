@@ -10,9 +10,11 @@ import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
+import { SearchBar } from 'react-native-elements';
 import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
+
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
@@ -28,6 +30,8 @@ const ScheduleScreen = ({ navigation }) => {
   const [userRole, setUserRole] = useState('Employee');
   const [modalVisible, setModalVisible] = useState(false);
   const [item, setItem] = useState({});
+  const [search, setSearch] = useState('')
+  const [searchButton, setSearchButton] = useState(false)
 
   let personalTasks = []
   let filteredTasks = []
@@ -37,13 +41,14 @@ const ScheduleScreen = ({ navigation }) => {
   filteredTasks = selectTasks(view)
 
   useEffect(() => {
+    navigation.setParams({ toggleButton });
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
     });
     return () => {
       listener.remove();
     };
-  }, []);
+  }, [searchButton]);
 
   useEffect(() => {
     dateList = []
@@ -61,7 +66,7 @@ const ScheduleScreen = ({ navigation }) => {
 
   useEffect(() => {
     dateList = []
-  }, [state])
+  }, [state, search])
 
   useEffect(() => {
     Array.isArray(user) && setUserRole(user[0].role)
@@ -100,11 +105,29 @@ const ScheduleScreen = ({ navigation }) => {
     }
   }
 
+  function toggleButton() {
+    setSearchButton(!searchButton);
+  }
+
+  function searchTask(inputTimesheets) {
+    let searchTasks = []
+    searchTasks = inputTimesheets.filter(item => item.task.includes(search))
+    return searchTasks
+  }
+
   return (
     <>
-      {userRole === "Manager"
-        && <ViewSelector buttons={buttons} setView={v => setView(v)} src='Schedule' />
+      {searchButton && <SearchBar
+        placeholder="Type Here..."
+        onChangeText={setSearch}
+        value={search}
+        lightTheme={true}
+        autoCapitalize='none'
+      />}
+      {userRole === "Manager" && !searchButton &&
+        <ViewSelector buttons={buttons} setView={v => setView(v)} src='Schedule' />
       }
+
       <View style={styles.calendarContainer}>
         <Calendar
           onDayPress={day => setSelectedDate(day.dateString)}
@@ -113,9 +136,10 @@ const ScheduleScreen = ({ navigation }) => {
           theme={themeStyle}
         />
       </View>
+
       <ScrollView>
         <FlatList
-          data={selectedTask}
+          data={searchTask(selectedTask)}
           keyExtractor={(blogPost) => blogPost._id}
           renderItem={({ item }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
@@ -139,7 +163,7 @@ const ScheduleScreen = ({ navigation }) => {
                         <Text style={styles.time}> ({hours} hrs {minutes} mins)</Text>
                       </Text>
                     </View>
-                    <UserAvatar firstName={userData.firstName} lastName={userData.lastName}/>
+                    <UserAvatar firstName={userData.firstName} lastName={userData.lastName} />
                   </View>
                 </TouchableOpacity>
               </View>
@@ -154,12 +178,12 @@ const ScheduleScreen = ({ navigation }) => {
   );
 };
 
-ScheduleScreen.navigationOptions = () => {
+ScheduleScreen.navigationOptions = ({ navigation }) => {
   return {
     title: 'Schedule',
     headerLeft: <UserAvatar />,
     headerRight: (
-      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => { }}>
+      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.state.params.toggleButton()}>
         <Ionicons style={iconStyle.searchIcon} name='ios-search' />
       </TouchableOpacity>
     )

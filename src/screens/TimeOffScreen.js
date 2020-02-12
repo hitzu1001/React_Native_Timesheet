@@ -32,26 +32,30 @@ const TimeOffScreen = ({ navigation }) => {
   if (task === 'Select time off reason') { message += '\nPlease select a leave reason.'; }
 
   useEffect(() => {
+
     change = ((allDay !== true)
-    // || (startTime !== nineAM) || (endTime !== fivePM)
-    || (task !== 'Select time off reason') || (notes !== ''));
-  }, []);
+      // || (startTime !== nineAM) || (endTime !== fivePM)
+      || (task !== 'Select time off reason') || (notes !== ''));
+      
+  }, [allDay]);
 
   useEffect(() => {
+    
     change = ((allDay !== true)
-    // || (startTime !== nineAM) || (endTime !== fivePM)
-    || (task !== 'Select time off reason') || (notes !== ''));
-    console.log('allDay is ' + (allDay === false));
+      // || (startTime !== nineAM) || (endTime !== fivePM)
+      || (task !== 'Select time off reason') || (notes !== ''));
+    // console.log('allDay is ' + (allDay === false));
     // console.log('startTime is ' + (startTime !== nineAM));
     // console.log('endTime is ' + (endTime !== fivePM));
-    console.log('notes is ' + (notes !== '')); 
-    console.log('change is ' + change); 
+    // console.log('notes is ' + (notes !== ''));
+    // console.log('change is ' + change);
+ 
     setIsChange(change);
     setErrorMsg(message);
     navigation.setParams({ isChange });
-    console.log(isChange);
+    // console.log(isChange);
   }, [allDay, startTime, endTime, task, notes]);
-  
+
   return (
     <ScrollView>
       <View style={styles.switchContainer}>
