@@ -70,7 +70,7 @@ const TimesheetScreen = ({ navigation }) => {
 
   function searchTask(inputTimesheets) {
     let searchTasks = []
-    searchTasks = inputTimesheets.filter(item => item.task.includes(search))
+    searchTasks = inputTimesheets.filter(item => item.task.toLowerCase().includes(search.toLowerCase()))
     return searchTasks
   }
 
