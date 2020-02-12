@@ -15,12 +15,11 @@ const TimesheetForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [endTime, setEndTime] = useState(initialValues.endTime);
   const [task, setTask] = useState(initialValues.task);
   const [notes, setNotes] = useState(initialValues.notes);
-  // const [imgChange, setImgChange] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const change =
-    // (startTime !== initialValues.startTime) ||
-    // (setEndTime !== initialValues.endTime) ||
+    !(moment(startTime).isSame(moment(initialValues.startTime))) ||
+    !(moment(endTime).isSame(moment(initialValues.endTime))) ||
     (task !== initialValues.task) ||
     (notes !== initialValues.notes)
     || (JSON.stringify(imgState) !== JSON.stringify(initialValues.images))
