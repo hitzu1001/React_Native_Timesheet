@@ -100,6 +100,10 @@ const ScheduleScreen = ({ navigation }) => {
     }
   }
 
+  function futureToPast(dateA, dateB) {
+    return (moment(dateA.startTime).valueOf() - moment(dateB.startTime).valueOf());
+  }
+
   return (
     <>
       {userRole === "Manager"
@@ -115,7 +119,7 @@ const ScheduleScreen = ({ navigation }) => {
       </View>
       <ScrollView>
         <FlatList
-          data={selectedTask}
+          data={selectedTask.sort(futureToPast)}
           keyExtractor={(blogPost) => blogPost._id}
           renderItem={({ item }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));

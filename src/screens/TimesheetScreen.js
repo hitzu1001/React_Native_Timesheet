@@ -78,12 +78,12 @@ const TimesheetScreen = ({ navigation }) => {
           var hours = (timeDiff - (timeDiff % 60)) / 60;
           var minutes = timeDiff % 60;
           var userData = userList.find(user => user._id === item.userId);
-          var owner = `${userData.firstName.toUpperCase()} ${userData.lastName.toUpperCase()}`;
+          var owner = `${userData.firstName} ${userData.lastName}`;
           return (
             <>
               {!sameDate &&
                 <Text style={styles.time}>
-                  {moment(item.startTime).format('ddd')}, {moment(item.startTime).format('DD MMMM YYYY')}
+                  {moment(item.startTime).format('dddd')}, {moment(item.startTime).format('DD MMMM YYYY')}
                 </Text>
               }
               <TouchableOpacity
