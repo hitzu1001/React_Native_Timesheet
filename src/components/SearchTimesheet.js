@@ -11,7 +11,7 @@ const SearchTimesheet = ({ search, setSearch }) => {
       containerStyle={styles.containerStyle}
       inputContainerStyle={styles.inputContainerStyle}
       // placeholderTextColor='#20b2aa'
-      searchIcon={{ size: 20, color: '#20b2aa' }}
+      searchIcon={{ size: 20, color: '#20b2aa', marginTop: 2 }}
       inputStyle={styles.inputStyle}
       autoCapitalize='none'
     />
