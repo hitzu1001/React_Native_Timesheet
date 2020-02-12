@@ -5,13 +5,13 @@ import UserAvatar from '../components/UserAvatar';
 import ViewSelector from '../components/ViewSelector';
 import PersonalOverview from '../components/PersonalOverview';
 import Summary from '../components/Summary';
-import { Context as BlogContext } from '../context/BlogContext';
+import { Context as TimesheetContext } from '../context/TimesheetContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import modalStyle from '../style/modalStyle';
 
 const OverviewScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(BlogContext);
+  const { state, getTimesheets } = useContext(TimesheetContext);
   const { state: user } = useContext(UserContext);
   // true for Personal, false for Team
   const [view, setView] = useState(true);
@@ -21,13 +21,13 @@ const OverviewScreen = ({ navigation }) => {
   const [userRole, setUserRole] = useState('')
 
   useEffect(() => {
-    getBlogPosts();
+    getTimesheets();
     getAllUser()
     Array.isArray(user) && setUserId(user[0]._id)
     Array.isArray(user) && setUserRole(user[0].role)
 
     const listener = navigation.addListener('didFocus', () => {
-      getBlogPosts();
+      getTimesheets();
       Array.isArray(user) && setUserId(user[0]._id)
       Array.isArray(user) && setUserRole(user[0].role)
     });
@@ -46,13 +46,13 @@ const OverviewScreen = ({ navigation }) => {
       <StatusBar barStyle='dark-content' />
       <ScrollView style={styles.screen}>
         <View style={styles.overviewContainer}>
-          <PersonalOverview blogPosts={state} userId={userId} />
+          <PersonalOverview timesheets={state} userId={userId} />
         </View>
         {userRole === 'Manager' &&
           <ViewSelector buttons={buttons} setView={v => setView(v)} src='overview' />
         }
         <View style={styles.overviewContainer}>
-          <Summary blogPosts={state} userId={userId} view={view} />
+          <Summary timesheets={state} userId={userId} view={view} />
         </View>
       </ScrollView>
     </SafeAreaView>

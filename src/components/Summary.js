@@ -4,7 +4,7 @@ import ButtonSelector from './ButtonSelector';
 import moment from 'moment';
 import containerStyle from '../style/containerStyle';
 
-const Summary = ({ blogPosts: allTasks, userId, view }) => {
+const Summary = ({ timesheets: allTasks, userId, view }) => {
   const [option, setOption] = useState(0)
   const buttons = ['DAILY', 'WEEKLY', 'MONTHLY', 'TOTAL'];
   const colorCode = ['#617be3', '#61d4b3', '#fdd365', '#fb8d62', '#f54291']

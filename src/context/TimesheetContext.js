@@ -1,29 +1,29 @@
 import createDateContext from "./createDataContext";
 import timesheetApi from "../api/timesheetApi";
 
-const blogReducer = (state, action) => {
+const timesheetReducer = (state, action) => {
   switch (action.type) {
-    case "get_blogposts":
+    case "get_timesheets":
       return action.payload;
-    case "delete_blogpost":
-      return state.filter(blogPost => blogPost._id !== action.payload);
-    case "edit_blogpost":
-      return state.map(blogPost => {
-        return blogPost._id === action.payload._id ? action.payload : blogPost;
+    case "delete_timesheet":
+      return state.filter(timesheet => timesheet._id !== action.payload);
+    case "edit_timesheet":
+      return state.map(timesheet => {
+        return timesheet._id === action.payload._id ? action.payload : timesheet;
       });
     default:
       return state;
   }
 };
 
-const getBlogPosts = dispatch => {
+const getTimesheets = dispatch => {
   return async () => {
     const response = await timesheetApi.get("/timesheets");
-    dispatch({ type: "get_blogposts", payload: response.data });
+    dispatch({ type: "get_timesheets", payload: response.data });
   };
 };
 
-const addBlogPost = dispatch => {
+const addTimesheet = dispatch => {
   return async (startTime, endTime, task, notes, images, status, isTimeOff, callback) => {
     if (callback) {
       callback();
@@ -32,21 +32,20 @@ const addBlogPost = dispatch => {
     await timesheetApi.post("/timesheets", {
       startTime, endTime, task, notes, images, status, isTimeOff
     });
-    //await timesheetApi.post("/blogposts", { title, startTime, endTime, notes });
   };
 };
 
-const deleteBlogPost = dispatch => {
+const deleteTimesheet = dispatch => {
   return async (id, callback) => {
     if (callback) {
       callback();
     }
     await timesheetApi.delete(`/timesheets/${id}`, { id });
-    dispatch({ type: "delete_blogpost", payload: id });
+    dispatch({ type: "delete_timesheet", payload: id });
   };
 };
 
-const editBlogPost = dispatch => {
+const editTimesheet = dispatch => {
   return async (id, startTime, endTime, task, notes, images, status, callback) => {
     await timesheetApi.put(`/timesheets/${id}`, {
       startTime, endTime, task, notes, images, status
@@ -57,14 +56,14 @@ const editBlogPost = dispatch => {
     };
 
     dispatch({
-      type: "edit_blogpost",
+      type: "edit_timesheet",
       payload: { startTime, endTime, task, notes, images, status }
     });
   };
 };
 
 export const { Context, Provider } = createDateContext(
-  blogReducer,
-  { addBlogPost, deleteBlogPost, editBlogPost, getBlogPosts },
+  timesheetReducer,
+  { addTimesheet, deleteTimesheet, editTimesheet, getTimesheets },
   []
 );

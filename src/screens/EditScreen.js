@@ -1,41 +1,41 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Context as BlogContext } from '../context/BlogContext';
+import { Context as TimesheetContext } from '../context/TimesheetContext';
 import { Context as ImageContext } from '../context/ImageContext';
-import BlogPostForm from '../components/BlogPostForm';
+import TimesheetForm from '../components/TimesheetForm';
 import moment from 'moment';
 import { Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle'
 
 const EditScreen = ({ navigation }) => {
-  const { state, editBlogPost } = useContext(BlogContext);
+  const { state, editTimesheet } = useContext(TimesheetContext);
   const { state: imgState, setImages } = useContext(ImageContext)
   const id = navigation.getParam("id");
-  const blogPost = state.find(blogPost => blogPost._id === id);
+  const timesheet = state.find(timesheet => timesheet._id === id);
   const [change, setChange] = useState(false);
 
   useEffect(() => {
-    setImages(blogPost.images);
+    setImages(timesheet.images);
   }, []);
 
   useEffect(() => {
     navigation.setParams({ change });
     console.log('EditScreen change: ' + change);
-  }, [change, blogPost]);
+  }, [change, timesheet]);
 
   return (
-    <BlogPostForm
+    <TimesheetForm
       id={id}
       initialValues={{
-        startTime: blogPost.startTime,
-        endTime: blogPost.endTime,
-        task: blogPost.task,
-        notes: blogPost.notes,
-        images: blogPost.images,
-        status: blogPost.status
+        startTime: timesheet.startTime,
+        endTime: timesheet.endTime,
+        task: timesheet.task,
+        notes: timesheet.notes,
+        images: timesheet.images,
+        status: timesheet.status
       }}
       onSubmit={(startTime, endTime, task, notes, images, status) => {
-        editBlogPost(id, startTime, endTime, task, notes, images, status, () => {
+        editTimesheet(id, startTime, endTime, task, notes, images, status, () => {
           navigation.pop();
         });
       }}

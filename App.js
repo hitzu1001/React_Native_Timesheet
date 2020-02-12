@@ -20,7 +20,7 @@ import TaskListScreen from './src/screens/TaskListScreen';
 import CreateTaskScreen from './src/screens/CreateTaskScreen';
 import EditTaskScreen from './src/screens/EditTaskScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
-import { Provider as BlogProvider } from './src/context/BlogContext';
+import { Provider as TimesheetProvider } from './src/context/TimesheetContext';
 import { Provider as ImageProvider } from './src/context/ImageContext';
 import { Provider as TaskProvider } from './src/context/TaskContext';
 import { Provider as UserProvider } from './src/context/UserContext';
@@ -112,7 +112,7 @@ export default () => {
 
   return (
     <UserProvider>
-      <BlogProvider>
+      <TimesheetProvider>
         <TaskProvider>
           <ImageProvider>
             <AuthProvider>
@@ -128,7 +128,7 @@ export default () => {
             </AuthProvider>
           </ImageProvider>
         </TaskProvider>
-      </BlogProvider>
+      </TimesheetProvider>
     </UserProvider>
   );
 }

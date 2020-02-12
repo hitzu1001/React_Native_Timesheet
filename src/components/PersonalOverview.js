@@ -4,7 +4,7 @@ import moment from 'moment';
 import ButtonSelector from '../components/ButtonSelector';
 import ProgressChart from '../components/ProgressChart';
 
-const PersonalOverview = ({ blogPosts: tasks, userId }) => {
+const PersonalOverview = ({ timesheets: tasks, userId }) => {
   const [option, setOption] = useState(0)
   const from_date = moment().startOf('week').format('DD-MMM');
   const to_date = moment().endOf('week').format('DD-MMM');
