@@ -111,7 +111,7 @@ const ScheduleScreen = ({ navigation }) => {
 
   function searchTask(inputTimesheets) {
     let searchTasks = []
-    searchTasks = inputTimesheets.filterfilter(item => item.task.toLowerCase().includes(search.toLowerCase()))
+    searchTasks = inputTimesheets.filter(item => item.task.toLowerCase().includes(search.toLowerCase()))
     return searchTasks
   }
 
