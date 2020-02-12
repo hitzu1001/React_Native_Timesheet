@@ -44,8 +44,13 @@ const iconStyle = StyleSheet.create({
     marginBottom: 4,
   },
   searchIcon: {
+    fontSize: 20,
+    color: '#20b2aa',
+  }, 
+  calendarIcon: {
     fontSize: 22,
     color: '#20b2aa',
+    marginRight: -5,
   },
   lockIcon: {
     fontSize: 20,
