@@ -12,10 +12,12 @@ const EditTaskScreen = ({ navigation }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [isChange, setIsChange] = useState(false);
 
-
-
   useEffect(() => {
+    navigation.setParams({ editable, setEditable, errorMsg, isChange });
+    (name === '') ? setErrorMsg('Please enter a task name') : setErrorMsg('');
+
     const callEditTask = () => {
+      console.log(name)
       editTask(task._id, name, () => {
         setEditable(false);
         navigation.navigate("EditTask", { task });
@@ -27,11 +29,6 @@ const EditTaskScreen = ({ navigation }) => {
       });
     };
     navigation.setParams({ callEditTask, callDeleteTask });
-  }, []);
-
-  useEffect(() => {
-    navigation.setParams({ editable, setEditable, errorMsg, isChange });
-    (name === '') ? setErrorMsg('Please enter a task name') : setErrorMsg('');
   }, [name, editable]);
 
   return (

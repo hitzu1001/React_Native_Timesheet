@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f3f3',
   },
   time: {
-    fontSize: 12,
+    fontSize: 11,
     paddingVertical: 6,
     paddingHorizontal: 15,
     alignSelf: 'stretch',
