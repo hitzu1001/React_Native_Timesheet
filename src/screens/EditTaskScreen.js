@@ -17,7 +17,6 @@ const EditTaskScreen = ({ navigation }) => {
     (name === '') ? setErrorMsg('Please enter a task name') : setErrorMsg('');
 
     const callEditTask = () => {
-      console.log(name)
       editTask(task._id, name, () => {
         setEditable(false);
         navigation.navigate("EditTask", { task });

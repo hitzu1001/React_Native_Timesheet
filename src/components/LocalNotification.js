@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Input } from 'react-native-elements';
-
 import { Keyboard } from 'react-native';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';

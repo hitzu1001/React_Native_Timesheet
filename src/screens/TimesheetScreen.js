@@ -121,7 +121,6 @@ const TimesheetScreen = ({ navigation }) => {
                 </View>
                 <View style={containerStyle.rowSBCenter}>
                   <Text style={{ marginTop: 10 }}>
-                    {!view && <Text style={styles.owner}>{owner} </Text>}
                     {item.status === 'APPROVED' &&
                       <Text style={{ ...styles.status, color: '#008000' }}>({item.status})</Text>
                     }
@@ -131,6 +130,7 @@ const TimesheetScreen = ({ navigation }) => {
                     {item.status === 'PENDING' &&
                       <Text style={{ ...styles.status, color: '#ffa500' }}>({item.status})</Text>
                     }
+                    {!view && <Text style={styles.owner}> {owner}</Text>}
                   </Text>
                   <Text style={styles.timeDiff}>{hours} hrs {minutes} mins</Text>
                 </View>

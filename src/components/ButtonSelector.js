@@ -44,8 +44,6 @@ const styles = StyleSheet.create({
   },
   // buttonStyle: {
   //   backgroundColor: 'blue',
-  //   borderColor: '#ff0000',
-  //   borderWidth: 0.5,
   // },
   innerBorderStyle: {
     width: 0,

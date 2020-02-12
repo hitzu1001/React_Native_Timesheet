@@ -9,7 +9,7 @@ import iconStyle from '../style/iconStyle'
 
 const EditScreen = ({ navigation }) => {
   const { state, editTimesheet } = useContext(TimesheetContext);
-  const { state: imgState, setImages } = useContext(ImageContext)
+  const { setImages } = useContext(ImageContext)
   const id = navigation.getParam("id");
   const timesheet = state.find(timesheet => timesheet._id === id);
   const [change, setChange] = useState(false);
@@ -20,7 +20,6 @@ const EditScreen = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setParams({ change });
-    console.log('EditScreen change: ' + change);
   }, [change, timesheet]);
 
   return (

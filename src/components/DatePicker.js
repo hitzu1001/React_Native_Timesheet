@@ -103,17 +103,6 @@ export default class App extends Component {
               />
             }
 
-            {/* {!this.props.disabled && show1 &&
-              <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date1)}
-                mode={mode} is24Hour={false} display='default' onChange={this.setDate1}
-              />
-            }
-            {this.props.disabled && show1 &&
-              <DateTimePicker timeZoneOffsetInMinutes={660} value={new Date(date1)}
-                mode={'date'} is24Hour={false} display='default' onChange={this.setDate1}
-              />
-            } */}
-
             <Text style={styles.label}>END TIME</Text>
             <View testID='appRootView' style={styles.container}>
               <TouchableOpacity disabled={true}>

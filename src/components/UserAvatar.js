@@ -6,7 +6,7 @@ import { Context as UserContext } from '../context/AuthContext'
 const UserAvatar = ({ firstName, lastName }) => {
   const { state } = useContext(UserContext);
   let title = 'AA';
-  let username = 'first last';
+  let username = 'firstName lastName';
   let type = 'photo';
 
   if (firstName) {
