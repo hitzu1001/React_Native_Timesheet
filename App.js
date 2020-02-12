@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -107,13 +107,20 @@ const switchNavigator = createSwitchNavigator({
 const App = createAppContainer(switchNavigator);
 
 export default () => {
+  const [screenState, setScreenState] = useState(true);
   return (
     <UserProvider>
       <BlogProvider>
         <TaskProvider>
           <ImageProvider>
             <AuthProvider>
-              <App ref={navigator => { setNavigator(navigator) }} />
+              <App
+                ref={navigator => { setNavigator(navigator) }}
+                screenProps={{
+                  screenState,
+                  setScreenState: (st) => setScreenState(st)
+                }}
+              />
             </AuthProvider>
           </ImageProvider>
         </TaskProvider>

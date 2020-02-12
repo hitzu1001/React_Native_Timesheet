@@ -162,15 +162,19 @@ const ScheduleScreen = ({ navigation }) => {
   );
 };
 
-ScheduleScreen.navigationOptions = ({ navigation }) => {
+ScheduleScreen.navigationOptions = ({ navigation, screenProps }) => {
   return {
     title: 'Schedule',
     headerLeft: <UserAvatar />,
     headerRight: (
       <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => {
         navigation.state.params.toggleButton();
+        screenProps.setScreenState(!screenProps.screenState);
       }}>
-        <MaterialCommunityIcons style={iconStyle.calendarIcon} name='calendar-text' />
+        {screenProps.screenState
+          ? <MaterialCommunityIcons style={iconStyle.calendarIcon} name='calendar-import' />
+          : <MaterialCommunityIcons style={iconStyle.calendarIcon} name='calendar-export' />
+        }
       </TouchableOpacity>
     )
   };

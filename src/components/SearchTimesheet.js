@@ -31,9 +31,6 @@ const styles = StyleSheet.create({
     borderColor: '#dcdcdc',
     borderBottomWidth: 1,
   },
-  placeholderTextColor: {
-    color: '#20b2aa'
-  },
   inputStyle: {
     fontSize: 14,
     color: '#333',
