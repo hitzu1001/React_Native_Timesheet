@@ -7,12 +7,15 @@ import moment from 'moment';
 import containerStyle from '../style/containerStyle';
 
 export default class App extends Component {
-  state = {
-    date1: new Date(moment(this.props.startTime).local().toDate()),
-    date2: new Date(moment(this.props.endTime).local().toDate()),
-    mode: 'date',
-    show1: false,
-    show2: false,
+  constructor(props) {
+    super(props)
+    this.state = {
+      date1: new Date(moment(this.props.startTime).local().toDate()),
+      date2: new Date(moment(this.props.endTime).local().toDate()),
+      mode: 'date',
+      show1: false,
+      show2: false,
+    }
   }
 
   setDate1 = (event, date1, date2) => {
@@ -23,6 +26,7 @@ export default class App extends Component {
       date1,
       date2: date1
     });
+ 
     if (this.props.disabled === true) {
       this.setState({
         date1: moment(date1).local().set('hour', 9).set('minute', 0),
@@ -54,12 +58,12 @@ export default class App extends Component {
     } else {
       this.setState({ show1: false, show2: !this.state.show2, mode });
     }
-  }
+  } 
 
   render() {
     const { mode, show1, show2, date1, date2 } = this.state;
     var timeDiff = parseInt(
-      moment(this.state.date2).diff(this.state.date1, "minutes"), 10
+      moment(this.state.date2,"minutes").diff(this.state.date1, "minutes"), 10
     );
     var hours = (timeDiff - (timeDiff % 60)) / 60;
     var minutes = timeDiff % 60;

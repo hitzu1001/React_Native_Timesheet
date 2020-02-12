@@ -7,9 +7,11 @@ import { Context as ImageContext } from '../context/ImageContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons'
+import { SearchBar } from 'react-native-elements';
 import iconStyle from '../style/iconStyle';
 import containerStyle from '../style/containerStyle';
 import moment from 'moment';
+
 
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
@@ -20,6 +22,8 @@ const TimesheetScreen = ({ navigation }) => {
   const [view, setView] = useState(true);
   const buttons = ['My Timesheet', 'Full Timesheet'];
   const [userRole, setUserRole] = useState('Employee')
+  const [search, setSearch] = useState('')
+  const [searchButton, setSearchButton] = useState(false)
   let personalTasks = []
   let filteredTasks = []
   let dateList = []
@@ -27,7 +31,9 @@ const TimesheetScreen = ({ navigation }) => {
   Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id))
   filteredTasks = selectTasks(view)
 
+
   useEffect(() => {
+    setSearchButton(false)
     getBlogPosts();
     Array.isArray(user) && setUserRole(user[0].role)
     dateList = []
@@ -46,8 +52,13 @@ const TimesheetScreen = ({ navigation }) => {
   }, [view]);
 
   useEffect(() => {
+    // setSearchButton(false)
     dateList = []
-  }, [state])
+  }, [state,search])
+
+  useEffect(() => {
+    navigation.setParams({ toggleButton });
+  }, [searchButton])
 
   function selectTasks(view) {
     if (view) {
@@ -57,17 +68,35 @@ const TimesheetScreen = ({ navigation }) => {
     }
   }
 
+  function searchTask(inputTimesheets) {
+    let searchTasks = []
+    searchTasks = inputTimesheets.filter(item => item.task.includes(search))
+    return searchTasks
+  }
+
   function futureToPast(dateA, dateB) {
     return (moment(dateB.startTime).valueOf() - moment(dateA.startTime).valueOf());
   }
 
+  function toggleButton() {
+    setSearchButton(!searchButton);
+  }
+
   return (
     <View style={styles.screen}>
+      {searchButton && <SearchBar
+        placeholder="Type Here..."
+        onChangeText={setSearch}
+        value={search}
+        lightTheme={true}
+        autoCapitalize='none'
+      />}
+
       {userRole === 'Manager' &&
         <ViewSelector buttons={buttons} setView={v => setView(v)} src='timesheets' />
       }
       <FlatList
-        data={filteredTasks.sort(futureToPast)}
+        data={searchTask(filteredTasks.sort(futureToPast))}
         keyExtractor={blogPost => blogPost._id}
         renderItem={({ item }) => {
           var sameDate = false
@@ -125,10 +154,16 @@ TimesheetScreen.navigationOptions = ({ navigation }) => {
     title: 'Timesheets',
     headerLeft: <UserAvatar />,
     headerRight:
-      <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
-        {/* , { setDateList: navigation.state.params.setDateList } */}
-        <Ionicons style={styles.addIcon} name='ios-add' />
-      </TouchableOpacity>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.state.params.toggleButton()}>
+          <Ionicons style={iconStyle.searchIcon} name='ios-search' />
+        </TouchableOpacity>
+        <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
+          {/* , { setDateList: navigation.state.params.setDateList } */}
+          <Ionicons style={styles.addIcon} name='ios-add' />
+        </TouchableOpacity>
+      </View>
+
   };
 };
 
