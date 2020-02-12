@@ -15,7 +15,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const [endTime, setEndTime] = useState(initialValues.endTime);
   const [task, setTask] = useState(initialValues.task);
   const [notes, setNotes] = useState(initialValues.notes);
-  const images = initialValues.images;
+  // const [imgChange, setImgChange] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const change =
@@ -23,6 +23,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
     // (setEndTime !== initialValues.endTime) ||
     (task !== initialValues.task) ||
     (notes !== initialValues.notes)
+    || (JSON.stringify(imgState) !== JSON.stringify(initialValues.images))
 
   const timeDiff = parseInt(
     moment(endTime).diff(startTime, 'minutes'), 10
@@ -35,11 +36,11 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   useEffect(() => {
     setErrorMsg(message);
     isChange(change);
-  }, [startTime, endTime, task, notes]);
+  }, [startTime, endTime, task, notes, change]);
 
   return (
     <ScrollView>
-      <View style={{...styles.subContainer, marginTop: 10}}>
+      <View style={{ ...styles.subContainer, marginTop: 10 }}>
         <TimeForm
           startTime={startTime}
           endTime={endTime}
@@ -72,7 +73,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
             )}
         </TouchableOpacity>
       </View>
-      {!isCreate && <PhotoPicker id={id} images={images} />}
+      {!isCreate && <PhotoPicker id={id} images={imgState} />}
       <TouchableOpacity
         style={styles.saveBtn}
         onPress={() => {

@@ -35,8 +35,8 @@ const TimesheetScreen = ({ navigation }) => {
   useEffect(() => {
     setSearchButton(false)
     getBlogPosts();
-    Array.isArray(user) && setUserRole(user[0].role)
     dateList = []
+    Array.isArray(user) && setUserRole(user[0].role)
     Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id))
     filteredTasks = selectTasks(view)
 
@@ -52,7 +52,6 @@ const TimesheetScreen = ({ navigation }) => {
   }, [view]);
 
   useEffect(() => {
-    // setSearchButton(false)
     dateList = []
   }, [state, search])
 

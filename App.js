@@ -107,7 +107,9 @@ const switchNavigator = createSwitchNavigator({
 const App = createAppContainer(switchNavigator);
 
 export default () => {
-  const [screenState, setScreenState] = useState(true);
+  const [TOisChange, setTOIsChange] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(true);
+
   return (
     <UserProvider>
       <BlogProvider>
@@ -117,8 +119,10 @@ export default () => {
               <App
                 ref={navigator => { setNavigator(navigator) }}
                 screenProps={{
-                  screenState,
-                  setScreenState: (st) => setScreenState(st)
+                  TOisChange,
+                  setTOIsChange: (st) => setTOIsChange(st),
+                  showCalendar,
+                  setShowCalendar: (st) => setShowCalendar(st),
                 }}
               />
             </AuthProvider>
