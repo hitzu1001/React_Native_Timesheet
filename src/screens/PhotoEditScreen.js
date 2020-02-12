@@ -96,8 +96,6 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
           <TouchableOpacity
             style={iconStyle.iconTouchRight}
             onPress={() => {
-              // deleteImage(uri);
-              // navigation.navigate('Edit', { id });
               Alert.alert(
                 'Delete photo?',
                 '',
@@ -123,38 +121,7 @@ PhotoEditScreen.navigationOptions = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    height: 220,
-    backgroundColor: '#000'
-  },
-  authContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 10
-  },
-  title: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    marginBottom: 5
-  },
-  authContent: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  auth: {
-    color: 'dimgray'
-  },
-  commentContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    height: 100
-  },
-  comment: {
-    fontSize: 15
-  },
-  line: {
-    borderBottomColor: '#d3d3d3',
-    borderBottomWidth: 1
-  }
+ 
 });
 
 export default PhotoEditScreen;

@@ -7,6 +7,7 @@ import TimeForm from './TimeForm';
 import TaskPickModal from './TaskPickModal';
 import { Context as ImageContext } from '../context/ImageContext';
 import { Ionicons } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 
 const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const { state: imgState } = useContext(ImageContext);
@@ -38,7 +39,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
 
   return (
     <ScrollView>
-      <View style={styles.subContainer}>
+      <View style={{...styles.subContainer, marginTop: 10}}>
         <TimeForm
           startTime={startTime}
           endTime={endTime}
@@ -56,7 +57,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
           onPress={() => { navigate('NoteEdit', { notes, setNotes }); }}
         >
           {notes === '' ? (
-            <View style={styles.emptyNote}>
+            <View style={containerStyle.rowNullCenter}>
               <Ionicons style={styles.addIcon} name='ios-add' />
               <Text style={styles.emptyNoteText}>Add timesheet note</Text>
             </View>
@@ -108,19 +109,17 @@ const styles = StyleSheet.create({
   lable: {
     fontSize: 12,
     fontWeight: 'bold',
+    color: '#333',
     marginBottom: 10
   },
-  emptyNote: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   addIcon: {
-    fontSize: 22,
+    fontSize: 24,
     color: '#20b2aa',
-    marginRight: 5
+    marginTop: 1,
+    marginRight: 6,
   },
   emptyNoteText: {
-    color: '#20b2aa'
+    color: '#20b2aa',
   },
   noteContent: {
     paddingVertical: 10,

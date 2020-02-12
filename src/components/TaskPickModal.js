@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import Modal from 'react-native-modal'
 import { Context as TaskContext } from '../context/TaskContext';
-import { Entypo } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
@@ -25,7 +26,8 @@ const TaskPickModal = ({ task, setTask }) => {
   useEffect(() => {
     getTaskList();
     sortedTasks = state.sort(sortTask);
-  }, []);
+    prefixList = [];
+  }, [modalVisible]);
 
   return (
     <>
@@ -97,13 +99,12 @@ const styles = StyleSheet.create({
     color: '#20b2aa',
   },
   input: {
+    ...containerStyle.rowNullCenter,
     paddingVertical: 12,
     paddingHorizontal: 5,
     borderColor: "#d3d3d3",
     borderWidth: 1,
     borderRadius: 3,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   taskInput: {
     marginLeft: 5,

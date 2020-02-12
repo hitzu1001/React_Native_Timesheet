@@ -8,10 +8,10 @@ const ViewSelector = ({ buttons, setView, src }) => {
   return (
     <View style={{
       ...styles.buttonGroup,
+      backgroundColor: src === 'overview' ? null : '#fff',
       borderBottomColor: src === 'timesheets' ? '#dcdcdc' : '#fff',
       borderWidth: src === 'timesheets' ? 1 : 0,
       marginBottom: src === 'timesheets' ? 0 : -15,
-      backgroundColor: src === 'overview' ? null : '#fff',
     }}>
       <ButtonGroup
         buttons={buttons}

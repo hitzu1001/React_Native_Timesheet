@@ -1,28 +1,23 @@
 import React, { useContext, useState, useEffect } from 'react';
-import * as Font from 'expo-font';
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
 import { Context as AuthContext } from '../context/AuthContext';
+import { Context as UserContext } from '../context/AuthContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import containerStyle from '../style/containerStyle';
 
 const MoreScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
-  const [fontLoaded, setfontLoaded] = useState(false);
+  const { state: user } = useContext(UserContext);
+  const [userRole, setUserRole] = useState('Employee');
 
   useEffect(() => {
-    Font.loadAsync({
-      'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
-      'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
-      'lato-black': require('../../assets/fonts/Lato-Black.ttf'),
-    }).then(() => {
-      setfontLoaded(true);
-    })
+    Array.isArray(user) && setUserRole(user[0].role)
   }, [])
 
   return (
     <View style={styles.container}>
-      {fontLoaded && <View>
+      <View>
         <TouchableOpacity style={styles.subContainer} >
           <MaterialCommunityIcons style={styles.icon} name='settings' />
           <Text style={styles.Text}>Settings</Text>
@@ -36,15 +31,15 @@ const MoreScreen = ({ navigation }) => {
           <Text style={styles.Text}>Time Off</Text>
         </TouchableOpacity>
 
-
-        <TouchableOpacity
-          style={styles.subContainer}
-          onPress={() => navigation.navigate('TaskList')}
-        >
-          <MaterialCommunityIcons style={styles.icon} name='playlist-plus' />
-          <Text style={styles.Text}>Manage Tasks</Text>
-        </TouchableOpacity>
-
+        {userRole === "Manager" &&
+          <TouchableOpacity
+            style={styles.subContainer}
+            onPress={() => navigation.navigate('TaskList')}
+          >
+            <MaterialCommunityIcons style={styles.icon} name='playlist-plus' />
+            <Text style={styles.Text}>Manage Tasks</Text>
+          </TouchableOpacity>
+        }
 
         <TouchableOpacity style={styles.subContainer}>
           <MaterialCommunityIcons style={styles.icon} name='bell-outline' />
@@ -54,12 +49,12 @@ const MoreScreen = ({ navigation }) => {
           <MaterialCommunityIcons style={styles.icon} name='logout' />
           <Text style={styles.Text}>Log out</Text>
         </TouchableOpacity>
-      </View>}
+      </View>
     </View >
   );
 };
 
-MoreScreen.navigationOptions = ({ navigation }) => {
+MoreScreen.navigationOptions = () => {
   return {
     title: 'More',
     headerLeft: <UserAvatar />,
@@ -68,21 +63,22 @@ MoreScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
+    marginVertical: 30,
+    marginHorizontal: 30,
   },
   subContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    ...containerStyle.rowNullCenter,
     marginBottom: 40,
   },
   icon: {
     fontSize: 22,
-    color: '#808080',
+    color: '#999',
   },
   Text: {
-    fontFamily: 'lato-regular',
     marginLeft: 30,
     fontSize: 15,
+    fontWeight: '500',
+    color: '#333',
   },
 });
 

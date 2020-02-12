@@ -8,7 +8,8 @@ import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons'
 import iconStyle from '../style/iconStyle';
-import moment from "moment";
+import containerStyle from '../style/containerStyle';
+import moment from 'moment';
 
 
 const TimesheetScreen = ({ navigation }) => {
@@ -32,7 +33,7 @@ const TimesheetScreen = ({ navigation }) => {
     Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id))
     filteredTasks = selectTasks(view)
 
-    const listener = navigation.addListener("didFocus", () => {
+    const listener = navigation.addListener('didFocus', () => {
       getBlogPosts();
       dateList = []
       setImages([]);
@@ -61,7 +62,7 @@ const TimesheetScreen = ({ navigation }) => {
 
   return (
     <View style={styles.screen}>
-      {userRole === "Manager" &&
+      {userRole === 'Manager' &&
         <ViewSelector buttons={buttons} setView={v => setView(v)} src='timesheets' />
       }
       <FlatList
@@ -71,7 +72,7 @@ const TimesheetScreen = ({ navigation }) => {
           var sameDate = false
           dateList.includes(moment(item.startTime).format('L')) ? sameDate = true : dateList.push(moment(item.startTime).format('L'))
           var timeDiff = parseInt(
-            moment(item.endTime).diff(moment(item.startTime), "minutes")
+            moment(item.endTime).diff(moment(item.startTime), 'minutes')
           );
           var hours = (timeDiff - (timeDiff % 60)) / 60;
           var minutes = timeDiff % 60;
@@ -79,34 +80,30 @@ const TimesheetScreen = ({ navigation }) => {
             <>
               {!sameDate &&
                 <Text style={styles.time}>
-                  {moment(item.startTime).format("dddd")}, {moment(item.startTime).format("LL")}
+                  {moment(item.startTime).format('ddd')}, {moment(item.startTime).format('DD MMMM YYYY')}
                 </Text>
               }
               <TouchableOpacity
                 style={{ ...styles.itemContainer, borderTopWidth: sameDate ? 0 : 1 }}
-                onPress={() => navigation.navigate("Show", { id: item._id, startTime: item.startTime, status: item.status })}
+                onPress={() => navigation.navigate('Show', { id: item._id, startTime: item.startTime, status: item.status })}
               >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={containerStyle.rowSBCenter}>
                   <Text style={styles.item}>{item.task}</Text>
                   <Text style={styles.itemtime}>
                     {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
                   </Text>
                 </View>
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                  {item.status === "APPROVED" &&
-                    <Text style={{ ...styles.status, color: "#008000" }}>
-                      {item.status}
-                    </Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  {item.status === 'APPROVED' &&
+                    <Text style={{ ...styles.status, color: '#008000' }}>{item.status}</Text>
                   }
-                  {item.status === "DECLINED" &&
-                    <Text style={{ ...styles.status, color: "#ff0000" }}>{item.status}</Text>
+                  {item.status === 'DECLINED' &&
+                    <Text style={{ ...styles.status, color: '#ff0000' }}>{item.status}</Text>
                   }
-                  {item.status === "PENDING" &&
-                    <Text style={{ ...styles.status, color: "#808080" }}>{item.status}</Text>
+                  {item.status === 'PENDING' &&
+                    <Text style={{ ...styles.status, color: '#ffa500' }}>{item.status}</Text>
                   }
-                  <Text style={styles.timeDiff}>
-                    {hours} hrs {minutes} mins
-                </Text>
+                  <Text style={styles.timeDiff}>{hours} hrs {minutes} mins</Text>
                 </View>
               </TouchableOpacity>
             </>
@@ -119,7 +116,7 @@ const TimesheetScreen = ({ navigation }) => {
 
 TimesheetScreen.navigationOptions = ({ navigation }) => {
   return {
-    title: "Timesheets",
+    title: 'Timesheets',
     headerLeft: <UserAvatar />,
     headerRight:
       <TouchableOpacity style={iconStyle.iconTouchRight} onPress={() => navigation.navigate('Create')}>
@@ -150,30 +147,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: "#dcdcdc"
+    borderColor: '#dcdcdc'
   },
   item: {
     fontSize: 13,
-    fontWeight: "bold",
+    fontWeight: '600',
     color: '#444',
   },
   itemtime: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '500',
     color: '#444',
   },
   timeDiff: {
-    fontSize: 12,
-    alignSelf: "flex-end",
-    fontWeight: "500",
-    color: "#999"
+    fontSize: 11,
+    alignSelf: 'flex-end',
+    fontWeight: '500',
+    color: '#999'
   },
   status: {
     marginTop: 10,
-    color: "green",
+    color: 'green',
     fontSize: 9,
     fontWeight: '600',
-    flexWrap: "nowrap"
+    flexWrap: 'nowrap'
   }
 });
 

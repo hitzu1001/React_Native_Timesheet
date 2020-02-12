@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
@@ -17,7 +18,7 @@ const TimeOffTaskModal = ({ task, setTask }) => {
       <TouchableOpacity onPress={() => toggleModal()}>
         <View style={styles.input}>
           {task === 'Select time off reason'
-            && <MaterialCommunityIcons style={iconStyle.coffeeIcon} name='coffee' />}
+            && <Ionicons style={iconStyle.cafeIcon} name='ios-cafe' />}
           <Text style={{
             ...styles.taskInput, color: task === 'Select time off reason' ? '#8e8e8e' : '#000',
           }}>
@@ -56,13 +57,12 @@ const TimeOffTaskModal = ({ task, setTask }) => {
 }
 const styles = StyleSheet.create({
   input: {
+    ...containerStyle.rowNullCenter,
     paddingVertical: 10,
     paddingHorizontal: 5,
     borderColor: "#d3d3d3",
     borderWidth: 1,
     borderRadius: 3,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   taskInput: {
     marginLeft: 5,

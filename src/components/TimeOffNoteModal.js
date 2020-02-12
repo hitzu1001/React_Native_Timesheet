@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import Modal from 'react-native-modal'
 import { Ionicons, Entypo } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
@@ -17,7 +18,7 @@ const TimeOffNoteModal = ({ notes, setNotes }) => {
     <>
       <TouchableOpacity onPress={() => toggleModal()}>
         {notes === '' ? (
-          <View style={styles.emptyNote}>
+          <View style={containerStyle.rowNullCenter}>
             <Ionicons style={styles.addIcon} name='ios-add' />
             <Text style={styles.emptyNoteText}>Add time off note</Text>
           </View>
@@ -69,13 +70,10 @@ const TimeOffNoteModal = ({ notes, setNotes }) => {
   );
 }
 const styles = StyleSheet.create({
-  emptyNote: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   addIcon: {
-    fontSize: 22,
+    fontSize: 24,
     color: '#20b2aa',
+    marginTop: 1,
     marginRight: 5
   },
   emptyNoteText: {
@@ -92,9 +90,7 @@ const styles = StyleSheet.create({
     ...modalStyle.screenHearder,
     alignItems: 'center',
     borderBottomWidth: 0,
-    // borderColor: '#fff',
     paddingTop: 10,
-    paddingBottom: 7,
   },
   modalText: {
     flex: 1,

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, FlatList, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import Modal from 'react-native-modal';
@@ -10,13 +10,14 @@ import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
 const ScheduleScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { state: user } = useContext(UserContext);
-  // const { state: userList } = useContext(UserList);
+  const { state: userList } = useContext(UserList);
   const today = moment(new Date()).format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedTask, setSelectedTask] = useState([]);
@@ -26,7 +27,7 @@ const ScheduleScreen = ({ navigation }) => {
   const buttons = ['My Schedule', 'Full Schedule'];
   const [userRole, setUserRole] = useState('Employee');
   const [modalVisible, setModalVisible] = useState(false);
-  const [item, setItem] = useState('');
+  const [item, setItem] = useState({});
 
   let personalTasks = []
   let filteredTasks = []
@@ -104,15 +105,15 @@ const ScheduleScreen = ({ navigation }) => {
       {userRole === "Manager"
         && <ViewSelector buttons={buttons} setView={v => setView(v)} src='Schedule' />
       }
-      <View style={styles.calendar}>
+      <View style={styles.calendarContainer}>
         <Calendar
           onDayPress={day => setSelectedDate(day.dateString)}
           markedDates={markedDate}
+          style={styles.calendar}
           theme={themeStyle}
         />
       </View>
       <ScrollView>
-        {/* <Text style={styles.selectedDate}>{moment(selectedDate).format('dddd, DD MMMM YYYY')}</Text> */}
         <FlatList
           data={selectedTask}
           keyExtractor={(blogPost) => blogPost._id}
@@ -120,22 +121,25 @@ const ScheduleScreen = ({ navigation }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
             var hours = (timeDiff - timeDiff % 60) / 60;
             var minutes = timeDiff % 60;
+            var userData = userList.find(user => user._id === item.userId)
             return (
               <View style={styles.row}>
                 <TouchableOpacity
                   style={styles.taskContainer}
-                  // onPress={() => navigation.navigate('Show', { id: item._id })}
                   onPress={() => {
                     setItem(item);
                     toggleModal();
                   }}
                 >
-                  <Text style={styles.task}>{item.task}</Text>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                    <Text style={styles.time}>
-                      {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
-                    </Text>
-                    <Text style={styles.time}>{hours} hrs {minutes} mins</Text>
+                  <View style={containerStyle.rowSBCenter} >
+                    <View>
+                      <Text style={styles.task}>{item.task}</Text>
+                      <Text style={styles.time}>
+                        {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
+                        <Text style={styles.time}> ({hours} hrs {minutes} mins)</Text>
+                      </Text>
+                    </View>
+                    <UserAvatar firstName={userData.firstName} lastName={userData.lastName}/>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -163,7 +167,6 @@ ScheduleScreen.navigationOptions = () => {
 };
 
 const themeStyle = {
-  calendarBackground: '#ffffff',
   todayTextColor: '#ff7f50',
   arrowColor: '#20b2aa',
   dotColor: '#20b2aa',
@@ -176,10 +179,14 @@ const themeStyle = {
 }
 
 const styles = StyleSheet.create({
-  calendar: {
+  calendarContainer: {
     ...modalStyle.shadowContainer3,
     margin: 15,
+    marginBottom: 20,
     paddingBottom: 5,
+  },
+  calendar: {
+    borderRadius: 8,
   },
   selectedDate: {
     marginBottom: 5,
@@ -208,7 +215,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   time: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#ffffff',
   },
   // timeDiff: {

@@ -6,8 +6,8 @@ const modalStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    paddingTop: 15,
-    paddingBottom: 12,
+    paddingTop: 12,
+    paddingBottom: 7,
     borderBottomWidth: 1,
     borderColor: '#dcdcdc',
     // borderColor: 'red',
@@ -18,17 +18,15 @@ const modalStyle = StyleSheet.create({
   },
   screenCenter: {
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 50,
   },
   screenLeft: {
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    marginTop: 30,
+    marginTop: 50,
     backgroundColor: '#f3f3f3',
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
@@ -36,7 +34,7 @@ const modalStyle = StyleSheet.create({
 
   shadowContainer8: {
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 8,
     borderColor: 'white',
     shadowColor: "#000",
     shadowOffset: {

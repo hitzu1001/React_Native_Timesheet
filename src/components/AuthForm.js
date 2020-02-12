@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import * as Font from 'expo-font';
 import RNPickerSelect from 'react-native-picker-select';
-import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 
 const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
@@ -11,6 +12,7 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
   const [firstName, setFirstName] = useState('Charlie');
   const [lastName, setLastName] = useState('Brown');
   const [role, setRole] = useState('Employee');
+  const [secureText, setSecureText] = useState(true);
   const [fontLoaded, setfontLoaded] = useState(false);
   const colorCode = ['#617be3', '#61d4b3', '#fdd365', '#fb8d62', '#f54291']
 
@@ -52,64 +54,69 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
 
       <View style={styles.container}>
         <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={styles.input}
-          secureTextEntry
-          value={password}
-          onChangeText={text=>{
-            setPassword(text)
-
-          }}
-          autoCapitalize='none'
-          autoCorrect={false}
-        />
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={{ ...styles.input, flex: 1, borderBottomWidth: 0 }}
+            secureTextEntry={secureText}
+            value={password}
+            onChangeText={text => setPassword(text)}
+            autoCapitalize='none'
+            autoCorrect={false}
+          />
+          <TouchableOpacity onPress={() => setSecureText(!secureText)}>
+            {secureText
+              ? <Ionicons style={iconStyle.eyeIcon} name='ios-eye' />
+              : <Ionicons style={iconStyle.eyeIcon} name='ios-eye-off' />
+            }
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {isSingup
-        ?
-        <>
-          <View style={styles.container}>
-            <Text style={styles.label}>First Name</Text>
-            <TextInput
-              style={styles.input}
-              value={firstName}
-              onChangeText={setFirstName}
-              autoCapitalize='none'
-              autoCorrect={false}
-            />
-          </View>
-          <View style={styles.container}>
-            <Text style={styles.label}>Last Name</Text>
-            <TextInput
-              style={styles.input}
-              value={lastName}
-              onChangeText={setLastName}
-              autoCapitalize='none'
-              autoCorrect={false}
-            />
-          </View>
-
-          <View style={styles.container}>
-            <Text style={{ ...styles.label, marginBottom: 5 }}>Role</Text>
-            <RNPickerSelect
-              items={[
-                { label: 'Manager/Accounting', value: 'Manager' },
-                { label: 'Foreman', value: 'Foreman' },
-                { label: 'Employee', value: 'Employee' },
-              ]}
-              onValueChange={(value) => setRole(value)}
-              style={{ pickerSelectstyles }}
-              value={role}
-              useNativeAndroidPickerstyle={false}
-              textInputProps={{ underlineColor: 'yellow' }}
-              Icon={() => {
-                return <FontAwesome style={iconStyle.arrowDownIcon} name='hand-o-left' />;
-              }}
-            />
-            <View style={styles.line}></View>
-          </View>
-        </>
-        : null
+      {
+        isSingup
+          ?
+          <>
+            <View style={styles.container}>
+              <Text style={styles.label}>First Name</Text>
+              <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={setFirstName}
+                autoCapitalize='none'
+                autoCorrect={false}
+              />
+            </View>
+            <View style={styles.container}>
+              <Text style={styles.label}>Last Name</Text>
+              <TextInput
+                style={styles.input}
+                value={lastName}
+                onChangeText={setLastName}
+                autoCapitalize='none'
+                autoCorrect={false}
+              />
+            </View>
+            <View style={styles.container}>
+              <Text style={{ ...styles.label, marginBottom: 5 }}>Role</Text>
+              <RNPickerSelect
+                items={[
+                  { label: 'Manager/Accounting', value: 'Manager' },
+                  { label: 'Foreman', value: 'Foreman' },
+                  { label: 'Employee', value: 'Employee' },
+                ]}
+                onValueChange={(value) => setRole(value)}
+                style={{ pickerSelectstyles }}
+                value={role}
+                useNativeAndroidPickerstyle={false}
+                textInputProps={{ underlineColor: 'yellow' }}
+                Icon={() => {
+                  return <FontAwesome style={iconStyle.arrowDownIcon} name='hand-o-left' />;
+                }}
+              />
+              <View style={styles.line}></View>
+            </View>
+          </>
+          : null
       }
       <View>
         <TouchableOpacity
@@ -121,7 +128,7 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
           <Text style={styles.buttonText}>{buttonText}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View >
   );
 };
 
@@ -131,10 +138,8 @@ const styles = StyleSheet.create({
     marginTop: 70,
   },
   headerContainer: {
+    ...containerStyle.rowCenterCenter,
     marginBottom: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   header: {
     // fontFamily: 'courgette',
@@ -156,6 +161,11 @@ const styles = StyleSheet.create({
     color: '#000',
     borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
+  },
+  passwordContainer: {
+    ...containerStyle.rowSBCenter,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1
   },
   line: {
     marginTop: 5,

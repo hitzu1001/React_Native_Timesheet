@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Math } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import moment from 'moment';
 import ButtonSelector from '../components/ButtonSelector';
 import ProgressChart from '../components/ProgressChart';

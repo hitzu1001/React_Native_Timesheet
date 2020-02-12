@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, FlatList } from 'react-native';
+import moment from 'moment';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
-import moment from 'moment';
 import modalStyle from '../style/modalStyle';
 import uuid from 'uuid/v4';
 
 const ShowScreen = ({ navigation }) => {
   const { state, deleteBlogPost, getBlogPosts, editBlogPost } = useContext(BlogContext);
   const { state: user } = useContext(UserContext);
-  const [userRole, setUserRole] = useState('Employee')
+  const [userRole, setUserRole] = useState('Employee');
   const blogPost = state.find(blogPost =>
     blogPost._id === navigation.getParam('id')
   )
@@ -30,7 +31,6 @@ const ShowScreen = ({ navigation }) => {
     };
     navigation.setParams({ callDeleteBlogPost, status: blogPost.status });
 
-
     const listener = navigation.addListener("didFocus", () => {
       getBlogPosts();
     });
@@ -43,7 +43,7 @@ const ShowScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.timeContainer}>
-        <View style={styles.timeSpan}>
+        <View style={containerStyle.rowCenterCenter}>
           <Text style={styles.time}>
             {moment(blogPost.startTime).format('LT')}
           </Text>
@@ -68,7 +68,7 @@ const ShowScreen = ({ navigation }) => {
       </View>
       <View style={styles.container}>
         <Text style={styles.label}>ATTACHMENTS</Text>
-        <View style={styles.photoContainer}>
+        <View style={containerStyle.rowWrap}>
           {blogPost.images.length > 0
             ? blogPost.images.map(i =>
               <TouchableOpacity
@@ -80,7 +80,7 @@ const ShowScreen = ({ navigation }) => {
                   });
                 }}
               >
-                <Image source={{ uri: i.uri }} style={styles.image} />
+                <Image style={styles.image} source={{ uri: i.uri }} />
               </TouchableOpacity>)
             : <Text style={styles.none}>None</Text>}
         </View>
@@ -89,27 +89,27 @@ const ShowScreen = ({ navigation }) => {
         <>
           <View style={styles.auditContainer}>
             <TouchableOpacity
-              style={{...styles.auditBtn, backgroundColor: '#5cb85c'}}
+              style={{ ...styles.auditBtn, backgroundColor: '#5cb85c' }}
               onPress={() => {
                 editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
                   blogPost.task, blogPost.notes, blogPost.images, "APPROVED", () => {
                     navigation.pop();
                   })
               }}>
-              <View style={styles.timeSpan}>
+              <View style={containerStyle.rowCenterCenter}>
                 <FontAwesome style={iconStyle.auditIcon} name='check' />
                 <Text style={styles.buttonText}>Approve</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{...styles.auditBtn, backgroundColor: '#d9534f'}}
+              style={{ ...styles.auditBtn, backgroundColor: '#d9534f' }}
               onPress={() => {
                 editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
                   blogPost.task, blogPost.notes, blogPost.images, "DECLINED", () => {
                     navigation.pop();
                   })
               }}>
-              <View style={styles.timeSpan}>
+              <View style={containerStyle.rowCenterCenter}>
                 <FontAwesome style={iconStyle.auditIcon} name='times' />
                 <Text style={styles.buttonText}>Decline</Text>
               </View>
@@ -126,7 +126,7 @@ ShowScreen.navigationOptions = ({ navigation }) => {
   let thisDay = moment(startTime);
   return {
     title:
-      `${thisDay.format('ddd')}, ${thisDay.format('DD MMM')} ${thisDay.format('YYYY')}`,
+      `${thisDay.format('ddd')}, ${thisDay.format('DD MMM YYYY')}`,
     headerLeft: <TouchableOpacity style={iconStyle.iconTouchLeft}
       onPress={() => navigation.navigate('Timesheet')}
     >
@@ -171,11 +171,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: 'center',
   },
-  timeSpan: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   time: {
     fontSize: 22,
     fontWeight: '500',
@@ -203,10 +198,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
   },
-  photoContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
   image: {
     width: 65,
     height: 65,
@@ -219,9 +210,8 @@ const styles = StyleSheet.create({
     color: 'dimgray'
   },
   auditContainer: {
+    ...containerStyle.rowSANull,
     marginHorizontal: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
   },
   auditBtn: {
     ...modalStyle.shadowContainer1,

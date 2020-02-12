@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import ButtonSelector from './ButtonSelector';
-import moment from 'moment'
+import moment from 'moment';
+import containerStyle from '../style/containerStyle';
 
 const Summary = ({ blogPosts: allTasks, userId, view }) => {
   const [option, setOption] = useState(0)
@@ -45,7 +46,7 @@ const Summary = ({ blogPosts: allTasks, userId, view }) => {
       }
       let hours = (taskSummary - (taskSummary % 60)) / 60;
       let minutes = taskSummary % 60;
-      result = [...result, { task: taskList[i], ratio: taskSummary / totalTime, color: colorCode[i], time: `${hours} h ${minutes} m` }]
+      result = [...result, { task: taskList[i], ratio: taskSummary / totalTime, color: colorCode[i % 5], time: `${hours} h ${minutes} m` }]
     }
     return result
   }
@@ -151,14 +152,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   taskContent: {
+    ...containerStyle.rowSBNull,
     marginTop: 6,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   label: {
-    // paddingHorizontal: 2,
     fontWeight: '500',
     color: '#444',
   }

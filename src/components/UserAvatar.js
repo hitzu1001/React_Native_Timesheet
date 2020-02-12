@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Context as UserContext } from '../context/AuthContext'
@@ -23,8 +23,8 @@ const UserAvatar = ({ firstName, lastName }) => {
     switch (username) {
       case 'Charlie Brown':
         return require('../../assets/images/CharlieBrown.png');
-      case 'Lucy van Pelt':
-        return require('../../assets/images/LucyvanPelt.png');
+      case 'Lucy Pelt':
+        return require('../../assets/images/LucyPelt.png');
       case 'Sally Brown':
         return require('../../assets/images/SallyBrown.png');
       case 'Snoopy Peanuts':
@@ -40,7 +40,7 @@ const UserAvatar = ({ firstName, lastName }) => {
         ? <Avatar
           rounded
           source={getUri(username)}
-          imageProps={{resizeMode: 'contain'}}
+          imageProps={{ resizeMode: 'contain' }}
           containerStyle={styles.containerStyle}
           titleStyle={{ fontSize: 14 }}
           onPress={() => console.log('hi')}

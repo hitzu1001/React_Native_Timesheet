@@ -6,6 +6,7 @@ import TimeOffTaskModal from '../components/TimeOffTaskModal';
 import TimeOffNoteModal from '../components/TimeOffNoteModal';
 import { Context as BlogContext } from '../context/BlogContext';
 import { Entypo } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 
 const TimeOffScreen = ({ navigation }) => {
@@ -19,10 +20,7 @@ const TimeOffScreen = ({ navigation }) => {
   const [notes, setNotes] = useState('');
   const [isChange, setIsChange] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-
-  const change = (allDay !== true)
-    || (startTime !== nineAM) || (setEndTime !== fivePM)
-    || (task !== 'Select time off reason') || (notes !== '');
+  let change;
 
   const timeDiff = parseInt(
     moment(endTime).diff(startTime, "minutes"), 10
@@ -34,26 +32,38 @@ const TimeOffScreen = ({ navigation }) => {
   if (task === 'Select time off reason') { message += '\nPlease select a leave reason.'; }
 
   useEffect(() => {
-    navigation.setParams({ isChange });
+    change = ((allDay !== true)
+    // || (startTime !== nineAM) || (endTime !== fivePM)
+    || (task !== 'Select time off reason') || (notes !== ''));
   }, []);
 
   useEffect(() => {
-    change && setIsChange(true);
+    change = ((allDay !== true)
+    // || (startTime !== nineAM) || (endTime !== fivePM)
+    || (task !== 'Select time off reason') || (notes !== ''));
+    console.log('allDay is ' + (allDay === false));
+    // console.log('startTime is ' + (startTime !== nineAM));
+    // console.log('endTime is ' + (endTime !== fivePM));
+    console.log('notes is ' + (notes !== '')); 
+    console.log('change is ' + change); 
+    setIsChange(change);
     setErrorMsg(message);
+    navigation.setParams({ isChange });
+    console.log(isChange);
   }, [allDay, startTime, endTime, task, notes]);
-
+  
   return (
     <ScrollView>
       <View style={styles.switchContainer}>
         <Text style={styles.switchLabel}>All-Day</Text>
         <Switch
-          value={allDay}
-          onValueChange={v => { setAllDay(v); }}
-          trackColor={{ true: '#20b2aa' }}
           style={styles.switch}
+          value={allDay}
+          onValueChange={v => setAllDay(v)}
+          trackColor={{ true: '#20b2aa' }}
         />
       </View>
-      <View style={styles.subContainer}>
+      <View style={{ ...styles.subContainer, marginTop: 5 }}>
         <TimeForm
           startTime={startTime} endTime={endTime}
           setStartTime={setStartTime} setEndTime={setEndTime}
@@ -94,7 +104,7 @@ TimeOffScreen.navigationOptions = ({ navigation }) => {
     headerLeft: <TouchableOpacity
       style={iconStyle.iconTouchLeft}
       onPress={() => {
-        (false || navigation.state.params.isChange)
+        (navigation.state.params.isChange)
           ? Alert.alert('Discard?', '',
             [
               { text: 'Keep Editing', style: 'cancel' },
@@ -111,24 +121,18 @@ TimeOffScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   switchContainer: {
+    ...containerStyle.rowFECenter,
     marginTop: 10,
     marginBottom: -20,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
     marginHorizontal: 20,
-    // borderColor: 'red',
-    // borderWidth: 2,
   },
   switchLabel: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: "600",
     marginRight: 5,
   },
   switch: {
-    transform: [{ scaleX: .8 }, { scaleY: .8 }]
-    // borderColor: 'red',
-    // borderWidth: 2,
+    transform: [{ scaleX: .8 }, { scaleY: .8 }],
   },
   subContainer: {
     marginHorizontal: 20,
@@ -137,6 +141,7 @@ const styles = StyleSheet.create({
   lable: {
     fontSize: 12,
     fontWeight: "bold",
+    color: '#333',
     marginBottom: 10
   },
   sendBtn: {

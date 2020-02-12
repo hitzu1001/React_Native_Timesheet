@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StatusBar, SafeAreaView, TouchableOpacity, YellowBox } from 'react-native';
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { StatusBar, SafeAreaView, YellowBox } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import UserAvatar from '../components/UserAvatar';
 import ViewSelector from '../components/ViewSelector';
 import PersonalOverview from '../components/PersonalOverview';
@@ -17,8 +17,8 @@ const OverviewScreen = ({ navigation }) => {
   const [view, setView] = useState(true);
   const buttons = ['My Summary', 'Team Summary'];
   const { getAllUser } = useContext(UserList);
-  const [userId, setUserId] = useState("");
-  const [userRole, setUserRole] = useState("")
+  const [userId, setUserId] = useState('');
+  const [userRole, setUserRole] = useState('')
 
   useEffect(() => {
     getBlogPosts();
@@ -43,12 +43,12 @@ const OverviewScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle='dark-content' />
       <ScrollView style={styles.screen}>
         <View style={styles.overviewContainer}>
           <PersonalOverview blogPosts={state} userId={userId} />
         </View>
-        {userRole === "Manager" &&
+        {userRole === 'Manager' &&
           <ViewSelector buttons={buttons} setView={v => setView(v)} src='overview' />
         }
         <View style={styles.overviewContainer}>
@@ -82,8 +82,7 @@ const styles = StyleSheet.create({
   },
   overviewContainer: {
     ...modalStyle.shadowContainer3,
-    marginBottom: 15,
-    marginTop: 15,
+    marginVertical: 15,
     marginHorizontal: 15,
     paddingBottom: 15,
   },

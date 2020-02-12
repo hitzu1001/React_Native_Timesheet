@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Image, TextInput } from "react-native";
 import { Context as ImageContext } from "../context/ImageContext";
 import { Ionicons } from "@expo/vector-icons";
+import containerStyle from '../style/containerStyle';
 import iconStyle from "../style/iconStyle";
 
 const PhotoDetailForm = ({ uri, initialComment, isChange, readOnly }) => {
@@ -16,10 +17,10 @@ const PhotoDetailForm = ({ uri, initialComment, isChange, readOnly }) => {
 
   return (
     <>
-      <Image source={{ uri: uri }} style={styles.image} resizeMode="contain" />
+      <Image style={styles.image} source={{ uri: uri }} resizeMode="contain" />
       <View style={styles.authContainer}>
         <Text style={styles.task}>WHO CAN SEE THIS</Text>
-        <View style={styles.authContent}>
+        <View style={containerStyle.rowNullCenter}>
           <Ionicons style={iconStyle.lockIcon} name="ios-lock" />
           <Text style={styles.auth}>Seen only by you and your admin</Text>
         </View>

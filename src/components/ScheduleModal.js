@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import UserAvatar from '../components/UserAvatar';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 import modalStyle from '../style/modalStyle';
 
 const ScheduleModal = ({ timesheet, toggleModal }) => {
-  const { state } = useContext(UserContext);
   const { state: userList } = useContext(UserList);
   const timeDiff = parseInt(moment(timesheet.endTime).diff(moment(timesheet.startTime), 'minutes'));
   const hours = (timeDiff - timeDiff % 60) / 60;
@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   userContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    ...containerStyle.rowNullCenter,
     marginLeft: 15,
     marginTop: -5,
     marginBottom: 10,

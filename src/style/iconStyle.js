@@ -50,12 +50,13 @@ const iconStyle = StyleSheet.create({
   lockIcon: {
     fontSize: 20,
     color: '#696969',
-    marginRight: 15,
+    marginRight: 10,
   },
-  coffeeIcon: {
-    fontSize: 20,
+  cafeIcon: {
+    fontSize: 17,
     color: '#20b2aa',
-    marginHorizontal: 2,
+    marginTop: 1,
+    marginHorizontal: 5,
   },
   scheduleIcon:{
     fontSize: 20,
@@ -66,7 +67,12 @@ const iconStyle = StyleSheet.create({
     fontSize: 56,
     color: '#617be3',
     transform: [{ rotate: '-10 deg' }],
-    marginRight: 15,
+    marginRight: 5,
+    marginTop: 5,
+  },
+  eyeIcon: {
+    fontSize: 22,
+    color: '#20b2aa',
     marginTop: 5,
   },
   arrowDownIcon: {

@@ -8,14 +8,13 @@ const ButtonSelector = ({ buttons, setOption }) => {
   return (
     <View style={styles.buttonGroup}>
       <ButtonGroup
-        // title="Clear button"
         buttons={buttons}
         selectedIndex={selectedIndex}
         onPress={i => {
           setSelectedIndex(i);
           setOption(i);
         }}
-        containerStyle={{...styles.containerStyle, height: 40,}}
+        containerStyle={{ ...styles.containerStyle, height: 40, }}
         textStyle={styles.textStyle}
         // buttonStyle={styles.buttonStyle}
         innerBorderStyle={styles.innerBorderStyle}
@@ -35,6 +34,8 @@ const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
     borderWidth: 0,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
   textStyle: {
     color: '#a9a9a9',
@@ -42,7 +43,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   // buttonStyle: {
-  //   backgroundColor: '#fff',
+  //   backgroundColor: 'blue',
+  //   borderColor: '#ff0000',
+  //   borderWidth: 0.5,
   // },
   innerBorderStyle: {
     width: 0,

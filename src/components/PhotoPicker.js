@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import { Context as ImageContext } from '../context/ImageContext';
 import { navigate } from '../navigationRef';
 import { Ionicons } from '@expo/vector-icons';
+import containerStyle from '../style/containerStyle';
 import uuid from 'uuid/v4';
 
 const PhotoPicker = ({ id, images }) => {
@@ -100,7 +101,7 @@ const PhotoPicker = ({ id, images }) => {
     <ScrollView>
       <View style={styles.attachContainer}>
         <Text style={styles.lable}>ATTACHMENTS</Text>
-        <View style={styles.photoContainer}>
+        <View style={containerStyle.rowWrap}>
           <TouchableOpacity
             style={styles.attachBtn}
             onPress={() => {
@@ -138,10 +139,6 @@ const styles = StyleSheet.create({
   lable: {
     fontSize: 12,
     fontWeight: 'bold'
-  },
-  photoContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap'
   },
   attachBtn: {
     width: 65,
