@@ -121,7 +121,7 @@ const ScheduleScreen = ({ navigation }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
             var hours = (timeDiff - timeDiff % 60) / 60;
             var minutes = timeDiff % 60;
-            var userData = userList.find(user => user._id === item.userId)
+            var userData = userList.find(user => user._id === item.userId);
             return (
               <View style={styles.row}>
                 <TouchableOpacity

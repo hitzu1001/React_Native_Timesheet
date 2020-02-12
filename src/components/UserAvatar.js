@@ -27,8 +27,8 @@ const UserAvatar = ({ firstName, lastName }) => {
         return require('../../assets/images/LucyPelt.png');
       case 'Sally Brown':
         return require('../../assets/images/SallyBrown.png');
-      case 'Snoopy Peanuts':
-        return require('../../assets/images/SnoopyPeanuts.png');
+      case 'Snoopy ':
+        return require('../../assets/images/Snoopy.png');
       default:
         return null;
     }

@@ -11,11 +11,12 @@ import iconStyle from '../style/iconStyle';
 import containerStyle from '../style/containerStyle';
 import moment from 'moment';
 
-
 const TimesheetScreen = ({ navigation }) => {
   const { state, getBlogPosts } = useContext(BlogContext);
   const { setImages } = useContext(ImageContext);
   const { state: user } = useContext(UserContext);
+  const { state: userList } = useContext(UserList);
+  // true for My, false for Full
   const [view, setView] = useState(true);
   const buttons = ['My Timesheet', 'Full Timesheet'];
   const [userRole, setUserRole] = useState('Employee')
@@ -76,6 +77,8 @@ const TimesheetScreen = ({ navigation }) => {
           );
           var hours = (timeDiff - (timeDiff % 60)) / 60;
           var minutes = timeDiff % 60;
+          var userData = userList.find(user => user._id === item.userId);
+          var owner = `${userData.firstName.toUpperCase()} ${userData.lastName.toUpperCase()}`;
           return (
             <>
               {!sameDate &&
@@ -93,16 +96,19 @@ const TimesheetScreen = ({ navigation }) => {
                     {moment(item.startTime).format('LT')} - {moment(item.endTime).format('LT')}
                   </Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  {item.status === 'APPROVED' &&
-                    <Text style={{ ...styles.status, color: '#008000' }}>{item.status}</Text>
-                  }
-                  {item.status === 'DECLINED' &&
-                    <Text style={{ ...styles.status, color: '#ff0000' }}>{item.status}</Text>
-                  }
-                  {item.status === 'PENDING' &&
-                    <Text style={{ ...styles.status, color: '#ffa500' }}>{item.status}</Text>
-                  }
+                <View style={containerStyle.rowSBCenter}>
+                  <Text style={{ marginTop: 10 }}>
+                    {!view && <Text style={styles.owner}>{owner} </Text>}
+                    {item.status === 'APPROVED' &&
+                      <Text style={{ ...styles.status, color: '#008000' }}>({item.status})</Text>
+                    }
+                    {item.status === 'DECLINED' &&
+                      <Text style={{ ...styles.status, color: '#ff0000' }}>({item.status})</Text>
+                    }
+                    {item.status === 'PENDING' &&
+                      <Text style={{ ...styles.status, color: '#ffa500' }}>({item.status})</Text>
+                    }
+                  </Text>
                   <Text style={styles.timeDiff}>{hours} hrs {minutes} mins</Text>
                 </View>
               </TouchableOpacity>
@@ -160,17 +166,19 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   timeDiff: {
-    fontSize: 11,
+    fontSize: 10,
     alignSelf: 'flex-end',
     fontWeight: '500',
     color: '#999'
   },
-  status: {
-    marginTop: 10,
-    color: 'green',
+  owner: {
+    color: '#808080',
     fontSize: 9,
     fontWeight: '600',
-    flexWrap: 'nowrap'
+  },
+  status: {
+    fontSize: 9,
+    fontWeight: '600',
   }
 });
 

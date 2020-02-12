@@ -26,13 +26,11 @@ const containerStyle = StyleSheet.create({
   rowSBCenter: {
     flexDirection: 'row', 
     justifyContent: 'space-between', 
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   rowNullCenter: {
     flexDirection: 'row',
     alignItems: 'center',
-    // borderColor: '#ff0000',
-    // borderWidth: 0.5,
   },
   rowWrap: {
     flexDirection: 'row',
