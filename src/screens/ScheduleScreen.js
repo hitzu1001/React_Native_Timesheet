@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import UserAvatar from '../components/UserAvatar';
 import ScheduleModal from '../components/ScheduleModal';
 import ViewSelector from '../components/ViewSelector';
-import { Context as BlogContext } from '../context/BlogContext';
+import { Context as TimesheetContext } from '../context/TimesheetContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -16,7 +16,7 @@ import modalStyle from '../style/modalStyle';
 
 const ScheduleScreen = ({ navigation, screenProps }) => {
   const { showCalendar } = screenProps;
-  const { state, getBlogPosts } = useContext(BlogContext);
+  const { state, getTimesheets } = useContext(TimesheetContext);
   const { state: user } = useContext(UserContext);
   const { state: userList } = useContext(UserList);
   const today = moment(new Date()).format('YYYY-MM-DD')
@@ -39,7 +39,7 @@ const ScheduleScreen = ({ navigation, screenProps }) => {
 
   useEffect(() => {
     const listener = navigation.addListener("didFocus", () => {
-      getBlogPosts();
+      getTimesheets();
     });
     return () => {
       listener.remove();
@@ -119,7 +119,7 @@ const ScheduleScreen = ({ navigation, screenProps }) => {
       <ScrollView style={{ marginTop: showCalendar ? 0 : 20 }}>
         <FlatList
           data={selectedTask.sort(ascOrder)}
-          keyExtractor={(blogPost) => blogPost._id}
+          keyExtractor={(timesheet) => timesheet._id}
           renderItem={({ item }) => {
             var timeDiff = parseInt(moment(item.endTime).diff(moment(item.startTime), 'minutes'));
             var hours = (timeDiff - timeDiff % 60) / 60;

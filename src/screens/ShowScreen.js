@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, FlatList } from 'react-native';
 import moment from 'moment';
-import { Context as BlogContext } from '../context/BlogContext';
+import { Context as TimesheetContext } from '../context/TimesheetContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import containerStyle from '../style/containerStyle';
@@ -10,29 +10,29 @@ import modalStyle from '../style/modalStyle';
 import uuid from 'uuid/v4';
 
 const ShowScreen = ({ navigation }) => {
-  const { state, deleteBlogPost, getBlogPosts, editBlogPost } = useContext(BlogContext);
+  const { state, deleteTimesheet, getTimesheets, editTimesheet } = useContext(TimesheetContext);
   const { state: user } = useContext(UserContext);
   const [userRole, setUserRole] = useState('Employee');
-  const blogPost = state.find(blogPost =>
-    blogPost._id === navigation.getParam('id')
+  const timesheet = state.find(timesheet =>
+    timesheet._id === navigation.getParam('id')
   )
   const timeDiff = parseInt(
-    moment(blogPost.endTime).diff(moment(blogPost.startTime), "minutes")
+    moment(timesheet.endTime).diff(moment(timesheet.startTime), "minutes")
   );
   const hours = (timeDiff - (timeDiff % 60)) / 60;
   const minutes = timeDiff % 60;
 
   useEffect(() => {
     Array.isArray(user) && setUserRole(user[0].role)
-    const callDeleteBlogPost = () => {
-      deleteBlogPost(navigation.getParam('id'), () => {
+    const callDeleteTimesheet = () => {
+      deleteTimesheet(navigation.getParam('id'), () => {
         navigation.navigate('Timesheet');
       });
     };
-    navigation.setParams({ callDeleteBlogPost, status: blogPost.status });
+    navigation.setParams({ callDeleteTimesheet, status: timesheet.status });
 
     const listener = navigation.addListener("didFocus", () => {
-      getBlogPosts();
+      getTimesheets();
     });
 
     return () => {
@@ -45,11 +45,11 @@ const ShowScreen = ({ navigation }) => {
       <View style={styles.timeContainer}>
         <View style={containerStyle.rowCenterCenter}>
           <Text style={styles.time}>
-            {moment(blogPost.startTime).format('LT')}
+            {moment(timesheet.startTime).format('LT')}
           </Text>
           <Ionicons style={iconStyle.forwardIcon} name='ios-arrow-forward' />
           <Text style={styles.time}>
-            {moment(blogPost.endTime).format('LT')}
+            {moment(timesheet.endTime).format('LT')}
           </Text>
         </View>
         <Text style={styles.timeDiff}> {hours} hrs {minutes} mins</Text>
@@ -57,20 +57,20 @@ const ShowScreen = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.label}>TASK</Text>
         <Text style={styles.content}>
-          {blogPost.task}
+          {timesheet.task}
         </Text>
       </View>
       <View style={styles.container}>
         <Text style={styles.label}>NOTES</Text>
         <Text style={styles.content} numberOfLines={3} ellipsizeMode='tail'>
-          {blogPost.notes}
+          {timesheet.notes}
         </Text>
       </View>
       <View style={styles.container}>
         <Text style={styles.label}>ATTACHMENTS</Text>
         <View style={containerStyle.rowWrap}>
-          {blogPost.images.length > 0
-            ? blogPost.images.map(i =>
+          {timesheet.images.length > 0
+            ? timesheet.images.map(i =>
               <TouchableOpacity
                 key={uuid()}
                 onPress={() => {
@@ -85,14 +85,14 @@ const ShowScreen = ({ navigation }) => {
             : <Text style={styles.none}>None</Text>}
         </View>
       </View>
-      {userRole === "Manager" && (blogPost.status === "PENDING") &&
+      {userRole === "Manager" && (timesheet.status === "PENDING") &&
         <>
           <View style={styles.auditContainer}>
             <TouchableOpacity
               style={{ ...styles.auditBtn, backgroundColor: '#5cb85c' }}
               onPress={() => {
-                editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
-                  blogPost.task, blogPost.notes, blogPost.images, "APPROVED", () => {
+                editTimesheet(timesheet._id, timesheet.startTime, timesheet.endTime,
+                  timesheet.task, timesheet.notes, timesheet.images, "APPROVED", () => {
                     navigation.pop();
                   })
               }}>
@@ -104,8 +104,8 @@ const ShowScreen = ({ navigation }) => {
             <TouchableOpacity
               style={{ ...styles.auditBtn, backgroundColor: '#d9534f' }}
               onPress={() => {
-                editBlogPost(blogPost._id, blogPost.startTime, blogPost.endTime,
-                  blogPost.task, blogPost.notes, blogPost.images, "DECLINED", () => {
+                editTimesheet(timesheet._id, timesheet.startTime, timesheet.endTime,
+                  timesheet.task, timesheet.notes, timesheet.images, "DECLINED", () => {
                     navigation.pop();
                   })
               }}>
@@ -148,7 +148,7 @@ ShowScreen.navigationOptions = ({ navigation }) => {
                 { text: 'Cancel', style: 'cancel' },
                 {
                   text: 'Delete', onPress: () => {
-                    navigation.state.params.callDeleteBlogPost()
+                    navigation.state.params.callDeleteTimesheet()
                   }
                 }
               ],

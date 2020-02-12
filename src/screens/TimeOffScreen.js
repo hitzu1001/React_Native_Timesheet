@@ -4,14 +4,14 @@ import moment from 'moment';
 import TimeForm from "../components/TimeForm";
 import TimeOffTaskModal from '../components/TimeOffTaskModal';
 import TimeOffNoteModal from '../components/TimeOffNoteModal';
-import { Context as BlogContext } from '../context/BlogContext';
+import { Context as TimesheetContext } from '../context/TimesheetContext';
 import { Entypo } from '@expo/vector-icons';
 import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 
 const TimeOffScreen = ({ navigation, screenProps }) => {
   const { setTOIsChange } = screenProps;
-  const { addBlogPost } = useContext(BlogContext);
+  const { addTimesheet } = useContext(TimesheetContext);
   const nineAM = moment.utc(new Date()).local().set('hour', 9).set('minute', 0);
   const fivePM = moment.utc(new Date()).local().set('hour', 17).set('minute', 0);
   const [allDay, setAllDay] = useState(true);
@@ -74,7 +74,7 @@ const TimeOffScreen = ({ navigation, screenProps }) => {
               { cancelable: false },
             )
           } else {
-            addBlogPost(startTime, endTime, task, notes, [], 'PENDING', true);
+            addTimesheet(startTime, endTime, task, notes, [], 'PENDING', true);
             navigation.pop();
           }
         }}

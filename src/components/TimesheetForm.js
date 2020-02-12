@@ -9,7 +9,7 @@ import { Context as ImageContext } from '../context/ImageContext';
 import { Ionicons } from '@expo/vector-icons';
 import containerStyle from '../style/containerStyle';
 
-const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
+const TimesheetForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
   const { state: imgState } = useContext(ImageContext);
   const [startTime, setStartTime] = useState(initialValues.startTime);
   const [endTime, setEndTime] = useState(initialValues.endTime);
@@ -94,7 +94,7 @@ const BlogPostForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
 };
 
 
-BlogPostForm.defaultProps = {
+TimesheetForm.defaultProps = {
   initialValues: {
     task: '',
     notes:
@@ -139,4 +139,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default BlogPostForm;
+export default TimesheetForm;

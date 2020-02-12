@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import UserAvatar from '../components/UserAvatar';
 import ViewSelector from '../components/ViewSelector';
 import SearchTimesheet from '../components/SearchTimesheet';
-import { Context as BlogContext } from '../context/BlogContext';
+import { Context as TimesheetContext } from '../context/TimesheetContext';
 import { Context as ImageContext } from '../context/ImageContext';
 import { Context as UserContext } from '../context/AuthContext';
 import { Context as UserList } from '../context/UserContext';
@@ -14,7 +14,7 @@ import moment from 'moment';
 
 
 const TimesheetScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(BlogContext);
+  const { state, getTimesheets } = useContext(TimesheetContext);
   const { setImages } = useContext(ImageContext);
   const { state: user } = useContext(UserContext);
   const { state: userList } = useContext(UserList);
@@ -34,14 +34,14 @@ const TimesheetScreen = ({ navigation }) => {
 
   useEffect(() => {
     setSearchButton(false)
-    getBlogPosts();
+    getTimesheets();
     dateList = []
     Array.isArray(user) && setUserRole(user[0].role)
     Array.isArray(user) && (personalTasks = state.filter(task => task.userId === user[0]._id))
     filteredTasks = selectTasks(view)
 
     const listener = navigation.addListener('didFocus', () => {
-      getBlogPosts();
+      getTimesheets();
       dateList = []
       setImages([]);
       filteredTasks = selectTasks(view)
@@ -91,7 +91,7 @@ const TimesheetScreen = ({ navigation }) => {
       }
       <FlatList
         data={searchTask(filteredTasks.sort(descOrder))}
-        keyExtractor={blogPost => blogPost._id}
+        keyExtractor={timesheet => timesheet._id}
         renderItem={({ item }) => {
           var sameDate = false
           dateList.includes(moment(item.startTime).format('L')) ? sameDate = true : dateList.push(moment(item.startTime).format('L'))

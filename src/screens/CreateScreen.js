@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Context as BlogContext } from '../context/BlogContext';
-import BlogPostForm from '../components/BlogPostForm';
+import { Context as TimesheetContext } from '../context/TimesheetContext';
+import TimesheetForm from '../components/TimesheetForm';
 import moment from 'moment';
 import { Entypo } from '@expo/vector-icons';
 import iconStyle from '../style/iconStyle'
 
 const CreateScreen = ({ navigation }) => {
-  const { addBlogPost, getBlogPosts } = useContext(BlogContext);
+  const { addTimesheet, getTimesheets } = useContext(TimesheetContext);
   var startTime = moment.utc(new Date()).local().format();
   var endTime = moment.utc(new Date()).local().format();
   const [isChange, setIsChange] = useState(false);
@@ -17,7 +17,7 @@ const CreateScreen = ({ navigation }) => {
   }, [isChange]);
 
   return (
-    <BlogPostForm
+    <TimesheetForm
       id={0}
       initialValues={{
         startTime: startTime,
@@ -27,7 +27,7 @@ const CreateScreen = ({ navigation }) => {
         images: []
       }}
       onSubmit={(startTime, endTime, task, notes, images) => {
-        addBlogPost(startTime, endTime, task, notes, images, "PENDING", false, () => {
+        addTimesheet(startTime, endTime, task, notes, images, "PENDING", false, () => {
           // ensure the page is navigated to Index after the post has been added
 
           navigation.navigate('Timesheet');
