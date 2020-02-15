@@ -2,7 +2,7 @@
 - Provides a user-friendly app that allows employees to manipulate timesheets and schedules. 
 - Managers and foremen can approve, decline or edit each timesheet after each timesheet is submitted. 
 - This app is developed with React Native to reach both iOS and Android users.
-- Front-end: 
+- Front-end: Interactive UI is built based on one-way data flow, Virtual DOM, JSX, React Native, React Native Context concepts.
 - Back-end: Express.js, Mongoose and MongoDB to provide RESTful API.
 
 <p align="center">
