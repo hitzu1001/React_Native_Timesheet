@@ -29,14 +29,12 @@ const PhotoPicker = ({ id, images }) => {
   }
 
   const requestCameraRollPermission = async () => {
-    if (Constants.platform.ios) {
-      const { status, granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (granted === false) {
-        alert('Sorry, missing photos permission!'
-          + '\nChange permission at App > Settings > Photos');
-      } else {
-        _pickImage();
-      }
+    const { status, granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (granted === false) {
+      alert('Sorry, missing photos permission!'
+        + '\nChange permission at App > Settings > Photos');
+    } else {
+      _pickImage();
     }
   };
 

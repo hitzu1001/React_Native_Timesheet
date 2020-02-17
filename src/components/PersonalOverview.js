@@ -9,7 +9,8 @@ const PersonalOverview = ({ timesheets: tasks, userId }) => {
   const from_date = moment().startOf('week').format('DD-MMM');
   const to_date = moment().endOf('week').format('DD-MMM');
   const buttons = ['DAY TOTAL', 'WEEK TOTAL'];
-  let filteredTasks = tasks.filter(task => task.userId === userId)
+  let filteredTasks =[]
+  tasks? filteredTasks = tasks.filter(task => task.userId === userId) : null
   let dayRatio = 0
   let weekRatio = 0
 
