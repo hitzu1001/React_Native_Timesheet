@@ -11,6 +11,10 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
   const [password, setPassword] = useState('password');
   const [firstName, setFirstName] = useState('Charlie');
   const [lastName, setLastName] = useState('Brown');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
   const [role, setRole] = useState('Employee');
   const [secureText, setSecureText] = useState(true);
   const [fontLoaded, setfontLoaded] = useState(false);
