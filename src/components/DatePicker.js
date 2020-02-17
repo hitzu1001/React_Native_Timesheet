@@ -33,8 +33,9 @@ export default class App extends Component {
         date2: moment(date1).local().set('hour', 17).set('minute', 0)
       })
     }
-    this.props.setStartTime(date1)
-    this.props.setEndTime(date2)
+
+    this.props.setStartTime(this.state.date1)
+    this.props.setEndTime(this.state.date2)
   }
 
   setDate2 = (event, date2) => {

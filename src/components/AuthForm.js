@@ -7,7 +7,7 @@ import containerStyle from '../style/containerStyle';
 import iconStyle from '../style/iconStyle';
 
 const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
-  const [email, setEmail] = useState('snoopy.peanuts@test.com');
+  const [email, setEmail] = useState('charlie.brown@test.com');
   const [password, setPassword] = useState('password');
   const [firstName, setFirstName] = useState('Charlie');
   const [lastName, setLastName] = useState('Brown');
@@ -135,7 +135,7 @@ const AuthForm = ({ buttonText, onSubmit, isSingup }) => {
 const styles = StyleSheet.create({
   screen: {
     marginHorizontal: 30,
-    marginTop: 70,
+    marginTop: 70, //ios 70
   },
   headerContainer: {
     ...containerStyle.rowCenterCenter,
