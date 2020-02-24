@@ -30,8 +30,8 @@ const TimeOffScreen = ({ navigation, screenProps }) => {
   );
 
   let message = '';
-  if (timeDiff < 0) { message += '\nStart time needs to be before end time.'; }
-  if (timeDiff > 480) { message += `\nCan't input more than 8 hours.`; }
+  if (timeDiff < 0) { message += '\nStart time must be earlier than end time.'; }
+  if (timeDiff > 480) { message += `\nCannot input more than 8 hours.`; }
   if (task === 'Select time off reason') { message += '\nPlease select a leave reason.'; }
 
   useEffect(() => {

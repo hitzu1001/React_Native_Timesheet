@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   inputContainerStyle: {
     marginHorizontal: 5,
-    marginTop: -10,
+    marginTop: 0,
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#dcdcdc',

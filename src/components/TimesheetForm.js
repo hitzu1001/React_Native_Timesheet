@@ -28,9 +28,9 @@ const TimesheetForm = ({ id, initialValues, onSubmit, isChange, isCreate }) => {
     moment(endTime).diff(startTime, 'minutes'), 10
   );
   let message = '';
-  if (timeDiff < 0) { message += '\nStart time needs to be before end time.'; }
-  if (timeDiff > 480) { message += `\nCan't input more than 8 hours.`; }
-  if (task === '') { message += '\nPlease select a task'; }
+  if (timeDiff < 0) { message += '\nStart time must be earlier than end time.'; }
+  if (timeDiff > 480) { message += `\nCannot input more than 8 hours.`; }
+  if (task === 'Select a task') { message += '\nPlease select a task.'; }
 
   useEffect(() => {
     setErrorMsg(message);

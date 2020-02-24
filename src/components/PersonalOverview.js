@@ -4,26 +4,29 @@ import moment from 'moment';
 import ButtonSelector from '../components/ButtonSelector';
 import ProgressChart from '../components/ProgressChart';
 
-const PersonalOverview = ({ timesheets: tasks, userId }) => {
+const PersonalOverview = ({ timesheets, userId }) => {
   const [option, setOption] = useState(0)
   const from_date = moment().startOf('week').format('DD-MMM');
   const to_date = moment().endOf('week').format('DD-MMM');
   const buttons = ['DAY TOTAL', 'WEEK TOTAL'];
-  let filteredTasks =[]
-  tasks? filteredTasks = tasks.filter(task => task.userId === userId) : null
+  let filteredSheets = [];
+  timesheets
+    ? filteredSheets = timesheets.filter(item =>
+      (item.userId === userId) && (item.isTimeOff === false))
+    : null
   let dayRatio = 0
   let weekRatio = 0
 
-  for (let i = 0; i < filteredTasks.length; i++) {
-    if (moment(filteredTasks[i].startTime).isSame(moment(), 'day')) {
-      dayRatio = dayRatio + parseInt(moment(filteredTasks[i].endTime).diff(filteredTasks[i].startTime, 'minutes'), 10) / 480;
-      // filteredTasks.push(tasks[i])
+  for (let i = 0; i < filteredSheets.length; i++) {
+    if (moment(filteredSheets[i].startTime).isSame(moment(), 'day')) {
+      dayRatio = dayRatio + parseInt(moment(filteredSheets[i].endTime).diff(filteredSheets[i].startTime, 'minutes'), 10) / 480;
+      // filteredSheets.push(timesheets[i])
     }
   }
 
-  for (let i = 0; i < filteredTasks.length; i++) {
-    if ((moment(filteredTasks[i].startTime).isAfter(moment().startOf('week'))) && (moment(filteredTasks[i].startTime).isBefore(moment().endOf('week')))) {
-      weekRatio = weekRatio + parseInt(moment(filteredTasks[i].endTime).diff(filteredTasks[i].startTime, 'minutes'), 10) / 2400;
+  for (let i = 0; i < filteredSheets.length; i++) {
+    if ((moment(filteredSheets[i].startTime).isAfter(moment().startOf('week'))) && (moment(filteredSheets[i].startTime).isBefore(moment().endOf('week')))) {
+      weekRatio = weekRatio + parseInt(moment(filteredSheets[i].endTime).diff(filteredSheets[i].startTime, 'minutes'), 10) / 2400;
     }
   }
 

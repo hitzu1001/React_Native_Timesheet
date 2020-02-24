@@ -58,7 +58,7 @@ EditTaskScreen.navigationOptions = ({ navigation }) => {
   const { callEditTask, callDeleteTask, editable, setEditable, isChange, errorMsg }
     = navigation.state.params;
   return {
-    title: 'Edit Task',
+    title: editable ? 'Edit Task' : 'View Task',
     headerLeft:
       <TouchableOpacity style={iconStyle.iconTouchLeft}
         onPress={() => {

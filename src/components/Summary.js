@@ -104,6 +104,7 @@ const Summary = ({ timesheets: allTasks, userId, view }) => {
                   <View style={styles.bar}></View>
                   <View style={{ flexDirection: 'row', marginTop: -16 }}>
                     <View style={{ ...styles.colorBar, flex: item.ratio, backgroundColor: item.color, }}></View>
+                    {/* <View style={{ ...styles.colorBar, backgroundColor: item.color, }}></View> */}
                     {/* <View style={styles.stuff}></View> */}
                   </View>
                   <View style={styles.taskContent}>
